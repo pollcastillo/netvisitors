@@ -1,0 +1,67 @@
+//
+//  _sidebar.scss
+//
+//  Created by Poll Castillo on 14/02/2023
+//
+
+.app {
+  // sidebar
+  &_sidebar {
+    background-color: $dark;
+    height: 100%;
+    max-width: 100%;
+    overflow-y: scroll;
+
+    &_container {
+      width: 100%;
+    }
+  }
+
+  .sidebar_item {
+    span {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      color: $white;
+      padding: 16px 16px;
+      margin: 8px 0;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: 0.3s all ease-in-out;
+
+      & .feather {
+        height: 22px;
+        width: 22px;
+        margin-right: 8px;
+      }
+    }
+    .sidebar_subitems {
+      display: none;
+
+      .isActive {
+        background-color: lighten($dark, 5%);
+      }
+    }
+
+
+    &.isActive {
+      background-color: darken($dark, 5%);
+      color: $gray;
+
+      &:hover {
+        background-color: darken($dark, 6%);
+        color: $blue;
+      }
+
+      & .sidebar_subitems {
+        display: block !important;
+        background-color: darken($dark, 3%);
+      }
+    }
+
+    .sidebar_subitem_label {
+      font-size: 14px;
+    }
+  }
+
+}

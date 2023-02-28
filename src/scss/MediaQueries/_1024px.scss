@@ -1,0 +1,28 @@
+@media screen and (max-width: 1024px) {
+    .app {
+        display: grid;
+        grid-template-columns: 65px 1fr;
+        height: 100vh;
+
+        &_sidebar {
+            padding: 8px;
+
+            &_item {
+                width: 100% !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .feather {
+                    height: 32px;
+                    width: 32px;
+                    margin: 0;
+                }
+            }
+
+            #app_sidebar_label {
+                display: none !important;
+            }
+        }
+    }
+}

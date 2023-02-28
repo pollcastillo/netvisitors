@@ -1,0 +1,106 @@
+//
+//  _content.scss
+//
+//  Created by Poll Castillo on 14/02/2023
+
+.app {
+
+    // &_container {
+    //     display: inline-block;
+    //     width: fit-content;
+    // }
+
+    &_content {
+        background-color: $grayLightBlue;
+        width: 100%;
+        height: 100%;
+        display: block;
+
+        .app_topbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 16px 32px;
+            width: 100%;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+
+            .welcome {
+                margin-right: 16px;
+                font-weight: $bold;
+                color: $slategray;
+            }
+
+            .separator {
+                display: block;
+                width: 1px;
+                height: 64px;
+                background-color: $gray;
+            }
+
+            .userAvatar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 42px;
+                width: 42px;
+                background-color: $gray;
+                margin-left: 16px;
+                border-radius: 100px;
+
+                .feather-user {
+                    color: lighten($dark, 50%)
+                }
+            }
+
+            .nameAndCustomer {
+                margin: 0 16px;
+            }
+
+            .name {
+                font-weight: $bold;
+                color: $dark;
+            }
+
+            .customer {
+                display: block;
+                color: $slategray;
+            }
+
+            .settings_button {
+                display: block;
+
+                button {
+                    appearance: none;
+                    -webkit-appearance: none;
+                    -moz-osx-appearance: none;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: none;
+                    height: 32px;
+                    width: 32px;
+                    border-radius: 100px;
+                    background-color: transparent;
+                    transition: 0.3s all ease-in-out;
+
+                    &:hover { background-color: $gray; }
+
+                    .feather-settings {
+                        margin: 0;
+                        line-height: 0;
+                        color: $slategray;
+                        padding: 0;
+                        height: 22px;
+                        width: 22px;
+                    }
+                }
+
+            }
+        }
+    }
+}
