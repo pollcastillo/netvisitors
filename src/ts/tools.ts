@@ -9,7 +9,7 @@ export const inputObserver = (): void => {
     input.addEventListener("keyup", (e: any): void => {
       if (input.value == "" || input.value == " ")
         input.classList.remove('input_filled'),
-          input.value = " "
+          input.value = ""
       else
         input.classList.add('input_filled')
     })

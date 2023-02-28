@@ -44,6 +44,7 @@ const renderInterface = (data: any): void => {
 }
 
 const renderUserOptions = async (block: InterfaceElement, data: any): Promise<void> => {
+  console.log(data)
   block.innerHTML = `
     <div class="user">
       <span class="welcome">Bienvenido</span>
@@ -56,7 +57,7 @@ const renderUserOptions = async (block: InterfaceElement, data: any): Promise<vo
         <p id="current-username" class="name">
           ${data.attributes.firstName} ${data.attributes.lastName}
         </p>
-        <p id="current-user-customer" class="customer">Netliinks</p>
+        <p id="current-user-customer" class="customer">${data.attributes.username}</p>
       </div>
 
       <div class="settings_button">

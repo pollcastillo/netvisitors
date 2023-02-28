@@ -33,6 +33,7 @@ const renderInterface = (data) => {
     renderUserOptions(userAndPreferences, data);
 };
 const renderUserOptions = async (block, data) => {
+    console.log(data);
     block.innerHTML = `
     <div class="user">
       <span class="welcome">Bienvenido</span>
@@ -45,7 +46,7 @@ const renderUserOptions = async (block, data) => {
         <p id="current-username" class="name">
           ${data.attributes.firstName} ${data.attributes.lastName}
         </p>
-        <p id="current-user-customer" class="customer">Netliinks</p>
+        <p id="current-user-customer" class="customer">${data.attributes.username}</p>
       </div>
 
       <div class="settings_button">

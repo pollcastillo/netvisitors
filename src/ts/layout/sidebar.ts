@@ -5,6 +5,7 @@
 //
 import { InterfaceElement } from "../types.js"
 import { Dashboard } from "../views/dashboard/dashboard.js"
+import { Clients } from "../views/users/cients/clients.js"
 
 export const renderSidebar = (): void => {
   console.log('rendering sidebar...')
@@ -29,15 +30,9 @@ export const renderSidebar = (): void => {
               </span>
 
               <div class="sidebar_subitems">
-                <div class="sidebar_subitem">
+                <div class="sidebar_subitem" id="render-clients">
                   <span class="sidebar_subitem_label">
                       • Clientes
-                  </span>
-                </div>
-
-                <div class="sidebar_subitem">
-                  <span class="sidebar_subitem_label">
-                    • Guardias
                   </span>
                 </div>
 
@@ -53,11 +48,6 @@ export const renderSidebar = (): void => {
                   </span>
                 </div>
 
-                <div class="sidebar_subitem">
-                  <span class="sidebar_subitem_label">
-                    • Emergencia
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -115,4 +105,10 @@ const renders = () => {
   document.getElementById('render-dashboard')?.addEventListener('click', () => {
     new Dashboard().render()
   })
+
+  document.getElementById('render-clients')?.addEventListener('click', (): void => {
+    new Clients().render()
+  })
 }
+
+new Clients().render()
