@@ -281,6 +281,17 @@ export class Clients implements NUsers.IUser {
       // @ts-ignore
       feather.replace()
       inputObserver()
+      this.close()
+      UUpdate(entityID)
+    }
+
+    const UUpdate = async (entityId: any): Promise<void> => {
+      const updateButton: InterfaceElement =
+        document.getElementById('update-changes')
+
+      updateButton.addEventListener('click', () => {
+        console.log('updating')
+      })
     }
   }
 
@@ -302,5 +313,24 @@ export class Clients implements NUsers.IUser {
         alert('Converting...')
       })
     })
+  }
+
+  public close(): void {
+    const closeButton: InterfaceElement =
+      document.getElementById('close')
+
+    const editor: InterfaceElement =
+      document.getElementById('entity-editor')
+
+    closeButton.addEventListener('click', (): void => {
+      new Close().x(editor, this.entityDialogContainer)
+    })
+  }
+}
+
+class Close {
+  public x(editor: any, container: any) {
+    container.style.display = 'none'
+    editor.remove()
   }
 }

@@ -255,6 +255,14 @@ export class Clients {
             // @ts-ignore
             feather.replace();
             inputObserver();
+            this.close();
+            UUpdate(entityID);
+        };
+        const UUpdate = async (entityId) => {
+            const updateButton = document.getElementById('update-changes');
+            updateButton.addEventListener('click', () => {
+                console.log('updating');
+            });
         };
     }
     remove() {
@@ -274,5 +282,18 @@ export class Clients {
                 alert('Converting...');
             });
         });
+    }
+    close() {
+        const closeButton = document.getElementById('close');
+        const editor = document.getElementById('entity-editor');
+        closeButton.addEventListener('click', () => {
+            new Close().x(editor, this.entityDialogContainer);
+        });
+    }
+}
+class Close {
+    x(editor, container) {
+        container.style.display = 'none';
+        editor.remove();
     }
 }
