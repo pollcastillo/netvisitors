@@ -384,49 +384,27 @@ table button:hover {
   color: #706F8E;
   background-color: #E9EAEF;
 }
-
-/*  // tools
-    .tag {
-        span {
-            display: block;
-            font-size: 10px;
-            font-weight: $bold;
-            text-transform: uppercase;
-            letter-spacing: 0.25px;
-            width: fit-content;
-            margin: 0 auto;
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: $white;
-        }
-
-        &_green {
-            background-color: $green;
-        }
-
-        &_gray {
-            background-color: $gray;
-            color: $slategray !important;
-        }
-
-        &_blue {
-            background-color: $gray;
-            color: $slategray !important;
-        }
-
-        &_yellow {
-            background-color: $gray;
-            color: $slategray !important;
-        }
-
-        &_red {
-            background-color: $gray;
-            color: $slategray !important;
-        }
-
-    }
+.datatable_content .tag_green {
+  background-color: #5DBD51 !important;
+  color: #FFFFFF !important;
 }
-*/
+.datatable_content .tag_gray {
+  background-color: #E9EAEF !important;
+  color: #706F8E !important;
+}
+.datatable_content .tag_blue {
+  background-color: #6F7ADD !important;
+  color: #FFFFFF !important;
+}
+.datatable_content .tag_yellow {
+  background-color: #F76400 !important;
+  color: #FFFFFF !important;
+}
+.datatable_content .tag_red {
+  background-color: #DB4545 !important;
+  color: #FFFFFF !important;
+}
+
 .dialog_content {
   position: fixed;
   display: flex;
