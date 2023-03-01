@@ -286,6 +286,9 @@ table button:hover {
   border-bottom: 1px solid #cbceda;
   border-top: 1px solid #cbceda;
 }
+.datatable_content thead tr .thead_centered span {
+  text-align: center;
+}
 .datatable_content thead tr th {
   white-space: nowrap;
   border-left: 1px solid #cbceda;
@@ -301,14 +304,19 @@ table button:hover {
   width: 100%;
   background-color: #E9EAEF;
   text-align: left;
+  cursor: pointer;
+}
+.datatable_content thead tr th span:hover {
+  background-color: #dadce4;
 }
 .datatable_content thead tr th .feather-filter {
-  height: 16px;
-  width: 16px;
+  height: 14px;
+  width: 14px;
   display: inline;
-  margin-left: 8px;
+  margin-left: 4px;
 }
-.datatable_content thead tr .key {
+.datatable_content thead tr .header_key {
+  width: 18px;
   border-left: 1px solid #E9EAEF;
 }
 .datatable_content thead tr .header_filled {
@@ -362,6 +370,19 @@ table button:hover {
   height: 18px;
   width: 18px;
   color: #26233A;
+}
+.datatable_content .tag span {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25px;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #706F8E;
+  background-color: #E9EAEF;
 }
 
 /*  // tools
@@ -699,6 +720,56 @@ h1, h2, h3, h4, h5, h6 {
   color: #6F7ADD;
   transform: translateY(-25px);
   font-size: 10px;
+}
+.material_input_select {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 30px;
+  z-index: inherit;
+}
+.material_input_select label {
+  display: block;
+  position: inherit;
+  color: #706F8E;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.material_input_select input {
+  position: inherit;
+  height: 32px;
+  width: 100%;
+  border: 0 transparent;
+  border-bottom: 1px solid #E9EAEF;
+  z-index: 0;
+  cursor: pointer;
+}
+.material_input_select .input_options {
+  display: none;
+  position: absolute;
+  top: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #E9EAEF;
+  width: fit-content;
+  border-radius: 8px;
+  z-index: 10;
+}
+.material_input_select .input_options_container {
+  padding: 4px;
+}
+.material_input_select .input_options_container .input_option {
+  padding: 4px 16px;
+  border-radius: 4px;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer;
+}
+.material_input_select .input_options_container .input_option:hover {
+  background-color: #6F7ADD;
+  color: #FFFFFF;
+}
+.material_input_select.select_active .input_options {
+  display: block !important;
 }
 
 .input_filled + label {

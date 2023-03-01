@@ -94,6 +94,66 @@
         transform: translateY(-25px);
         font-size: 10px;
     }
+
+    &_select {
+        position: relative;
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 30px;
+        z-index: inherit;
+
+        label {
+            display: block;
+            position: inherit;
+            color: $slategray;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: $bold;
+        }
+
+        input {
+            position: inherit;
+            height: 32px;
+            width: 100%;
+            border: 0 transparent;
+            border-bottom: 1px solid $gray;
+            z-index: 0;
+            cursor: pointer;
+        }
+
+        .input_options {
+            display: none;
+            position: absolute;
+            top: 0;
+            background-color: $white;
+            border: 1px solid $gray;
+            width: fit-content;
+            border-radius: 8px;
+            z-index: 10;
+
+            &_container {
+                padding: 4px;
+
+                .input_option {
+                    padding: 4px 16px;
+                    border-radius: 4px;
+                    transition: 0.2s all ease-in-out;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: $blue;
+                        color: $white;
+                    }
+                }
+            }
+
+        }
+
+        &.select_active {
+            .input_options { display: block !important;}
+        }
+    }
+
 }
 
 .input_filled + label {

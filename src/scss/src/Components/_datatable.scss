@@ -26,7 +26,7 @@
       color: $white !important;
 
       .feather-filter {
-        color: $white !important
+        color: $white !important;
       }
     }
   }
@@ -90,6 +90,10 @@
       tr {
         border-bottom: 1px solid darken($gray, 10%);
         border-top: 1px solid darken($gray, 10%);
+
+        .thead_centered span{
+          text-align: center;
+        }
         th {
           white-space: nowrap;
           border-left: 1px solid darken($gray, 10%);
@@ -106,17 +110,23 @@
             width:100%;
             background-color: $gray;
             text-align: left;
+            cursor: pointer;
+
+            &:hover {
+              background-color: darken($gray, 5%);
+            }
           }
 
           .feather-filter {
-            height: 16px;
-            width: 16px;
+            height: 14px;
+            width: 14px;
             display: inline;
-            margin-left: 8px;
+            margin-left: 4px;
           }
         }
 
-        .key {
+        .header_key {
+          width: 18px;
           border-left: 1px solid $gray;
         }
 
@@ -165,6 +175,22 @@
           width: 18px;
           color: $dark;
         }
+      }
+    }
+
+    .tag {
+      span {
+        display: block;
+        font-size: 10px;
+        font-weight: $bold;
+        text-transform: uppercase;
+        letter-spacing: 0.25px;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 4px 8px;
+        border-radius: 4px;
+        color: $slategray;
+        background-color: $gray;
       }
     }
   }

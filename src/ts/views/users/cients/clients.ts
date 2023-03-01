@@ -5,7 +5,7 @@
 //
 import { getEntitiesData, getEntityData } from "../../../endpoints.js"
 import { NUsers } from "../../../namespaces.js"
-import { drawTagsIntoTables, inputObserver } from "../../../tools.js"
+import { drawTagsIntoTables, inputObserver, inputSelect } from "../../../tools.js"
 import { InterfaceElement } from "../../../types.js"
 
 const tableRows = 16
@@ -43,13 +43,13 @@ const tableLayout = `
           Nombre <i data-feather="filter"></i>
         </span></th>
 
-        <th><span data-type="id">
+        <th colspan="2"><span data-type="id">
           ID <i data-feather="filter"></i>
         </span></th>
 
-        <th class="header_filled key"></th>
+        <!-- th class="header_filled header_key"></!-->
 
-        <th><span data-type="status">
+        <th class="thead_centered"><span data-type="status">
           Estado <i data-feather="filter"></i>
         </span></th>
 
@@ -144,7 +144,7 @@ export class Clients implements NUsers.IUser {
         row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
-          <td class="key"><button class="button"><i data-feather="key"></i></button></td>
+          <td class="key"><button class="button"><i data-feather="key" class="table_icon"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></dt>
           <td>${client.citadel.description}</dt>
           <td class="entity_options">
@@ -253,34 +253,44 @@ export class Clients implements NUsers.IUser {
               <label for="entity-username">Nombre de usuario</label>
             </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-state" class="input_filled" value="${data.state.name}">
+            <div class="material_input_select">
               <label for="entity-state">Estado</label>
+              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
             </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-busisness" class="input_filled" value="${data.business.name}">
+            <div class="material_input_select">
               <label for="entity-business">Empresa</label>
+              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
             </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-busisness" class="input_filled" value="${data.citadel.name}">
-              <label for="entity-business">Ciudadela</label>
+            <div class="material_input_select">
+              <label for="entity-citadel">Ciudadela</label>
+              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
             </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-busisness" class="input_filled" value="${data.customer.name}">
-              <label for="entity-business">Cliente</label>
+            <div class="material_input_select">
+              <label for="entity-customer">Cliente</label>
+              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
             </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-busisness" class="input_filled" value="${data.department.name}">
-              <label for="entity-business">Departamento</label>
+            <div class="material_input_select">
+              <label for="entity-department">Departamento</label>
+              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
             </div>
 
             <br><br><br>
             <div class="material_input">
-              <input type="password" id="tempPass" value="">
+              <input type="password" id="tempPass" >
               <label for="tempPass">Clave temporal</label>
             </div>
 
@@ -296,6 +306,11 @@ export class Clients implements NUsers.IUser {
       // @ts-ignore
       feather.replace()
       inputObserver()
+      inputSelect('Business', 'entity-citadel')
+      inputSelect('Customer', 'entity-customer')
+      inputSelect('State', 'entity-state', data.state.name)
+      inputSelect('Department', 'entity-department')
+      inputSelect('Business', 'entity-business')
       this.close()
       UUpdate(entityID)
     }
