@@ -7,6 +7,7 @@ import { connect } from "./connection.js";
 import { checkToken, renderLogin } from "./login.js";
 import { InterfaceElement } from "./types.js";
 
+checkToken()
 renderLogin()
 const form: InterfaceElement =
   document.getElementById('login-form')
@@ -57,5 +58,3 @@ form.addEventListener('submit', (e: SubmitEvent): void => {
   //  @ts-ignore
   feather.replace()
 })
-
-checkToken()

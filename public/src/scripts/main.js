@@ -5,6 +5,7 @@
 //
 import { connect } from "./connection.js";
 import { checkToken, renderLogin } from "./login.js";
+checkToken();
 renderLogin();
 const form = document.getElementById('login-form');
 const nameInput = document.getElementById('username');
@@ -47,4 +48,3 @@ form.addEventListener('submit', (e) => {
     //  @ts-ignore
     feather.replace();
 });
-checkToken();
