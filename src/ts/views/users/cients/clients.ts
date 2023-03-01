@@ -14,7 +14,7 @@ const userType = "CUSTOMER"
 const SUser = false
 
 const tableLayout = `
-  <div id="datatable" class="datatable">
+  <div class="datatable" id="datatable">
     <div class="datatable_header">
       <div class="datatable_title" id="datatable-title"><h1>Clientes</h1></div>
       <div class="datatable_tools" id="datatable-tools">
@@ -24,37 +24,51 @@ const tableLayout = `
         id="search">
 
         <button
-            class="datatable_button add_user"
-            id="new-entity">
-            <span data-feather="user-plus"></span>
+          class="datatable_button add_user"
+          id="new-entity">
+          <span data-feather="user-plus"></span>
         </button>
 
         <button
-            class="datatable_button import_user"
-            id="import-entities">
-            importar
+          class="datatable_button import_user"
+          id="import-entities">
+          Importar
         </button>
       </div>
     </div>
 
-        <table class="datatable_content">
-            <thead>
-                <tr>
-                    <th data-type="name"><span>Nombre <i data-feather="filter"></i></span></th>
-                    <th data-type="id"><span>ID <i data-feather="filter"></i></span></th>
-                    <th data-type="status">Estado <i data-feather="filter"></i></th>
-                    <th data-type="citadel">Ciudadela <i data-feather="filter"></i></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="datatable-body" class="datatable_body">
-            </tbody>
-        </table>
+    <table class="datatable_content">
+      <thead><tr>
+        <th><span data-type="name">
+          Nombre <i data-feather="filter"></i>
+        </span></th>
 
-        <div class="datatable_footer">
-            <div class="datatable_pagination" id="pagination-container"></div>
-        </div>
-    </div>`
+        <th><span data-type="id">
+          ID <i data-feather="filter"></i>
+        </span></th>
+
+        <th class="header_filled key"></th>
+
+        <th><span data-type="status">
+          Estado <i data-feather="filter"></i>
+        </span></th>
+
+        <th><span data-type="citadel">
+          Ciudadela <i data-feather="filter"></i>
+        </span></th>
+
+        <th class="header_filled"></th>
+
+      </tr></thead>
+      <tbody id="datatable-body" class="datatable_body">
+
+      </tbody>
+    </table>
+
+    <div class="datatable_footer">
+      <div class="datatable_pagination" id="pagination-container"></div>      
+    </div>
+  </div>`
 
 const tableLayoutTemplate = `
     <tr>
@@ -130,6 +144,7 @@ export class Clients implements NUsers.IUser {
         row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
+          <td class="key"><button class="button"><i data-feather="key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></dt>
           <td>${client.citadel.description}</dt>
           <td class="entity_options">
