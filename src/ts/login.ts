@@ -6,6 +6,7 @@
 
 import { getUserInfo } from "./endpoints.js";
 import { renderLayout } from "./layout/interface.js";
+import { registerWebLogin } from "./registerWebLogin.js";
 import { InterfaceElement } from "./types.js";
 
 const loginContainer: InterfaceElement =
@@ -87,6 +88,7 @@ export const checkToken = async (): Promise<void> => {
   else {
     app.style.display = 'block'
     loginContainer.style.display = 'none'
+    registerWebLogin()
     renderLayout()
   }
 }

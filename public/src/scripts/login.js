@@ -5,6 +5,7 @@
 //
 import { getUserInfo } from "./endpoints.js";
 import { renderLayout } from "./layout/interface.js";
+import { registerWebLogin } from "./registerWebLogin.js";
 const loginContainer = document.getElementById('login-container');
 const app = document.getElementById('app');
 export const renderLogin = async () => {
@@ -77,6 +78,7 @@ export const checkToken = async () => {
     else {
         app.style.display = 'block';
         loginContainer.style.display = 'none';
+        registerWebLogin();
         renderLayout();
     }
 };
