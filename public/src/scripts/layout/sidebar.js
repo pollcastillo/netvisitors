@@ -1,3 +1,4 @@
+import { WebAccess } from "../views/binnacle/Access/WebAccess.js";
 import { Dashboard } from "../views/dashboard/dashboard.js";
 import { Clients } from "../views/users/cients/clients.js";
 export const renderSidebar = () => {
@@ -45,8 +46,16 @@ export const renderSidebar = () => {
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="bar-chart-2"></i>Dashboard
+                <i data-feather="book"></i>Bitácora
               </span>
+
+              <div class="sidebar_subitems">
+                <div class="sidebar_subitem" id="render-webAccess">
+                  <span class="sidebar_subitem_label">
+                      • accesos
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div class="sidebar_item">
@@ -93,6 +102,9 @@ const renders = () => {
     });
     document.getElementById('render-clients')?.addEventListener('click', () => {
         new Clients().render();
+    });
+    document.getElementById('render-webAccess')?.addEventListener('click', () => {
+        new WebAccess().render();
     });
 };
 // new Clients().render()

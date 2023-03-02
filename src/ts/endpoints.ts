@@ -41,7 +41,7 @@ export const getToken = async (mail: string, password: string): Endpoint => {
  * customers, guards and more
  */
 export const getUserInfo = async (): Endpoint => {
-  const URL: string = 'https://backend.netliinks.com:443/rest/userInfo'
+  const URL: string = 'https://backend.netliinks.com:443/rest/userInfo?fetchPlan=full'
   let ReqOptions: {} = {
     method: 'GET',
     headers: headers,
