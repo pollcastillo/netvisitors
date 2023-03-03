@@ -21,13 +21,13 @@ export const renderSidebar = (): void => {
           <div class="sidebar_items">
             <div class="sidebar_item">
               <span class="sidebar_item_label" id="render-dashboard">
-                <i data-feather="bar-chart-2"></i>Dashboard
+                <i data-feather="bar-chart-2"></i><div class="label">Dashboard</div>
               </span>
             </div>
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="user"></i>Usuarios
+                <i data-feather="user"></i><div class="label">Usuarios</div>
               </span>
 
               <div class="sidebar_subitems">
@@ -54,7 +54,7 @@ export const renderSidebar = (): void => {
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="book"></i>Bitácora
+                <i data-feather="book"></i><div class="label">Bitácora</div>
               </span>
 
               <div class="sidebar_subitems">
@@ -68,13 +68,13 @@ export const renderSidebar = (): void => {
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="bar-chart-2"></i>Dashboard
+                <i data-feather="briefcase"></i><div class="label">Empresas</div>
               </span>
             </div>
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="bar-chart-2"></i>Dashboard
+                <i data-feather="shield"></i><div class="label">Superusuarios</div>
               </span>
             </div>
           </div>

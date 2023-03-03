@@ -10,6 +10,8 @@
     font-smooth: all;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 body, html, .app, input, a, p, button, select, table, td, tr, th {
