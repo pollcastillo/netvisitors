@@ -27,6 +27,8 @@ export const inputSelect = async (entity, selectId, currentStatus) => {
     optionsContent.appendChild(optionsContainer);
     for (let i = 0; i < data.length; i++) {
         const inputOption = document.createElement('div');
+        select.setAttribute('data-optionid', data[0].id);
+        select.setAttribute('value', data[0].name);
         inputOption.classList.add('input_option');
         inputOption.setAttribute('id', data[i].id);
         inputOption.innerHTML = data[i].name;

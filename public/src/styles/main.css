@@ -629,6 +629,10 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   margin-bottom: 24px;
 }
+.input_locked {
+  height: 12px;
+  width: 12px;
+}
 .input input {
   appearance: none;
   -webkit-appearance: none;
@@ -734,6 +738,7 @@ h1, h2, h3, h4, h5, h6 {
   width: fit-content;
   border-radius: 8px;
   z-index: 10;
+  box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.2);
 }
 .material_input_select .input_options_container {
   padding: 4px;

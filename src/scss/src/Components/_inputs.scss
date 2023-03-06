@@ -11,6 +11,11 @@
     width: 100%;
     margin-bottom: 24px;
 
+    &_locked {
+        height: 12px;
+        width: 12px;
+    }
+
     input {
         appearance: none;
         -webkit-appearance: none;
@@ -130,6 +135,7 @@
             width: fit-content;
             border-radius: 8px;
             z-index: 10;
+            box-shadow: 0 2px 8px -4px rgba(black, 0.2);
 
             &_container {
                 padding: 4px;

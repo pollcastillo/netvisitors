@@ -62,7 +62,7 @@ const tableLayout = `
     </table>
 
     <div class="datatable_footer">
-      <div class="datatable_pagination" id="pagination-container"></div>      
+      <div class="datatable_pagination" id="pagination-container"></div>
     </div>
   </div>`;
 const tableLayoutTemplate = `
@@ -111,6 +111,35 @@ export class Clients {
                     filteredResult = tableRows;
                 console.log(filteredResult);
                 this.load(tableBody, currentPage, filteredResult);
+            });
+        };
+        this.generateUserName = async () => {
+            const firstName = document.getElementById('entity-firstname');
+            const secondName = document.getElementById('');
+            const lastName = document.getElementById('entity-lastname');
+            const secondLastName = document.getElementById('entity-secondlastname');
+            const clientName = document.getElementById('entity-customer');
+            const userName = document.getElementById('entity-username');
+            let UserNameFFragment = '';
+            let UserNameLNFragment = '';
+            let UserNameSLNFragment = '';
+            firstName.addEventListener('keyup', (e) => {
+                UserNameFFragment = firstName.value.toLowerCase();
+                userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`);
+            });
+            lastName.addEventListener('keyup', (e) => {
+                UserNameLNFragment = lastName.value.toLowerCase();
+                userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`);
+            });
+            secondLastName.addEventListener('keyup', (e) => {
+                UserNameSLNFragment = secondLastName.value.toLowerCase();
+                if (secondLastName.value.length > 0) {
+                    UserNameFFragment[0];
+                    userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment[0]}`);
+                }
+                else {
+                    userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment}`);
+                }
             });
         };
     }
@@ -189,7 +218,7 @@ export class Clients {
           <div class="entity_editor_header">
             <div class="user_info">
               <div class="avatar"><i data-feather="user"></i></div>
-              <h1 class="entity_editor_title">Registrar <br><small>Registrar cliente</small></h1>
+              <h1 class="entity_editor_title">Registrar <br><small>Cliente</small></h1>
             </div>
 
             <button class="btn btn_close_editor" id="close"><i data-feather="x"></i></button>
@@ -198,42 +227,42 @@ export class Clients {
           <!-- EDITOR BODY -->
           <div class="entity_editor_body">
             <div class="material_input">
-              <input type="text" id="entity-firstname">
+              <input type="text" id="entity-firstname" autocomplete="none">
               <label for="entity-firstname">Nombre</label>
             </div>
 
             <div class="material_input">
-              <input type="text" id="entity-lastname">
+              <input type="text" id="entity-lastname" autocomplete="none">
               <label for="entity-lastname">Apellido</label>
             </div>
 
             <div class="material_input">
-              <input type="text" id="entity-secondlastname">
+              <input type="text" id="entity-secondlastname" autocomplete="none">
               <label for="entity-secondlastname">2do Apellido</label>
             </div>
 
             <div class="material_input">
               <input type="text"
                 id="entity-phone"
-                maxlength="10">
+                maxlength="10" autocomplete="none">
               <label for="entity-phone">Teléfono</label>
             </div>
 
             <div class="material_input">
-              <input type="text" id="entity-username" readonly>
-              <label for="entity-username">Nombre de usuario</label>
+              <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
+              <label for="entity-username"><i data-feather="lock" class="input_locked"></i> Nombre de usuario</label>
             </div>
 
             <div class="material_input_select">
               <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
+              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
               <div id="input-options" class="input_options">
               </div>
             </div>
 
             <div class="material_input_select">
               <label for="entity-business">Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
+              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
               <div id="input-options" class="input_options">
               </div>
             </div>
@@ -261,22 +290,62 @@ export class Clients {
 
             <br><br><br>
             <div class="material_input">
-              <input type="password" id="tempPass" >
-              <label for="tempPass">Clave temporal</label>
+              <input type="password" id="password" autocomplete="false">
+              <label for="tempPass">Contraseña</label>
             </div>
 
           </div>
           <!-- END EDITOR BODY -->
 
           <div class="entity_editor_footer">
-            <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
+            <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
           </div>
         </div>
       `;
             // @ts-ignore
             feather.replace();
             inputObserver();
+            inputSelect('Business', 'entity-citadel');
+            inputSelect('Customer', 'entity-customer');
+            inputSelect('State', 'entity-state');
+            inputSelect('Department', 'entity-department');
+            inputSelect('Business', 'entity-business');
             this.close();
+            this.generateUserName();
+            const registerButton = document.getElementById('register-entity');
+            registerButton.addEventListener('click', () => {
+                const inputsCollection = {
+                    firstName: document.getElementById('entity-firstname'),
+                    lastName: document.getElementById('entity-lastname'),
+                    secondLastName: document.getElementById('entity-secondlastname'),
+                    phoneNumer: document.getElementById('entity-phone'),
+                    state: document.getElementById('entity-state')
+                };
+                console.log(inputsCollection);
+                const raw = JSON.stringify({
+                    "lastName": `${inputsCollection.lastName.value}`,
+                    "secondLastName": `${inputsCollection.secondLastName.value}`,
+                    "isSuper": false,
+                    "email": "",
+                    "temp": "",
+                    "isWebUser": false,
+                    "active": true,
+                    "firstName": `${inputsCollection.firstName.value}`,
+                    "state": {
+                        "id": `${inputsCollection.state.dataset.entityid}`
+                    },
+                    "contractor": {
+                        "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
+                    },
+                    "phone": "0986778119",
+                    "userType": "CUSTOMER",
+                    "username": "danny.vaca@mail.com"
+                });
+                reg(raw);
+            });
+        };
+        const reg = async (raw) => {
+            console.log(raw);
         };
     }
     import() {
