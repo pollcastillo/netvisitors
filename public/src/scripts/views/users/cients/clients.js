@@ -94,6 +94,25 @@ export class Clients {
         this.dialogContainer = document.getElementById('app-dialogs');
         this.entityDialogContainer = document.getElementById('entity-editor-container');
         this.content = document.getElementById('datatable-container');
+        this.searchEntity = async (tableBody) => {
+            const search = document.getElementById('search');
+            await search.addEventListener('keyup', async () => {
+                let data = await getUsers(userType, SUser);
+                console.log(data);
+                const arrayData = data.filter((user) => {
+                    `${user.firstName}
+         ${user.lastName}
+         ${user.username}`
+                        .toLowerCase()
+                        .includes(search.value.toLowerCase());
+                });
+                let filteredResult = arrayData.length;
+                if (filteredResult >= tableRows)
+                    filteredResult = tableRows;
+                console.log(filteredResult);
+                this.load(tableBody, currentPage, filteredResult);
+            });
+        };
     }
     async render() {
         let data = await getUsers(userType, SUser);
@@ -104,6 +123,7 @@ export class Clients {
         this.load(tableBody, currentPage, data);
         // @ts-ignore
         feather.replace();
+        this.searchEntity(tableBody);
     }
     load(table, currentPage, data) {
         table.innerHTML = '';
@@ -156,13 +176,107 @@ export class Clients {
         this.convertToSuper();
     }
     register(container, data) {
-        const registerButton = document.getElementById('new-entity');
-        registerButton.addEventListener('click', () => {
-            RInterface(container, data);
+        // register entity
+        const openEditor = document.getElementById('new-entity');
+        openEditor.addEventListener('click', () => {
+            renderInterface('User');
         });
-        const RInterface = async (container, data) => {
-            console.log(container);
-            console.log(data);
+        const renderInterface = async (entities) => {
+            this.entityDialogContainer.innerHTML = '';
+            this.entityDialogContainer.style.display = 'block';
+            this.entityDialogContainer.innerHTML = `
+        <div class="entity_editor" id="entity-editor">
+          <div class="entity_editor_header">
+            <div class="user_info">
+              <div class="avatar"><i data-feather="user"></i></div>
+              <h1 class="entity_editor_title">Registrar <br><small>Registrar cliente</small></h1>
+            </div>
+
+            <button class="btn btn_close_editor" id="close"><i data-feather="x"></i></button>
+          </div>
+
+          <!-- EDITOR BODY -->
+          <div class="entity_editor_body">
+            <div class="material_input">
+              <input type="text" id="entity-firstname">
+              <label for="entity-firstname">Nombre</label>
+            </div>
+
+            <div class="material_input">
+              <input type="text" id="entity-lastname">
+              <label for="entity-lastname">Apellido</label>
+            </div>
+
+            <div class="material_input">
+              <input type="text" id="entity-secondlastname">
+              <label for="entity-secondlastname">2do Apellido</label>
+            </div>
+
+            <div class="material_input">
+              <input type="text"
+                id="entity-phone"
+                maxlength="10">
+              <label for="entity-phone">Teléfono</label>
+            </div>
+
+            <div class="material_input">
+              <input type="text" id="entity-username" readonly>
+              <label for="entity-username">Nombre de usuario</label>
+            </div>
+
+            <div class="material_input_select">
+              <label for="entity-state">Estado</label>
+              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
+            </div>
+
+            <div class="material_input_select">
+              <label for="entity-business">Empresa</label>
+              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
+            </div>
+
+            <div class="material_input_select">
+              <label for="entity-citadel">Ciudadela</label>
+              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
+            </div>
+
+            <div class="material_input_select">
+              <label for="entity-customer">Cliente</label>
+              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
+            </div>
+
+            <div class="material_input_select">
+              <label for="entity-department">Departamento</label>
+              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+              <div id="input-options" class="input_options">
+              </div>
+            </div>
+
+            <br><br><br>
+            <div class="material_input">
+              <input type="password" id="tempPass" >
+              <label for="tempPass">Clave temporal</label>
+            </div>
+
+          </div>
+          <!-- END EDITOR BODY -->
+
+          <div class="entity_editor_footer">
+            <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
+          </div>
+        </div>
+      `;
+            // @ts-ignore
+            feather.replace();
+            inputObserver();
+            this.close();
         };
     }
     import() {
