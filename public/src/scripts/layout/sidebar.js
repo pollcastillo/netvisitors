@@ -1,6 +1,6 @@
 import { WebAccess } from "../views/binnacle/Access/WebAccess.js";
 import { Dashboard } from "../views/dashboard/dashboard.js";
-import { Clients } from "../views/users/cients/clients.js";
+import { Clients } from "../views/users/clients/clients.js";
 export const renderSidebar = () => {
     console.log('rendering sidebar...');
     const sidebar = document.getElementById('app-sidebar');

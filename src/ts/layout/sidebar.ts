@@ -6,7 +6,7 @@
 import { InterfaceElement } from "../types.js"
 import { WebAccess } from "../views/binnacle/Access/WebAccess.js"
 import { Dashboard } from "../views/dashboard/dashboard.js"
-import { Clients } from "../views/users/cients/clients.js"
+import { Clients } from "../views/users/clients/clients.js"
 
 export const renderSidebar = (): void => {
   console.log('rendering sidebar...')
