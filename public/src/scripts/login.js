@@ -47,16 +47,8 @@ class CheckUser {
 export class SignIn extends CheckUser {
     async checkSignIn() {
         const currentUser = await getUserInfo();
-        console.log(currentUser);
         // validate token
-        if (currentUser.error_description == "Invalid access token: null") {
-            console.error("No se ha encontrado el token");
-            this.showLogin();
-        }
-        else if (currentUser.error_description == "Invalid access token: undefined") {
-            console.error('Ha ocurrido un error al verificar el token');
-            console.error('Código: 401');
-            console.error('Mensaje: Unauthorized');
+        if (currentUser.error == "invalid_token") {
             this.showLogin();
         }
         else {
@@ -156,6 +148,7 @@ export class SignIn extends CheckUser {
                         tokenType: res.token_type
                     };
                     localStorage.setItem('access_token', connectionData.token);
+                    window.location.reload();
                 }
             });
         }
