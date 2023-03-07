@@ -27,14 +27,18 @@ export const getToken = async (mail, password) => {
  * customers, guards and more
  */
 export const getUserInfo = async () => {
-    const URL = 'https://backend.netliinks.com:443/rest/userInfo?fetchPlan=full';
-    let ReqOptions = {
-        method: 'GET',
+    const userInfo = {
+        url: 'https://backend.netliinks.com:443/rest/userInfo?fetchPlan=full',
+        method: 'GET'
+    };
+    const options = {
+        method: userInfo.method,
         headers: headers,
         redirect: 'follow'
     };
-    const res = await fetch(URL, ReqOptions);
-    return await res.json();
+    return fetch(userInfo.url, options)
+        .then((req) => req.json())
+        .catch((err) => console.info(err));
 };
 /**
  *
@@ -71,7 +75,7 @@ export const getEntitiesData = async (entities) => {
  * @returns all data of specified entity.
  */
 export const getEntityData = async (entities, entity) => {
-    const URL = `${NetliinksUrl}${entities}/${entity}?fetchPlan=full`;
+    const URL = `${NetliinksUrl}${entities}/${entity}?fetchPlan=full&orderby=createdDate`;
     return getData(URL);
 };
 export const updateEntity = async (entities, entity, raw) => {

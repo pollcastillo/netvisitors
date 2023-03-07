@@ -107,4 +107,4 @@ const renders = () => {
         new WebAccess().render();
     });
 };
-// new Clients().render()
+new Clients().render();

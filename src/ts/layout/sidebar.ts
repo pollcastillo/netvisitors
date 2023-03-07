@@ -124,4 +124,4 @@ const renders = () => {
   })
 }
 
-// new Clients().render()
+new Clients().render()
