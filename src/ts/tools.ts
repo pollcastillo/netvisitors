@@ -109,3 +109,10 @@ export const drawTagsIntoTables = (): void => {
   })
 
 }
+
+export class CloseDialog {
+  public x(dialog: any, container: any) {
+    container.style.display = 'none'
+    dialog.remove()
+  }
+}

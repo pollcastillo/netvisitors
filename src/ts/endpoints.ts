@@ -124,7 +124,24 @@ export const deleteEntity = async (entities: string, entity: string): Endpoint =
     .catch(err => console.error('Error: ', err))
 }
 
-export const registerEntity = async (): Endpoint => { }
+export const registerEntity = async (raw: any): Endpoint => {
+  const req: Request = {
+    url: 'https://backend.netliinks.com:443/rest/entities/User',
+    method: 'POST'
+  }
+
+  const requestOptions: {} = {
+    method: req.method,
+    headers: headers,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  fetch(req.url, requestOptions)
+    .then((req) => req.json())
+    .then(req => (console.log(req)))
+    .catch((err: Error) => console.info(err))
+}
 
 
 export const filterEntities = async (): Endpoint => { }

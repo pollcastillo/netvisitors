@@ -98,3 +98,9 @@ export const drawTagsIntoTables = () => {
         }
     });
 };
+export class CloseDialog {
+    x(dialog, container) {
+        container.style.display = 'none';
+        dialog.remove();
+    }
+}
