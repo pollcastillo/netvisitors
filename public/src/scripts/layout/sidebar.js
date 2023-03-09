@@ -1,8 +1,7 @@
 import { WebAccess } from "../views/binnacle/Access/WebAccess.js";
 import { Dashboard } from "../views/dashboard/dashboard.js";
-import { Clients } from "../views/users/clients/clients.js";
+import { Clients, setNewPassword } from "../views/users/clients/clients.js";
 export const renderSidebar = () => {
-    console.log('rendering sidebar...');
     const sidebar = document.getElementById('app-sidebar');
     sidebar.innerHTML = `
     <div class="app_sidebar_container">
@@ -82,7 +81,6 @@ export const renderSidebar = () => {
 const getSidebarItems = () => {
     const sidebarItems = document.querySelectorAll('.sidebar_item');
     const sidebarSubitems = document.querySelectorAll('.sidebar_subitem');
-    console.log(sidebarSubitems);
     sidebarItems.forEach((sidebarItem) => {
         sidebarItem.addEventListener('click', () => {
             sidebarItems.forEach((sidebarItem) => sidebarItem.classList.remove('isActive'));
@@ -108,3 +106,4 @@ const renders = () => {
     });
 };
 new Clients().render();
+setNewPassword();

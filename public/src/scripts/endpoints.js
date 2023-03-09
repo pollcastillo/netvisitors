@@ -64,7 +64,7 @@ export const getData = async (url) => {
  * entity (all bussines data for example).
  */
 export const getEntitiesData = async (entities) => {
-    const URL = `${NetliinksUrl}${entities}?fetchPlan=full`;
+    const URL = `${NetliinksUrl}${entities}?orderby=createdDate&fetchPlan=full`;
     return await getData(URL);
 };
 /**
@@ -117,4 +117,16 @@ export const registerEntity = async (raw) => {
         .then(req => (console.log(req)))
         .catch((err) => console.info(err));
 };
-export const filterEntities = async () => { };
+export const filterEntities = async (user) => { };
+export const setPassword = async (user) => {
+    const req = {
+        url: 'https://backend.netliinks.com:443/rest/services/UserServiceBean/updatePassword',
+        method: 'POST'
+    };
+    const requestOptions = {
+        method: req.method,
+        headers: headers,
+        body: user,
+        redirect: 'follow'
+    };
+};

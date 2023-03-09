@@ -35,7 +35,10 @@ class CheckUser {
     }
     checkIfNew(isNew) {
         if (isNew === true) {
-            console.log('Mostrando passwordUpdater...');
+            app.style.display = 'block';
+            loginContainer.style.display = 'none';
+            renderLayout();
+            console.log('es nuevo usuario');
         }
         else {
             app.style.display = 'block';
@@ -47,6 +50,7 @@ class CheckUser {
 export class SignIn extends CheckUser {
     async checkSignIn() {
         const currentUser = await getUserInfo();
+        console.log(currentUser);
         // validate token
         if (currentUser.error == "invalid_token") {
             this.showLogin();

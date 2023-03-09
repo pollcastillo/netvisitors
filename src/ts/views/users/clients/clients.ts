@@ -73,7 +73,7 @@ const tableLayout = `
 const tableLayoutTemplate = `
     <tr>
         <td>Cargando</td>
-        <td>Cargando</td>
+        <th colspan="2"></th>
         <td>Cargando</td>
         <td>Cargando</td>
         <td class="entity_options">
@@ -94,6 +94,7 @@ const getUsers = async (userType: string, superUser: boolean): Promise<void> => 
     const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
     const data: any = FSuper.filter((data: any) => `${data.userType}`.includes(userType))
     return data
+
 }
 
 export class Clients implements NUsers.IUser {
@@ -116,7 +117,8 @@ export class Clients implements NUsers.IUser {
         this.load(tableBody, currentPage, data)
         // @ts-ignore
         feather.replace()
-        this.searchEntity(tableBody)
+        this.searchEntity(tableBody, data)
+        console.log(data)
     }
 
     public load(table: InterfaceElement, currentPage: number, data: any) {
@@ -164,36 +166,37 @@ export class Clients implements NUsers.IUser {
             }
         }
 
-        const tableBody = {}
-
-        this.register(this.entityDialogContainer, data)
+        this.register()
         this.import()
         this.edit(this.entityDialogContainer, data)
         this.remove()
         this.convertToSuper()
     }
 
-    public searchEntity = async (tableBody: InterfaceElement) => {
+    public searchEntity = async (tableBody: InterfaceElement, data: any) => {
         const search: InterfaceElement = document.getElementById('search')
-        await search.addEventListener('keyup', async (): Promise<void> => {
-            let data: any = await getUsers(userType, SUser)
-            console.log(data)
-            const arrayData: any = data.filter((user: any) => {
+
+        await search.addEventListener('keyup', () => {
+            const arrayData: any = data.filter((user: any) =>
                 `${user.firstName}
-         ${user.lastName}
-         ${user.username}`
+                 ${user.lastName}
+                 ${user.username}`
                     .toLowerCase()
                     .includes(search.value.toLowerCase())
-            })
+            )
 
             let filteredResult = arrayData.length
+            let result = arrayData
             if (filteredResult >= tableRows) filteredResult = tableRows
-            console.log(filteredResult)
-            this.load(tableBody, currentPage, filteredResult)
+
+            this.load(tableBody, currentPage, result)
+            // @ts-ignore
+            feather.replace()
         })
+
     }
 
-    public register(container: InterfaceElement, data: any) {
+    public register() {
         // register entity
         const openEditor: InterfaceElement = document.getElementById('new-entity')
         openEditor.addEventListener('click', (): void => {
@@ -319,8 +322,6 @@ export class Clients implements NUsers.IUser {
                     temporalPass: document.getElementById('tempPass')
                 }
 
-                console.log(inputsCollection)
-
                 const raw = JSON.stringify({
                     "lastName": `${inputsCollection.lastName.value}`,
                     "secondLastName": `${inputsCollection.secondLastName.value}`,
@@ -347,7 +348,6 @@ export class Clients implements NUsers.IUser {
                     "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
                 })
                 reg(raw)
-
             })
 
         }
@@ -356,11 +356,22 @@ export class Clients implements NUsers.IUser {
             console.log(raw)
             registerEntity(raw)
                 .then(res => {
-                    const tableBody: InterfaceElement = document.getElementById('datatable-body')
-                    this.load(tableBody, currentPage, data)
-
                     console.log('done')
+                    this.render()
+                    setNewPassword()
                 })
+
+            const setNewPassword: any = async (): Promise<void> => {
+                const users: any = await getEntitiesData('User')
+                const FNewUsers: any = users.filter((data: any) => data.isSuper === true)
+
+                FNewUsers.forEach((newUser: any) => {
+
+                })
+
+                console.log(FNewUsers)
+
+            }
         }
     }
 
@@ -379,7 +390,7 @@ export class Clients implements NUsers.IUser {
 
 
         firstName.addEventListener('keyup', (e: any): void => {
-            UserNameFFragment = firstName.value.toLowerCase()
+            UserNameFFragment = firstName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
             userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
         })
 
@@ -404,8 +415,9 @@ export class Clients implements NUsers.IUser {
     public import() {
         const importButton: InterfaceElement =
             document.getElementById('import-entities')
+
         importButton.addEventListener('click', (): void => {
-            alert('Importing...')
+            console.log('Importing...')
         })
     }
 
@@ -609,4 +621,17 @@ export class Clients implements NUsers.IUser {
             new CloseDialog().x(editor, this.entityDialogContainer)
         })
     }
+}
+
+
+export const setNewPassword: any = async (): Promise<void> => {
+    const users: any = await getEntitiesData('User')
+    const FNewUsers: any = users.filter((data: any) => data.isSuper === false)
+
+    FNewUsers.forEach((newUser: any) => {
+
+    })
+    console.group('Nuevos usuarios')
+    console.log(FNewUsers)
+
 }

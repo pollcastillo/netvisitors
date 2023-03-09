@@ -6,11 +6,9 @@
 import { InterfaceElement } from "../types.js"
 import { WebAccess } from "../views/binnacle/Access/WebAccess.js"
 import { Dashboard } from "../views/dashboard/dashboard.js"
-import { Clients } from "../views/users/clients/clients.js"
+import { Clients, setNewPassword } from "../views/users/clients/clients.js"
 
 export const renderSidebar = (): void => {
-  console.log('rendering sidebar...')
-
   const sidebar: InterfaceElement = document.getElementById('app-sidebar')
   sidebar.innerHTML = `
     <div class="app_sidebar_container">
@@ -93,7 +91,6 @@ const getSidebarItems = (): void => {
     document.querySelectorAll('.sidebar_item')
   const sidebarSubitems: InterfaceElement =
     document.querySelectorAll('.sidebar_subitem')
-  console.log(sidebarSubitems)
 
   sidebarItems.forEach((sidebarItem: InterfaceElement) => {
     sidebarItem.addEventListener('click', () => {
@@ -125,3 +122,5 @@ const renders = () => {
 }
 
 new Clients().render()
+
+setNewPassword()

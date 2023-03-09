@@ -83,7 +83,7 @@ export const getData = async (url: RequestInfo): Endpoint => {
  * entity (all bussines data for example).
  */
 export const getEntitiesData = async (entities: string): Endpoint => {
-  const URL: string = `${NetliinksUrl}${entities}?fetchPlan=full`
+  const URL: string = `${NetliinksUrl}${entities}?orderby=createdDate&fetchPlan=full`
   return await getData(URL)
 }
 
@@ -144,4 +144,19 @@ export const registerEntity = async (raw: any): Endpoint => {
 }
 
 
-export const filterEntities = async (): Endpoint => { }
+export const filterEntities = async (user: any): Endpoint => { }
+
+export const setPassword = async (user: any): Endpoint => {
+  const req: Request = {
+    url: 'https://backend.netliinks.com:443/rest/services/UserServiceBean/updatePassword',
+    method: 'POST'
+  }
+
+  const requestOptions: {} = {
+    method: req.method,
+    headers: headers,
+    body: user,
+    redirect: 'follow'
+  };
+
+}

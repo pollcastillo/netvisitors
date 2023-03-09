@@ -68,7 +68,7 @@ const tableLayout = `
 const tableLayoutTemplate = `
     <tr>
         <td>Cargando</td>
-        <td>Cargando</td>
+        <th colspan="2"></th>
         <td>Cargando</td>
         <td>Cargando</td>
         <td class="entity_options">
@@ -94,23 +94,21 @@ export class Clients {
         this.dialogContainer = document.getElementById('app-dialogs');
         this.entityDialogContainer = document.getElementById('entity-editor-container');
         this.content = document.getElementById('datatable-container');
-        this.searchEntity = async (tableBody) => {
+        this.searchEntity = async (tableBody, data) => {
             const search = document.getElementById('search');
-            await search.addEventListener('keyup', async () => {
-                let data = await getUsers(userType, SUser);
-                console.log(data);
-                const arrayData = data.filter((user) => {
-                    `${user.firstName}
-         ${user.lastName}
-         ${user.username}`
-                        .toLowerCase()
-                        .includes(search.value.toLowerCase());
-                });
+            await search.addEventListener('keyup', () => {
+                const arrayData = data.filter((user) => `${user.firstName}
+                 ${user.lastName}
+                 ${user.username}`
+                    .toLowerCase()
+                    .includes(search.value.toLowerCase()));
                 let filteredResult = arrayData.length;
+                let result = arrayData;
                 if (filteredResult >= tableRows)
                     filteredResult = tableRows;
-                console.log(filteredResult);
-                this.load(tableBody, currentPage, filteredResult);
+                this.load(tableBody, currentPage, result);
+                // @ts-ignore
+                feather.replace();
             });
         };
         this.generateUserName = async () => {
@@ -124,7 +122,7 @@ export class Clients {
             let UserNameLNFragment = '';
             let UserNameSLNFragment = '';
             firstName.addEventListener('keyup', (e) => {
-                UserNameFFragment = firstName.value.toLowerCase();
+                UserNameFFragment = firstName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`);
             });
             lastName.addEventListener('keyup', (e) => {
@@ -152,7 +150,8 @@ export class Clients {
         this.load(tableBody, currentPage, data);
         // @ts-ignore
         feather.replace();
-        this.searchEntity(tableBody);
+        this.searchEntity(tableBody, data);
+        console.log(data);
     }
     load(table, currentPage, data) {
         table.innerHTML = '';
@@ -197,14 +196,13 @@ export class Clients {
                 drawTagsIntoTables();
             }
         }
-        const tableBody = {};
-        this.register(this.entityDialogContainer, data);
+        this.register();
         this.import();
         this.edit(this.entityDialogContainer, data);
         this.remove();
         this.convertToSuper();
     }
-    register(container, data) {
+    register() {
         // register entity
         const openEditor = document.getElementById('new-entity');
         openEditor.addEventListener('click', () => {
@@ -325,7 +323,6 @@ export class Clients {
                     citadel: document.getElementById('entity-citadel'),
                     temporalPass: document.getElementById('tempPass')
                 };
-                console.log(inputsCollection);
                 const raw = JSON.stringify({
                     "lastName": `${inputsCollection.lastName.value}`,
                     "secondLastName": `${inputsCollection.secondLastName.value}`,
@@ -358,16 +355,23 @@ export class Clients {
             console.log(raw);
             registerEntity(raw)
                 .then(res => {
-                const tableBody = document.getElementById('datatable-body');
-                this.load(tableBody, currentPage, data);
                 console.log('done');
+                this.render();
+                setNewPassword();
             });
+            const setNewPassword = async () => {
+                const users = await getEntitiesData('User');
+                const FNewUsers = users.filter((data) => data.isSuper === true);
+                FNewUsers.forEach((newUser) => {
+                });
+                console.log(FNewUsers);
+            };
         };
     }
     import() {
         const importButton = document.getElementById('import-entities');
         importButton.addEventListener('click', () => {
-            alert('Importing...');
+            console.log('Importing...');
         });
     }
     edit(container, data) {
@@ -553,3 +557,11 @@ export class Clients {
         });
     }
 }
+export const setNewPassword = async () => {
+    const users = await getEntitiesData('User');
+    const FNewUsers = users.filter((data) => data.isSuper === false);
+    FNewUsers.forEach((newUser) => {
+    });
+    console.group('Nuevos usuarios');
+    console.log(FNewUsers);
+};
