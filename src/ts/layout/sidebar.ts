@@ -9,6 +9,7 @@ import { WebAccess } from "../views/binnacle/Access/WebAccess.js"
 import { Dashboard } from "../views/dashboard/dashboard.js"
 import { Notes } from "../views/binnacle/Notes/NotesView.js"
 import { Clients, setNewPassword } from "../views/users/clients/clients.js"
+import { Visits } from "../views/binnacle/Visits.ts/VisitsView.js"
 
 export const renderSidebar = (): void => {
   const sidebar: InterfaceElement = document.getElementById('app-sidebar')
@@ -146,7 +147,7 @@ const renders = () => {
   })
   // render visits
   document.getElementById('render-visits')?.addEventListener('click', (): void => {
-    new WebAccess().render()
+    new Visits().render()
   })
   // render AssistControl
   document.getElementById('render-assistControl')?.addEventListener('click', (): void => {
@@ -157,5 +158,3 @@ const renders = () => {
     new WebAccess().render()
   })
 }
-
-new Notes().render()

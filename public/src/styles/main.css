@@ -272,9 +272,7 @@ table button:hover {
   background-color: #5DBD51;
   color: #FFFFFF;
 }
-.datatable_tools .datatable_button .feather {
-  height: 16px;
-  width: 16px;
+.datatable_tools .datatable_button .fa-solid {
   color: #FFFFFF;
 }
 .datatable_content {
