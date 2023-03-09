@@ -119,6 +119,18 @@ export class Notes {
 
         const renderInterface = async (entities: string): Promise<void> => {
             renderRightSidebar(UIRightSidebar)
+            this.closeRightSidebar()
         }
+
+    }
+
+    private closeRightSidebar = (): void => {
+        const closeButton: InterfaceElement = document.getElementById('close')
+
+        const editor: InterfaceElement = document.getElementById('entity-editor')
+
+        closeButton.addEventListener('click', (): void => {
+            new CloseDialog().x(editor, this.siebarDialogContainer)
+        })
     }
 }

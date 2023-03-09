@@ -661,12 +661,10 @@ h1, h2, h3, h4, h5, h6 {
   height: 1px;
   width: 100%;
 }
-.input .feather {
-  height: 18px;
-  margin-right: 8px;
-  color: #706F8E;
-  bottom: 8px;
+.input .fa-regular {
   position: absolute;
+  bottom: 8px;
+  color: #706F8E;
 }
 
 .material_input {
@@ -786,6 +784,10 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+}
+.app .sidebar_item span .fa-regular {
+  font-size: 22px;
+  margin-right: 8px;
 }
 .app .sidebar_item span .feather {
   height: 22px;
@@ -980,14 +982,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 .login_footer .login_icons {
   display: block;
-  margin: 24px auto 0px auto;
+  margin: 24px auto 16px auto;
   width: fit-content;
 }
-.login_footer .login_icons .feather {
-  display: inline-block;
-  margin: 0 4px;
-  height: 16px;
+.login_footer .login_icons .fa-regular {
+  font-size: 18px;
   color: #26233A;
+  margin: 0 4px;
 }
 .login_footer p {
   text-align: center;

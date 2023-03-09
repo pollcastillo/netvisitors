@@ -39,8 +39,6 @@ const activeElements = (data: any): void => {
 }
 
 const renderInterface = (data: any): void => {
-  //  @ts-ignore
-  feather.replace()
   renderUserOptions(userAndPreferences, data)
 }
 
@@ -51,7 +49,7 @@ const renderUserOptions = async (block: InterfaceElement, data: any): Promise<vo
       <span class="welcome">Bienvenido</span>
       <span class="separator"></span>
       <div class="userAvatar">
-        <i data-feather="user"></i>
+        <i class="fa-regular fa-user"></i>
       </div>
 
       <div class="nameAndCustomer">
@@ -63,7 +61,7 @@ const renderUserOptions = async (block: InterfaceElement, data: any): Promise<vo
 
       <div class="settings_button">
         <button id="settings-button">
-          <i data-feather="settings"></i>
+          <i class="fa-regular fa-gear"></i>
         </button>
       </div>
 
@@ -76,8 +74,6 @@ const renderUserOptions = async (block: InterfaceElement, data: any): Promise<vo
 
     </div>
   `
-  //  @ts-ignore
-  feather.replace()
   renderSetting()
 }
 

@@ -14,13 +14,13 @@ export const renderSidebar = () => {
           <div class="sidebar_items">
             <div class="sidebar_item">
               <span class="sidebar_item_label" id="render-dashboard">
-                <i data-feather="bar-chart-2"></i><div class="label">Dashboard</div>
+                <i class="fa-regular fa-chart-simple"></i> <div class="label">Dashboard</div>
               </span>
             </div>
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="user"></i><div class="label">Usuarios</div>
+              <i class="fa-regular fa-user"></i> <div class="label">Usuarios</div>
               </span>
 
               <div class="sidebar_subitems">
@@ -47,13 +47,31 @@ export const renderSidebar = () => {
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="book"></i><div class="label">Bitácora</div>
+              <i class="fa-regular fa-book"></i> <div class="label">Bitácora</div>
               </span>
 
               <div class="sidebar_subitems">
-                <div class="sidebar_subitem" id="render-webAccess">
+                <div class="sidebar_subitem" id="render-notes">
                   <span class="sidebar_subitem_label">
-                      • accesos
+                    <i class="fa-regular fa-notes"></i> Notas
+                  </span>
+                </div>
+
+                <div class="sidebar_subitem" id="render-visits">
+                  <span class="sidebar_subitem_label">
+                    <i class="fa-regular fa-user"></i> Visits
+                  </span>
+                </div>
+
+                <div class="sidebar_subitem" id="render-assistControl">
+                  <span class="sidebar_subitem_label">
+                    <i class="fa-regular fa-marker"></i> Control de asistencia
+                  </span>
+                </div>
+
+                <div class="sidebar_subitem" id="render-vehicular">
+                  <span class="sidebar_subitem_label">
+                      <i class="fa-regular fa-car"></i> Vehicular
                   </span>
                 </div>
               </div>
@@ -61,13 +79,13 @@ export const renderSidebar = () => {
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="briefcase"></i><div class="label">Empresas</div>
+                <i class="fa-regular fa-building"></i> <div class="label">Empresas</div>
               </span>
             </div>
 
             <div class="sidebar_item">
               <span class="sidebar_item_label">
-                <i data-feather="shield"></i><div class="label">Superusuarios</div>
+                <i class="fa-regular fa-shield"></i> <div class="label">Superusuarios</div>
               </span>
             </div>
           </div>
@@ -104,6 +122,22 @@ const renders = () => {
         new Clients().render();
     });
     document.getElementById('render-webAccess')?.addEventListener('click', () => {
+        new WebAccess().render();
+    });
+    // render notes
+    document.getElementById('render-notes')?.addEventListener('click', () => {
+        new Notes().render();
+    });
+    // render visits
+    document.getElementById('render-visits')?.addEventListener('click', () => {
+        new WebAccess().render();
+    });
+    // render AssistControl
+    document.getElementById('render-assistControl')?.addEventListener('click', () => {
+        new WebAccess().render();
+    });
+    // render Vehicular
+    document.getElementById('render-vehicular')?.addEventListener('click', () => {
         new WebAccess().render();
     });
 };

@@ -29,6 +29,11 @@
       cursor: pointer;
       transition: 0.3s all ease-in-out;
 
+      .fa-regular {
+        font-size: 22px;
+        margin-right: 8px;
+      }
+
       & .feather {
         height: 22px;
         width: 22px;

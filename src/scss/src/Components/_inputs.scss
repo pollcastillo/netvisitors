@@ -51,12 +51,10 @@
 
     }
 
-    .feather {
-        height: 18px;
-        margin-right: 8px;
-        color: $slategray;
-        bottom: 8px;
+    .fa-regular {
         position: absolute;
+        bottom: 8px;
+        color: $slategray;
     }
 }
 

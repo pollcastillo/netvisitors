@@ -119,7 +119,8 @@ export class CloseDialog {
 
 // SIDEBAR RENDERING TOOLS
 export const renderRightSidebar = (UIFragment: InterfaceElement) => {
-  const dialogContainer: InterfaceElement = document.getElementById('app-dialogs')
+  const dialogContainer: InterfaceElement = document.getElementById('entity-editor-container')
+
   dialogContainer.innerHTML = ''
   dialogContainer.style.display = 'block'
   dialogContainer.innerHTML = UIFragment

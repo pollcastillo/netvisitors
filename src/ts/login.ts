@@ -86,7 +86,7 @@ export class SignIn extends CheckUser {
           <form id="login-form">
             <div class="input">
               <label for="username">
-                <i data-feather="user"></i>
+                <i class="fa-regular fa-user"></i>
               </label>
               <input type="text" id="username"
                 placeholder="johndoe@mail.com">
@@ -94,7 +94,7 @@ export class SignIn extends CheckUser {
 
             <div class="input">
               <label for="password">
-                <i data-feather="key"></i>
+                <i class="fa-regular fa-key"></i>
               </label>
               <input type="password" id="password"
                 placeholder="••••••••••••">
@@ -105,12 +105,12 @@ export class SignIn extends CheckUser {
 
         <div class="login_footer">
           <div class="login_icons">
-            <i data-feather="home"></i>
-            <i data-feather="user"></i>
-            <i data-feather="inbox"></i>
-            <i data-feather="file"></i>
-            <i data-feather="monitor"></i>
-            <i data-feather="smartphone"></i>
+            <i class="fa-regular fa-house"></i>
+            <i class="fa-regular fa-user"></i>
+            <i class="fa-regular fa-inbox"></i>
+            <i class="fa-regular fa-file"></i>
+            <i class="fa-regular fa-computer"></i>
+            <i class="fa-regular fa-mobile"></i>
           </div>
           <p>Accede a todas nuestras herramientas</p>
 

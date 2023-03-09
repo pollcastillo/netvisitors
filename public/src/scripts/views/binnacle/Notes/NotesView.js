@@ -5,7 +5,7 @@
 //
 import { Config } from "../../../Configs.js";
 import { getEntitiesData } from "../../../endpoints.js";
-import { fixDate, renderRightSidebar } from "../../../tools.js";
+import { CloseDialog, fixDate, renderRightSidebar } from "../../../tools.js";
 import { UIContentLayout, UIRightSidebar } from "./Layout.js";
 import { UITableSkeletonTemplate } from "./Template.js";
 // Local configs
@@ -98,7 +98,15 @@ export class Notes {
             });
             const renderInterface = async (entities) => {
                 renderRightSidebar(UIRightSidebar);
+                this.closeRightSidebar();
             };
+        };
+        this.closeRightSidebar = () => {
+            const closeButton = document.getElementById('close');
+            const editor = document.getElementById('entity-editor');
+            closeButton.addEventListener('click', () => {
+                new CloseDialog().x(editor, this.siebarDialogContainer);
+            });
         };
     }
 }

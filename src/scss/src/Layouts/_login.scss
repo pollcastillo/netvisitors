@@ -5,17 +5,6 @@
 //
 
 .login {
-    // .app_container {
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: center;
-    //     height: 100vh;
-
-    //     .input_group {
-    //         margin-bottom: 24px;
-    //     }
-    // }
-
     &_container {
         display: flex;
         align-items: center;
@@ -52,14 +41,13 @@
 
         .login_icons {
             display: block;
-            margin: 24px auto 0px auto;
+            margin: 24px auto 16px auto;
             width: fit-content;
 
-            .feather {
-                display: inline-block;
-                margin: 0 4px;
-                height: 16px;
+            .fa-regular {
+                font-size: 18px;
                 color: $dark;
+                margin: 0 4px;
             }
         }
 

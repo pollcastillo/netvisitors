@@ -28,8 +28,6 @@ const activeElements = (data) => {
     renderSidebar();
 };
 const renderInterface = (data) => {
-    //  @ts-ignore
-    feather.replace();
     renderUserOptions(userAndPreferences, data);
 };
 const renderUserOptions = async (block, data) => {
@@ -39,7 +37,7 @@ const renderUserOptions = async (block, data) => {
       <span class="welcome">Bienvenido</span>
       <span class="separator"></span>
       <div class="userAvatar">
-        <i data-feather="user"></i>
+        <i class="fa-regular fa-user"></i>
       </div>
 
       <div class="nameAndCustomer">
@@ -51,7 +49,7 @@ const renderUserOptions = async (block, data) => {
 
       <div class="settings_button">
         <button id="settings-button">
-          <i data-feather="settings"></i>
+          <i class="fa-regular fa-gear"></i>
         </button>
       </div>
 
@@ -64,8 +62,6 @@ const renderUserOptions = async (block, data) => {
 
     </div>
   `;
-    //  @ts-ignore
-    feather.replace();
     renderSetting();
 };
 const renderSetting = () => {

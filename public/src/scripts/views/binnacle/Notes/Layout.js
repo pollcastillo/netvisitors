@@ -17,15 +17,15 @@ export const UIContentLayout = `
         <table class="datatable_content">
         <thead><tr>
             <th><span data-type="title">
-            Título <i data-feather="filter"></i>
+            Título <i class="fa-regular fa-filter"></i>
             </span></th>
 
             <th><span data-type="content">
-            Contenido <i data-feather="filter"></i>
+            Contenido <i class="fa-regular fa-filter"></i>
             </span></th>
 
             <th class="thead_centered" width=220><span data-type="date">
-            Fecha <i data-feather="filter"></i>
+            Fecha <i class="fa-regular fa-filter"></i>
             </span></th>
 
             <th class="thead_centered" width=130><span data-type="details">
@@ -46,11 +46,11 @@ export const UIRightSidebar = `
 <div class="entity_editor" id="entity-editor">
 <div class="entity_editor_header">
   <div class="user_info">
-    <div class="avatar"><i data-feather="user"></i></div>
-    <h1 class="entity_editor_title">Registrar <br><small>Cliente</small></h1>
+    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+    <h1 class="entity_editor_title">Detalles <br><small>Notas</small></h1>
   </div>
 
-  <button class="btn btn_close_editor" id="close"><i data-feather="x"></i></button>
+  <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
 </div>
 
 <!-- EDITOR BODY -->
@@ -76,53 +76,6 @@ export const UIRightSidebar = `
       maxlength="10" autocomplete="none">
     <label for="entity-phone">Teléfono</label>
   </div>
-
-  <div class="material_input">
-    <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
-    <label for="entity-username"><i data-feather="lock" class="input_locked"></i> Nombre de usuario</label>
-  </div>
-
-  <div class="material_input_select">
-    <label for="entity-state">Estado</label>
-    <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-    <div id="input-options" class="input_options">
-    </div>
-  </div>
-
-  <div class="material_input_select">
-    <label for="entity-business">Empresa</label>
-    <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-    <div id="input-options" class="input_options">
-    </div>
-  </div>
-
-  <div class="material_input_select">
-    <label for="entity-citadel">Ciudadela</label>
-    <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-    <div id="input-options" class="input_options">
-    </div>
-  </div>
-
-  <div class="material_input_select">
-    <label for="entity-customer">Cliente</label>
-    <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
-    <div id="input-options" class="input_options">
-    </div>
-  </div>
-
-  <div class="material_input_select">
-    <label for="entity-department">Departamento</label>
-    <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-    <div id="input-options" class="input_options">
-    </div>
-  </div>
-
-  <br><br>
-  <div class="material_input">
-    <input type="password" id="tempPass" autocomplete="false">
-    <label for="tempPass">Contraseña temporal</label>
-  </div>
-
 </div>
 <!-- END EDITOR BODY -->
 
