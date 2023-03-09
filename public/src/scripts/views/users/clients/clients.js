@@ -5,10 +5,11 @@
 //
 import { deleteEntity, getEntitiesData, getEntityData, registerEntity } from "../../../endpoints.js";
 import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog } from "../../../tools.js";
-const tableRows = 16;
-const currentPage = 1;
-const userType = "CUSTOMER";
-const SUser = false;
+import { Config } from "../../../Configs.js";
+const tableRows = Config.tableRows;
+const currentPage = Config.currentPage;
+const userType = Config.userType;
+const SUser = Config.isSuperUser;
 const tableLayout = `
   <div class="datatable" id="datatable">
     <div class="datatable_header">

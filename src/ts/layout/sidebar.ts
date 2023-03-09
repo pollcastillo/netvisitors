@@ -5,7 +5,9 @@
 //
 import { InterfaceElement } from "../types.js"
 import { WebAccess } from "../views/binnacle/Access/WebAccess.js"
+// Views
 import { Dashboard } from "../views/dashboard/dashboard.js"
+import { Notes } from "../views/binnacle/Notes/NotesView.js"
 import { Clients, setNewPassword } from "../views/users/clients/clients.js"
 
 export const renderSidebar = (): void => {
@@ -121,6 +123,4 @@ const renders = () => {
   })
 }
 
-new Clients().render()
-
-setNewPassword()
+new Notes().render()

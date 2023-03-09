@@ -1,6 +1,8 @@
 import { WebAccess } from "../views/binnacle/Access/WebAccess.js";
+// Views
 import { Dashboard } from "../views/dashboard/dashboard.js";
-import { Clients, setNewPassword } from "../views/users/clients/clients.js";
+import { Notes } from "../views/binnacle/Notes/NotesView.js";
+import { Clients } from "../views/users/clients/clients.js";
 export const renderSidebar = () => {
     const sidebar = document.getElementById('app-sidebar');
     sidebar.innerHTML = `
@@ -105,5 +107,4 @@ const renders = () => {
         new WebAccess().render();
     });
 };
-new Clients().render();
-setNewPassword();
+new Notes().render();
