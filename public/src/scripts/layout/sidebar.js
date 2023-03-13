@@ -4,6 +4,7 @@ import { Dashboard } from "../views/dashboard/dashboard.js";
 import { Notes } from "../views/binnacle/Notes/NotesView.js";
 import { Clients } from "../views/users/clients/clients.js";
 import { Visits } from "../views/binnacle/Visits.ts/VisitsView.js";
+import { Employees } from "../views/users/employees/employees.js";
 export const renderSidebar = () => {
     const sidebar = document.getElementById('app-sidebar');
     sidebar.innerHTML = `
@@ -32,13 +33,13 @@ export const renderSidebar = () => {
                 </div>
 
                 <div class="sidebar_subitem">
-                  <span class="sidebar_subitem_label">
+                  <span class="sidebar_subitem_label" id="render-employees">
                     • Empleados
                   </span>
                 </div>
 
                 <div class="sidebar_subitem">
-                  <span class="sidebar_subitem_label">
+                  <span class="sidebar_subitem_label" id="render-contractors">
                     • Contratistas
                   </span>
                 </div>
@@ -122,6 +123,9 @@ const renders = () => {
     document.getElementById('render-clients')?.addEventListener('click', () => {
         new Clients().render();
     });
+    document.getElementById('render-employees')?.addEventListener('click', () => {
+        new Employees().render();
+    });
     document.getElementById('render-webAccess')?.addEventListener('click', () => {
         new WebAccess().render();
     });
@@ -142,3 +146,4 @@ const renders = () => {
         new WebAccess().render();
     });
 };
+new Clients().render();

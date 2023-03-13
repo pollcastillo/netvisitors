@@ -8,7 +8,7 @@ import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog } from "../
 import { Config } from "../../../Configs.js";
 const tableRows = Config.tableRows;
 const currentPage = Config.currentPage;
-const userType = Config.userType;
+const userType = Config.customerUser;
 const SUser = Config.isSuperUser;
 const tableLayout = `
   <div class="datatable" id="datatable">
@@ -23,7 +23,7 @@ const tableLayout = `
         <button
           class="datatable_button add_user"
           id="new-entity">
-          <span data-feather="user-plus"></span>
+          <i class="fa-solid fa-user-plus"></i>
         </button>
 
         <button
@@ -37,21 +37,21 @@ const tableLayout = `
     <table class="datatable_content">
       <thead><tr>
         <th><span data-type="name">
-          Nombre <i data-feather="filter"></i>
+          Nombre <i class="fa-regular fa-filter"></i>
         </span></th>
 
         <th colspan="2"><span data-type="id">
-          ID <i data-feather="filter"></i>
+          ID <i class="fa-regular fa-filter"></i>
         </span></th>
 
         <!-- th class="header_filled header_key"></!-->
 
         <th class="thead_centered"><span data-type="status">
-          Estado <i data-feather="filter"></i>
+          Estado <i class="fa-regular fa-filter"></i>
         </span></th>
 
         <th><span data-type="citadel">
-          Ciudadela <i data-feather="filter"></i>
+          Ciudadela <i class="fa-regular fa-filter"></i>
         </span></th>
 
         <th class="header_filled"></th>
@@ -149,8 +149,6 @@ export class Clients {
         const tableBody = document.getElementById('datatable-body');
         tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows);
         this.load(tableBody, currentPage, data);
-        // @ts-ignore
-        feather.replace();
         this.searchEntity(tableBody, data);
         console.log(data);
     }
@@ -176,20 +174,20 @@ export class Clients {
                 row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
-          <td class="key"><button class="button"><i data-feather="key" class="table_icon"></i></button></td>
+          <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></dt>
           <td>${client.citadel.description}</dt>
           <td class="entity_options">
             <button class="button" id="edit-entity" data-entityId="${client.id}">
-              <i data-feather="edit-2" class="table_icon"></i>
+              <i class="fa-solid fa-pen"></i>
             </button>
 
             <button class="button" id="remove-entity" data-entityId="${client.id}">
-              <i data-feather="trash" class="table_icon"></i>
+              <i class="fa-solid fa-trash"></i>
             </button>
 
             <button class="button" id="convert-entity" data-entityId="${client.id}">
-              <i data-feather="shield" class="table_icon"></i>
+                <i class="fa-solid fa-shield"></i>
             </button>
           </dt>
         `;

@@ -10,6 +10,7 @@ import { Dashboard } from "../views/dashboard/dashboard.js"
 import { Notes } from "../views/binnacle/Notes/NotesView.js"
 import { Clients, setNewPassword } from "../views/users/clients/clients.js"
 import { Visits } from "../views/binnacle/Visits.ts/VisitsView.js"
+import { Employees } from "../views/users/employees/employees.js"
 
 export const renderSidebar = (): void => {
   const sidebar: InterfaceElement = document.getElementById('app-sidebar')
@@ -39,13 +40,13 @@ export const renderSidebar = (): void => {
                 </div>
 
                 <div class="sidebar_subitem">
-                  <span class="sidebar_subitem_label">
+                  <span class="sidebar_subitem_label" id="render-employees">
                     • Empleados
                   </span>
                 </div>
 
                 <div class="sidebar_subitem">
-                  <span class="sidebar_subitem_label">
+                  <span class="sidebar_subitem_label" id="render-contractors">
                     • Contratistas
                   </span>
                 </div>
@@ -137,6 +138,10 @@ const renders = () => {
     new Clients().render()
   })
 
+  document.getElementById('render-employees')?.addEventListener('click', (): void => {
+    new Employees().render()
+  })
+
   document.getElementById('render-webAccess')?.addEventListener('click', (): void => {
     new WebAccess().render()
   })
@@ -158,3 +163,5 @@ const renders = () => {
     new WebAccess().render()
   })
 }
+
+new Clients().render()

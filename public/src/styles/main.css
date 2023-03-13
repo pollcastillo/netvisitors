@@ -88,6 +88,7 @@ table button:hover {
 .btn {
   height: 32px;
   padding: 0 16px;
+  font-size: 14px;
 }
 .btn_widder {
   width: 100%;
@@ -271,23 +272,29 @@ table button:hover {
   margin-left: 8px;
   background-color: #5DBD51;
   color: #FFFFFF;
+  font-size: 14px;
 }
 .datatable_tools .datatable_button .fa-solid {
   color: #FFFFFF;
+  font-size: 14px;
 }
 .datatable_content {
-  display: table;
   width: 100%;
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 16px;
   border-collapse: collapse;
 }
+.datatable_content tr td, .datatable_content tr th {
+  width: 100%;
+}
 .datatable_content thead tr {
   border-bottom: 1px solid #cbceda;
   border-top: 1px solid #cbceda;
-}
-.datatable_content thead tr .thead_centered span {
-  text-align: center;
+  /* TODO
+    .thead_centered_span {
+      text-align: center;
+    }
+  */
 }
 .datatable_content thead tr th {
   white-space: nowrap;
@@ -295,29 +302,20 @@ table button:hover {
   height: 32px;
 }
 .datatable_content thead tr th:first-child {
-  border-left: 0px;
+  border-left: 0;
 }
 .datatable_content thead tr th span {
   display: block;
-  padding: 8px 8px;
+  padding: 8px;
   height: 100%;
   width: 100%;
   background-color: #E9EAEF;
   text-align: left;
   cursor: pointer;
+  transition: 0.3s all ease;
 }
 .datatable_content thead tr th span:hover {
   background-color: #dadce4;
-}
-.datatable_content thead tr th .feather-filter {
-  height: 14px;
-  width: 14px;
-  display: inline;
-  margin-left: 4px;
-}
-.datatable_content thead tr .header_key {
-  width: 18px;
-  border-left: 1px solid #E9EAEF;
 }
 .datatable_content thead tr .header_filled {
   background-color: #E9EAEF;
@@ -334,42 +332,22 @@ table button:hover {
 .datatable_content tbody tr:hover td {
   color: #FFFFFF;
 }
-.datatable_content tbody tr:hover td .feather-edit-2 {
-  color: #FFFFFF;
-}
-.datatable_content tbody tr:hover td .feather-trash-2 {
-  color: #FFFFFF;
-}
-.datatable_content tbody tr:hover td .feather-trash {
-  color: #FFFFFF;
-}
-.datatable_content tbody tr:hover td .feather-shield {
-  color: #FFFFFF;
-}
-.datatable_content tbody tr:hover td .feather-key {
+.datatable_content tbody tr:hover td .fa-solid, .datatable_content tbody tr:hover td .fa-regular {
   color: #FFFFFF;
 }
 .datatable_content tbody tr td {
   padding: 4px 8px;
   border-bottom: 1px solid #E9EAEF;
 }
-.datatable_content tbody tr td .feather-key {
+.datatable_content tbody tr td .fa-key {
   color: transparent;
 }
 .datatable_content tbody tr td:first-child {
-  font-weight: bold;
+  font-weight: 700;
 }
 .datatable_content tbody tr td:last-child {
   text-align: center;
-}
-.datatable_content tbody tr .entity_options {
-  max-width: 155px;
-  min-width: 155px;
-}
-.datatable_content tbody tr .table_icon {
-  height: 18px;
-  width: 18px;
-  color: #26233A;
+  white-space: nowrap;
 }
 .datatable_content .tag span {
   display: block;
