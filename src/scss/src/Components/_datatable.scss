@@ -83,8 +83,7 @@ $TableBorder: 1px solid darken($gray, 10%);
   }
 
   &_content {
-    // display: table;
-    // width: 100%;
+    display: table;
     width: 100%;
     border-bottom-right-radius: 16px;
     border-bottom-left-radius: 16px;

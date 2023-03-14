@@ -70,4 +70,35 @@ export namespace NUsers {
      */
     remove(): void
   }
+
+  export interface IContractors {
+    /**
+     * Renderize interfaces, load functions and read functions
+     */
+    render(): void
+    /**
+     * Load Interface
+     */
+    load(table: any, currentPage: number, data: any): void
+
+    /**
+     * Register a new entity
+     */
+    register(container: any, data: any): void
+
+    /**
+     * Import entities
+     */
+    // import(): void
+
+    /**
+     * Edit entity
+     */
+    edit(container: any, data: any): void
+
+    /**
+     * Remove entity
+     */
+    remove(): void
+  }
 }
