@@ -96,6 +96,14 @@ export const drawTagsIntoTables = () => {
             tag.innerText = "Inactivo";
             tag.classList.add("tag_gray");
         }
+        else if (text === "Pendiente" ||
+            text === "pendiente" ||
+            text === "PENDIENTE") {
+            tag.classList.add("tag_yellow");
+        }
+        else {
+            tag.classList.add('tag_gray');
+        }
     });
 };
 export class CloseDialog {

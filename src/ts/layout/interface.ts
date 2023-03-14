@@ -49,7 +49,7 @@ const renderUserOptions = async (block: InterfaceElement, data: any): Promise<vo
       <span class="welcome">Bienvenido</span>
       <span class="separator"></span>
       <div class="userAvatar">
-        <i class="fa-regular fa-user"></i>
+        <i class="fa-solid fa-user"></i>
       </div>
 
       <div class="nameAndCustomer">
@@ -61,7 +61,7 @@ const renderUserOptions = async (block: InterfaceElement, data: any): Promise<vo
 
       <div class="settings_button">
         <button id="settings-button">
-          <i class="fa-regular fa-gear"></i>
+          <i class="fa-solid fa-gear"></i>
         </button>
       </div>
 

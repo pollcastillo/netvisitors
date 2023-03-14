@@ -7,6 +7,7 @@ export const UIContentLayout = `
     <div class="datatable" id="datatable">
         <div class="datatable_header">
             <div class="datatable_title"><h1 id="view-title"></h1></div>
+
             <div class="datatable_tools" id="datatable-tools">
                 <input type="search" class="search_input" placeholder="Buscar" id="search">
 
@@ -16,15 +17,15 @@ export const UIContentLayout = `
 
         <table class="datatable_content">
         <thead><tr>
-            <th><span data-type="CI">
-            CI <i class="fa-regular fa-filter"></i>
-            </span></th>
-
             <th><span data-type="name">
             Nombre <i class="fa-regular fa-filter"></i>
             </span></th>
 
-            <th class="thead_centered" width=120><span data-type="date">
+            <th><span data-type="CI">
+            CI <i class="fa-regular fa-filter"></i>
+            </span></th>
+
+            <th class="thead_centered" width=100><span data-type="date">
             Fecha <i class="fa-regular fa-filter"></i>
             </span></th>
 
@@ -64,26 +65,42 @@ export const UIRightSidebar = `
   <div class="user_info">
     <div class="avatar"><i class="fa-regular fa-user"></i></div>
     <h1 class="entity_editor_title">Detalles <br><small>Visitas</small></h1>
-  </div>
-
+    </div>
   <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
 </div>
 
 <!-- EDITOR BODY -->
 <div class="entity_editor_body">
+  <div class="tag"><i class="label active_label"><i class="fa-solid fa-circle-dot"></i> Estado:</i> <span class="tag_gray" id="visit-status"></span></div>
+  <br><br>
   <div class="material_input">
-    <input type="text" id="entity-firstname" autocomplete="none">
-    <label for="entity-firstname">Nombre</label>
+    <input type="text" id="visit-name" autocomplete="none" class="input_filled">
+    <label for="visit-name"><i class="fa-solid fa-user"></i> Nombre</label>
   </div>
 
   <div class="material_input">
-    <input type="text" id="entity-lastname" autocomplete="none">
-    <label for="entity-lastname">Apellido</label>
+    <input type="text" id="visit-reason" autocomplete="none" class="input_filled">
+    <label for="visit-reasons"><i class="fa-solid fa-seal-question"></i> Asunto</label>
   </div>
 
   <div class="material_input">
-    <input type="text" id="entity-secondlastname" autocomplete="none">
-    <label for="entity-secondlastname">2do Apellido</label>
+    <input type="text" id="visit-citadel" autocomplete="none" class="input_filled">
+    <label for="visit-citadel"><i class="fa-solid fa-buildings"></i> Ciudadela</label>
+  </div>
+
+  <div class="material_input">
+    <input type="text" id="visit-citadelid" autocomplete="none" class="input_filled">
+    <label for="visit-citadelid"><i class="fa-solid fa-hashtag"></i> Ciudadela - ID</label>
+  </div>
+
+  <div class="material_input">
+    <input type="text" id="visit-department" autocomplete="none" class="input_filled">
+    <label for="visit-department"><i class="fa-solid fa-building"></i> Departamento</label>
+  </div>
+
+  <div class="material_input">
+    <input type="text" id="visit-authorizedby" autocomplete="none" class="input_filled">
+    <label for="visit-authorizedby"><i class="fa-solid fa-shield"></i> Autorizado por</label>
   </div>
 
   <div class="material_input">
@@ -94,9 +111,5 @@ export const UIRightSidebar = `
   </div>
 </div>
 <!-- END EDITOR BODY -->
-
-<div class="entity_editor_footer">
-  <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
-</div>
 </div>
 `;

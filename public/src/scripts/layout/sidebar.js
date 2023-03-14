@@ -5,6 +5,7 @@ import { Notes } from "../views/binnacle/Notes/NotesView.js";
 import { Clients } from "../views/users/clients/clients.js";
 import { Visits } from "../views/binnacle/Visits.ts/VisitsView.js";
 import { Employees } from "../views/users/employees/employees.js";
+import { Contractors } from "../views/users/contractors/Contractors.js";
 export const renderSidebar = () => {
     const sidebar = document.getElementById('app-sidebar');
     sidebar.innerHTML = `
@@ -28,19 +29,19 @@ export const renderSidebar = () => {
               <div class="sidebar_subitems">
                 <div class="sidebar_subitem" id="render-clients">
                   <span class="sidebar_subitem_label">
-                      • Clientes
+                    <i class="fa-regular fa-user-group"></i> Clientes
                   </span>
                 </div>
 
                 <div class="sidebar_subitem">
                   <span class="sidebar_subitem_label" id="render-employees">
-                    • Empleados
+                    <i class="fa-regular fa-users"></i> Empleados
                   </span>
                 </div>
 
                 <div class="sidebar_subitem">
                   <span class="sidebar_subitem_label" id="render-contractors">
-                    • Contratistas
+                    <i class="fa-regular fa-briefcase"></i> Contratistas
                   </span>
                 </div>
 
@@ -68,12 +69,6 @@ export const renderSidebar = () => {
                 <div class="sidebar_subitem" id="render-assistControl">
                   <span class="sidebar_subitem_label">
                     <i class="fa-regular fa-marker"></i> Control de asistencia
-                  </span>
-                </div>
-
-                <div class="sidebar_subitem" id="render-vehicular">
-                  <span class="sidebar_subitem_label">
-                      <i class="fa-regular fa-car"></i> Vehicular
                   </span>
                 </div>
               </div>
@@ -126,6 +121,9 @@ const renders = () => {
     document.getElementById('render-employees')?.addEventListener('click', () => {
         new Employees().render();
     });
+    document.getElementById('render-contractors')?.addEventListener('click', () => {
+        new Contractors().render();
+    });
     document.getElementById('render-webAccess')?.addEventListener('click', () => {
         new WebAccess().render();
     });
@@ -141,9 +139,6 @@ const renders = () => {
     document.getElementById('render-assistControl')?.addEventListener('click', () => {
         new WebAccess().render();
     });
-    // render Vehicular
-    document.getElementById('render-vehicular')?.addEventListener('click', () => {
-        new WebAccess().render();
-    });
 };
 new Clients().render();
+// setNewPassword()

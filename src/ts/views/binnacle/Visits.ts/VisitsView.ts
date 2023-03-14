@@ -5,7 +5,7 @@
 //
 import { Config } from "../../../Configs.js"
 import { getEntityData, getEntitiesData } from "../../../endpoints.js"
-import { CloseDialog, fixDate, renderRightSidebar } from "../../../tools.js"
+import { CloseDialog, FixStatusElement, drawTagsIntoTables, fixDate, renderRightSidebar } from "../../../tools.js"
 import { InterfaceElement, InterfaceElementCollection } from "../../../types.js"
 import { UIContentLayout, UIRightSidebar } from "./Layout.js"
 import { UITableSkeletonTemplate } from "./Template.js"
@@ -70,13 +70,14 @@ export class Visits {
                 let visit = paginatedItems[i] // getting visit items
                 let row: InterfaceElement = document.createElement('TR')
                 row.innerHTML += `
-                    <td width=120>${visit.dni}</td>
-                    <td>${visit.firstName} ${visit.firstLastName} ${visit.secondLastName}</td>
+                    <td style="white-space: nowrap">${visit.firstName} ${visit.firstLastName} ${visit.secondLastName}</td>
+                    <td>${visit.dni}</td>
                     <td id="table-date">${visit.createdDate}</td>
-                    <td id="table-time">${visit.creationTime}</td>
-                    <td id="table-time">${visit.user.userType}</td>
-                    <td id="table-time">${visit.visitState.name}</td>
+                    <td id="table-time" style="white-space: nowrap">${visit.creationTime}</td>
+                    <td>${visit.user.userType}</td>
+                    <td class="tag"><span>${visit.visitState.name}</span></td>
                     <td id="table-time">${visit.citadel.description}</td>
+
                     <td>
                         <button class="button" id="entity-details" data-entityId="${visit.id}">
                             <i class="table_icon fa-regular fa-magnifying-glass"></i>
@@ -84,9 +85,10 @@ export class Visits {
                     </td>
                 `
                 tableBody.appendChild(row)
-                this.previewVisit()
-                this.fixCreatedDate()
+                drawTagsIntoTables()
             }
+            this.previewVisit()
+            this.fixCreatedDate()
         }
     }
 
@@ -102,7 +104,6 @@ export class Visits {
 
             let filteredVisit = arrayVisits.length
             let result = arrayVisits
-            console.log(result)
 
             if (filteredVisit >= Config.tableRows) filteredVisit = Config.tableRows
 
@@ -111,14 +112,45 @@ export class Visits {
     }
 
     private previewVisit = async (): Promise<void> => {
-        const open: InterfaceElement = document.getElementById('entity-details')
-        open.addEventListener('click', (): void => {
-            renderInterface('User')
+        const openButtons: InterfaceElement = document.querySelectorAll('#entity-details')
+        openButtons.forEach((openButton: InterfaceElement) => {
+            const entityId: string = openButton.dataset.entityid
+            openButton.addEventListener('click', (): void => {
+                renderInterface(entityId)
+            })
         })
 
-        const renderInterface = async (entities: string): Promise<void> => {
+
+        const renderInterface = async (entity: string): Promise<void> => {
+            let entityData = await getEntityData('Visit', entity)
+            console.log(entityData)
             renderRightSidebar(UIRightSidebar)
+
+            const visitName: InterfaceElement = document.getElementById('visit-name')
+            visitName.value = `${entityData.firstName} ${entityData.firstLastName}`
+
+            const visitReason: InterfaceElement = document.getElementById('visit-reason')
+            visitReason.value = entityData.reason
+
+            const visitAutorizedBy: InterfaceElement = document.getElementById('visit-authorizedby')
+            visitAutorizedBy.value = entityData.authorizer
+
+            const visitStatus: InterfaceElement = document.getElementById('visit-status')
+            visitStatus.innerText = entityData.visitState.name
+
+            const visitCitadel: InterfaceElement = document.getElementById('visit-citadel')
+            visitCitadel.value = entityData.citadel.description
+
+            const visitCitadelID: InterfaceElement = document.getElementById('visit-citadelid')
+            visitCitadelID.value = entityData.citadel.name
+
+            const visitDepartment: InterfaceElement = document.getElementById('visit-department')
+            visitDepartment.value = entityData.department.name
+
+            console.log(entityData.citadel.name)
+
             this.closeRightSidebar()
+            drawTagsIntoTables()
         }
 
     }
@@ -139,7 +171,6 @@ export class Visits {
         tableDate.forEach((date: InterfaceElement) => {
             const separateDateAndTime = date.innerText.split('T')
             date.innerText = separateDateAndTime[0]
-            console.log(separateDateAndTime)
         })
     }
 }

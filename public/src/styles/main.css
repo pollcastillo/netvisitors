@@ -49,8 +49,9 @@ body, html, .app {
   margin-right: 16px;
   border-radius: 100px;
 }
-.avatar .feather-user {
+.avatar .fa-user {
   color: #9f9ac2;
+  font-size: 14px;
 }
 
 .user_info {
@@ -173,9 +174,11 @@ table button:hover {
   background-color: #E9EAEF;
   margin-left: 16px;
   border-radius: 100px;
+  font-size: 22px;
 }
-.app_content .user .userAvatar .feather-user {
+.app_content .user .userAvatar .fa-user {
   color: #9f9ac2;
+  font-size: 14px;
 }
 .app_content .user .nameAndCustomer {
   margin: 0 16px;
@@ -202,19 +205,18 @@ table button:hover {
   height: 32px;
   width: 32px;
   border-radius: 100px;
-  background-color: transparent;
+  background-color: rgba(233, 234, 239, 0.5);
   transition: 0.3s all ease-in-out;
 }
 .app_content .user .settings_button button:hover {
   background-color: #E9EAEF;
 }
-.app_content .user .settings_button button .feather-settings {
+.app_content .user .settings_button button .fa-gear {
   margin: 0;
   line-height: 0;
   color: #706F8E;
   padding: 0;
-  height: 22px;
-  width: 22px;
+  font-size: 18px;
 }
 
 .datatable {
@@ -339,6 +341,9 @@ table button:hover {
   padding: 4px 8px;
   border-bottom: 1px solid #E9EAEF;
 }
+.datatable_content tbody tr td .fa-solid, .datatable_content tbody tr td .fa-regular {
+  font-size: 14px;
+}
 .datatable_content tbody tr td .fa-key {
   color: transparent;
 }
@@ -348,39 +353,6 @@ table button:hover {
 .datatable_content tbody tr td:last-child {
   text-align: center;
   white-space: nowrap;
-}
-.datatable_content .tag span {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.25px;
-  width: fit-content;
-  margin: 0 auto;
-  padding: 4px 8px;
-  border-radius: 4px;
-  color: #706F8E;
-  background-color: #E9EAEF;
-}
-.datatable_content .tag_green {
-  background-color: #5DBD51 !important;
-  color: #FFFFFF !important;
-}
-.datatable_content .tag_gray {
-  background-color: #E9EAEF !important;
-  color: #706F8E !important;
-}
-.datatable_content .tag_blue {
-  background-color: #6F7ADD !important;
-  color: #FFFFFF !important;
-}
-.datatable_content .tag_yellow {
-  background-color: #F76400 !important;
-  color: #FFFFFF !important;
-}
-.datatable_content .tag_red {
-  background-color: #DB4545 !important;
-  color: #FFFFFF !important;
 }
 
 .dialog_content {
@@ -792,6 +764,53 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 14px;
 }
 
+tbody .tag span {
+  margin: 0 auto;
+}
+
+.tag span {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25px;
+  width: fit-content;
+  margin: 4px 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #706F8E;
+  background-color: #E9EAEF;
+}
+.tag_green {
+  background-color: #5DBD51 !important;
+  color: #FFFFFF !important;
+}
+.tag_gray {
+  background-color: #E9EAEF !important;
+  color: #706F8E !important;
+}
+.tag_blue {
+  background-color: #6F7ADD !important;
+  color: #FFFFFF !important;
+}
+.tag_yellow {
+  background-color: #F76400 !important;
+  color: #FFFFFF !important;
+}
+.tag_red {
+  background-color: #DB4545 !important;
+  color: #FFFFFF !important;
+}
+
+i {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #706F8E;
+  font-style: normal !important;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
 .user_settings {
   display: none;
   flex-direction: column;
@@ -926,6 +945,11 @@ h1, h2, h3, h4, h5, h6 {
   height: auto !important;
 }
 
+/*
+    ...
+    grid
+    ...
+*/
 .login_container {
   display: flex;
   align-items: center;

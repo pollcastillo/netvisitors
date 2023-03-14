@@ -141,7 +141,7 @@ export class Employees {
           <div class="entity_editor_header">
             <div class="user_info">
               <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Registrar <br><small>Empleado</small></h1>
+              <h1 class="entity_editor_title">Registrar <br><small>Cliente</small></h1>
             </div>
 
             <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
@@ -269,7 +269,7 @@ export class Employees {
                         "id": `${inputsCollection.citadel.dataset.entityid}`
                     },
                     "phone": `${inputsCollection.phoneNumer.value}`,
-                    "userType": "EMPLOYEE",
+                    "userType": "CUSTOMER",
                     "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
                 });
                 reg(raw);
@@ -319,7 +319,7 @@ export class Employees {
               <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
             </div>
 
-            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
+            <button class="btn btn_close_editor" id="close"><i data-feather="x"></i></button>
           </div>
 
           <!-- EDITOR BODY -->

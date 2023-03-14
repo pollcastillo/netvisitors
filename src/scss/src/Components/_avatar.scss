@@ -14,8 +14,9 @@
     margin-right: 16px;
     border-radius: 100px;
 
-    .feather-user {
-        color: lighten($dark, 50%)
+    .fa-user {
+        color: lighten($dark, 50%);
+        font-size: 14px;
     }
 }
 

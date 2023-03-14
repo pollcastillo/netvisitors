@@ -50,9 +50,11 @@
                 background-color: $gray;
                 margin-left: 16px;
                 border-radius: 100px;
+                font-size: 22px;
 
-                .feather-user {
-                    color: lighten($dark, 50%)
+                .fa-user {
+                    color: lighten($dark, 50%);
+                    font-size: 14px;
                 }
             }
 
@@ -85,18 +87,17 @@
                     height: 32px;
                     width: 32px;
                     border-radius: 100px;
-                    background-color: transparent;
+                    background-color: rgba($gray, 0.5);
                     transition: 0.3s all ease-in-out;
 
                     &:hover { background-color: $gray; }
 
-                    .feather-settings {
+                    .fa-gear {
                         margin: 0;
                         line-height: 0;
                         color: $slategray;
                         padding: 0;
-                        height: 22px;
-                        width: 22px;
+                        font-size: 18px;
                     }
                 }
 

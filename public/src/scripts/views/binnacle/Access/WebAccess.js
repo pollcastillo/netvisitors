@@ -12,7 +12,7 @@ const SUser = false;
 const tableLayout = `
   <div class="datatable" id="datatable">
     <div class="datatable_header">
-      <div class="datatable_title" id="datatable-title"><h1>Clientes</h1></div>
+      <div class="datatable_title" id="datatable-title"><h1>Accesos web</h1></div>
       <div class="datatable_tools" id="datatable-tools">
         <input type="search"
         class="search_input"

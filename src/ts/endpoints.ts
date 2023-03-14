@@ -146,7 +146,7 @@ export const registerEntity = async (raw: any): Endpoint => {
 
 export const filterEntities = async (user: any): Endpoint => { }
 
-export const setPassword = async (user: any): Endpoint => {
+export const setPassword = async (raw: string): Endpoint => {
   const req: Request = {
     url: 'https://backend.netliinks.com:443/rest/services/UserServiceBean/updatePassword',
     method: 'POST'
@@ -155,8 +155,12 @@ export const setPassword = async (user: any): Endpoint => {
   const requestOptions: {} = {
     method: req.method,
     headers: headers,
-    body: user,
+    body: raw,
     redirect: 'follow'
   };
 
+  fetch(req.url, requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
 }
