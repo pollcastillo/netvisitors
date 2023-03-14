@@ -73,7 +73,6 @@ export class Employees implements NUsers.IEmployees {
           <td>${client.username}</dt>
           <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
-          <td>${client.citadel.description}</dt>
           <td class="entity_options">
             <button class="button" id="edit-entity" data-entityId="${client.id}">
               <i class="fa-solid fa-pen"></i>
@@ -241,6 +240,7 @@ export class Employees implements NUsers.IEmployees {
           firstName: document.getElementById('entity-firstname'),
           lastName: document.getElementById('entity-lastname'),
           secondLastName: document.getElementById('entity-secondlastname'),
+          dni: document.getElementById('entity-dni'),
           phoneNumer: document.getElementById('entity-phone'),
           state: document.getElementById('entity-state'),
           customer: document.getElementById('entity-customer'),
@@ -271,6 +271,7 @@ export class Employees implements NUsers.IEmployees {
             "id": `${inputsCollection.citadel.dataset.entityid}`
           },
           "phone": `${inputsCollection.phoneNumer.value}`,
+          "dni": `${inputsCollection.dni.value}`,
           "userType": "EMPLOYEE",
           "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
         })
