@@ -111,10 +111,6 @@ export class Employees {
             <button class="button" id="remove-entity" data-entityId="${client.id}">
               <i class="fa-solid fa-trash"></i>
             </button>
-
-            <button class="button" id="convert-entity" data-entityId="${client.id}">
-                <i class="fa-solid fa-shield"></i>
-            </button>
           </dt>
         `;
                 table.appendChild(row);
@@ -125,7 +121,6 @@ export class Employees {
         this.import();
         this.edit(this.entityDialogContainer, data);
         this.remove();
-        this.convertToSuper();
     }
     register() {
         // register entity
@@ -144,7 +139,7 @@ export class Employees {
               <h1 class="entity_editor_title">Registrar <br><small>Empleado</small></h1>
             </div>
 
-            <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
+            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
           </div>
 
           <!-- EDITOR BODY -->
@@ -166,6 +161,13 @@ export class Employees {
 
             <div class="material_input">
               <input type="text"
+                id="entity-dni"
+                maxlength="10" autocomplete="none">
+              <label for="entity-dni">Cédula</label>
+            </div>
+
+            <div class="material_input">
+              <input type="text"
                 id="entity-phone"
                 maxlength="10" autocomplete="none">
               <label for="entity-phone">Teléfono</label>
@@ -183,21 +185,21 @@ export class Employees {
               </div>
             </div>
 
-            <div class="material_input_select">
+            <div class="material_input_select" style="display: none">
               <label for="entity-business">Empresa</label>
               <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
               <div id="input-options" class="input_options">
               </div>
             </div>
 
-            <div class="material_input_select">
+            <div class="material_input_select" style="display: none">
               <label for="entity-citadel">Ciudadela</label>
               <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
               <div id="input-options" class="input_options">
               </div>
             </div>
 
-            <div class="material_input_select">
+            <div class="material_input_select" style="display: none">
               <label for="entity-customer">Cliente</label>
               <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
               <div id="input-options" class="input_options">
@@ -211,7 +213,7 @@ export class Employees {
               </div>
             </div>
 
-            <br><br>
+            <br>
             <div class="material_input">
               <input type="password" id="tempPass" autocomplete="false">
               <label for="tempPass">Contraseña temporal</label>
@@ -325,18 +327,27 @@ export class Employees {
           <!-- EDITOR BODY -->
           <div class="entity_editor_body">
             <div class="material_input">
-              <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}">
+              <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}" readonly>
               <label for="entity-firstname">Nombre</label>
             </div>
 
             <div class="material_input">
-              <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}">
+              <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}" reandonly>
               <label for="entity-lastname">Apellido</label>
             </div>
 
             <div class="material_input">
-              <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}">
+              <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}" readonly>
               <label for="entity-secondlastname">2do Apellido</label>
+            </div>
+
+            <div class="material_input">
+              <input type="text"
+                id="entity-dni"
+                class="input_filled"
+                maxlength="10"
+                value="${data.dni}" readonly>
+              <label for="entity-dni">Cédula</label>
             </div>
 
             <div class="material_input">
@@ -459,15 +470,6 @@ export class Employees {
                     new CloseDialog().x(dialogContent, this.dialogContainer);
                     this.render();
                 };
-            });
-        });
-    }
-    convertToSuper() {
-        const convert = document.querySelectorAll('#convert-entity');
-        convert.forEach((convert) => {
-            const entityId = convert.dataset.entityid;
-            convert.addEventListener('click', () => {
-                alert('Converting...');
             });
         });
     }

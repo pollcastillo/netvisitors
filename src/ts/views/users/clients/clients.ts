@@ -24,7 +24,7 @@ const getUsers = async (userType: string, superUser: boolean): Promise<void> => 
 
 }
 
-export class Clients implements NUsers.IUser {
+export class Clients implements NUsers.IClients {
   private dialogContainer: InterfaceElement =
     document.getElementById('app-dialogs')
 

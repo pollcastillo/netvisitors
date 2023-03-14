@@ -96,7 +96,7 @@ const getUsers = async (userType: string, superUser: boolean): Promise<void> => 
   return data
 }
 
-export class WebAccess implements NUsers.IUser {
+export class WebAccess {
   private dialogContainer: InterfaceElement =
     document.getElementById('app-dialogs')
 

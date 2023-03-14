@@ -78,6 +78,12 @@ export const renderSidebar = (): void => {
                     <i class="fa-regular fa-marker"></i> Control de asistencia
                   </span>
                 </div>
+
+                <div class="sidebar_subitem" id="render-webAccess">
+                  <span class="sidebar_subitem_label">
+                    <i class="fa-regular fa-computer"></i> Inicios de sesión
+                  </span>
+                </div>
               </div>
             </div>
 
