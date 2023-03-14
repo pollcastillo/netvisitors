@@ -40,7 +40,6 @@ export class Employees {
         };
         this.generateUserName = async () => {
             const firstName = document.getElementById('entity-firstname');
-            const secondName = document.getElementById('');
             const lastName = document.getElementById('entity-lastname');
             const secondLastName = document.getElementById('entity-secondlastname');
             const clientName = document.getElementById('entity-customer');

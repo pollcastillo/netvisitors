@@ -305,7 +305,6 @@ export class Employees implements NUsers.IEmployees {
 
   private generateUserName = async (): Promise<void> => {
     const firstName: InterfaceElement = document.getElementById('entity-firstname')
-    const secondName: InterfaceElement = document.getElementById('')
     const lastName: InterfaceElement = document.getElementById('entity-lastname')
     const secondLastName: InterfaceElement = document.getElementById('entity-secondlastname')
     const clientName: InterfaceElement = document.getElementById('entity-customer')
