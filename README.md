@@ -23,75 +23,88 @@ phrase: "Processin"
 
 ## 200
 
-OK
+**OK**
 code: 200
 phrase: "OK"
 
-CREATED
+**CREATED**
 code: 201
 phrase: "Created"
 
-ACCEPTED
+**ACCEPTED**
 code: 202
 phrase: "Accepted"
 
-NON_AUTHORITATIVE_INFORMATION
+**NON_AUTHORITATIVE_INFORMATION**
 code: 203
 phrase: "Non Authoritative Information"
 
-NO_CONTENT
+**NO_CONTENT**
 code: 204
 phrase: "No Content"
 
-RESET_CONTENT
+**RESET_CONTENT**
 code: 205
 phrase: "Reset Content"
 
-PARTIAL_CONTENT
+**PARTIAL_CONTENT**
 code: 206
 phrase: "Partial Content"
 
-MULTI_STATUS
+**MULTI_STATUS**
 code: 207
 phrase: "Multi-Status"
 
-MULTIPLE_CHOICES
+## 300
+
+**MULTIPLE_CHOICES**
 code: 300
 phrase: "Multiple Choices"
 
-MOVED_PERMANENTLY
+**MOVED_PERMANENTLY**
 code: 301
 phrase: "Moved Permanently"
 
-MOVED_TEMPORARILY
+**MOVED_TEMPORARILY**
 code: 302
 phrase: "Moved Temporarily"
 
-SEE_OTHER
+**SEE_OTHER**
 code: 303
 phrase: "See Other"
 
-NOT_MODIFIED
+**NOT_MODIFIED**
 code: 304
 phrase: "Not Modified"
 
-USE_PROXY
+**USE_PROXY**
 code: 305
 phrase: "Use Proxy"
 
-TEMPORARY_REDIRECT
+**TEMPORARY_REDIRECT**
 code: 307
 phrase: "Temporary Redirect"
 
-PERMANENT_REDIRECT code: 308, phrase: "Permanent Redirect"
+**PERMANENT_REDIRECT**
+code: 308
+phrase: "Permanent Redirect"
 
-BAD_REQUEST code: 400, phrase: "Bad Request"
+## 400
 
-UNAUTHORIZED code: 401, phrase: "Unauthorized"
+**BAD_REQUEST**
+code: 400
+phrase: "Bad Request"
 
-PAYMENT_REQUIRED code: 402, phrase: "Payment Required"
+**UNAUTHORIZED**
+code: 401
+phrase: "Unauthorized"
 
-FORBIDDEN code: 403, phrase: "Forbidden"
+**PAYMENT_REQUIRED**
+code: 402
+phrase: "Payment Required"
+
+**FORBIDDEN**
+code: 403, phrase: "Forbidden"
 
 NOT_FOUND code: 404, phrase: "Not Found"
 
@@ -142,6 +155,8 @@ TOO_MANY_REQUESTS code: 429, phrase: "Too Many Requests"
 REQUEST_HEADER_FIELDS_TOO_LARGE code: 431, phrase: "Request Header Fields Too Large"
 
 UNAVAILABLE_FOR_LEGAL_REASONS code: 451, phrase: "Unavailable For Legal Reasons"
+
+## 500
 
 INTERNAL_SERVER_ERROR code: 500, phrase: "Internal Server Error"
 
