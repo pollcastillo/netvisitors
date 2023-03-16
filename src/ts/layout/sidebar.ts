@@ -12,6 +12,8 @@ import { Visits } from "../views/binnacle/Visits/VisitsView.js"
 import { Employees } from "../views/users/employees/employees.js"
 import { Contractors } from "../views/users/contractors/Contractors.js"
 import { AssistControl } from "../views/binnacle/AssistControl/AssistControl.js"
+import { Departments } from "../views/Departments/Departments.js"
+import { SuperUsers } from "../views/users/SuperUsers/SuperUsers.js"
 
 export const renderSidebar = (): void => {
   const sidebar: InterfaceElement = document.getElementById('app-sidebar')
@@ -69,7 +71,7 @@ export const renderSidebar = (): void => {
 
                 <div class="sidebar_subitem" id="render-visits">
                   <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-user"></i> Visits
+                    <i class="fa-regular fa-user"></i> Visitas
                   </span>
                 </div>
 
@@ -81,13 +83,13 @@ export const renderSidebar = (): void => {
               </div>
             </div>
 
-            <div class="sidebar_item">
+            <div class="sidebar_item" id="render-departments">
               <span class="sidebar_item_label">
-                <i class="fa-regular fa-building"></i> <div class="label">Empresas</div>
+                <i class="fa-regular fa-building"></i> <div class="label">Departamentos</div>
               </span>
             </div>
 
-            <div class="sidebar_item">
+            <div class="sidebar_item" id="render-superusers">
               <span class="sidebar_item_label">
                 <i class="fa-regular fa-shield"></i> <div class="label">Superusuarios</div>
               </span>
@@ -153,6 +155,14 @@ const renders = () => {
   document.getElementById('render-assistControl')?.addEventListener('click', (): void => {
     new AssistControl().render()
   })
+  // render Deparments
+  document.getElementById('render-deparments')?.addEventListener('click', (): void => {
+    new Departments().render()
+  })
+  // render Superusers
+  document.getElementById('render-superusers')?.addEventListener('click', (): void => {
+    new SuperUsers().render()
+  })
 }
 
-// setNewPassword()
+new SuperUsers().render()
