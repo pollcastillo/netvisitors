@@ -140,3 +140,55 @@ export const fixDate = () => {
         date.innerText = DT + ' ' + Time;
     });
 };
+export class filterDataByHeaderType {
+    constructor() {
+        this.datatable = document.getElementById('datatable');
+        this.filter = () => {
+            this.datatable.onclick = (e) => {
+                if (e.target.tagName != "SPAN")
+                    return;
+                let span = e.target;
+                let th = e.target.parentNode;
+                const THead = this.datatable.querySelectorAll('tr th span');
+                THead.forEach((header) => {
+                    header.classList.remove('datatable_header_selected');
+                });
+                e.target.classList.add('datatable_header_selected');
+                this.sortGrid(th.cellIndex, span.dataset.type);
+            };
+        };
+        this.sortGrid = (colNum, type) => {
+            let tbody = this.datatable.querySelector('tbody');
+            let rowsArray = Array.from(tbody.rows);
+            let compare;
+            switch (type) {
+                case 'name':
+                    compare = (rowA, rowB) => {
+                        return rowA.cells[colNum].innerHTML >
+                            rowB.cells[colNum].innerHTML ? 1 : -1;
+                    };
+                    break;
+                case 'id':
+                    compare = (rowA, rowB) => {
+                        return rowA.cells[colNum].innerHTML >
+                            rowB.cells[colNum].innerHTML ? 1 : -1;
+                    };
+                    break;
+                case 'status':
+                    compare = (rowA, rowB) => {
+                        return rowA.cells[colNum].innerHTML >
+                            rowB.cells[colNum].innerHTML ? 1 : -1;
+                    };
+                    break;
+                case 'citadel':
+                    compare = (rowA, rowB) => {
+                        return rowA.cells[colNum].innerHTML >
+                            rowB.cells[colNum].innerHTML ? 1 : -1;
+                    };
+                    break;
+            }
+            rowsArray.sort(compare);
+            tbody.append(...rowsArray);
+        };
+    }
+}

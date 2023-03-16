@@ -13,7 +13,7 @@ $TableBorder: 1px solid darken($gray, 10%);
   background-color: $white;
   border: 1px solid $gray;
   border-radius: 16px;
-  box-shadow: rgba(black, 0.24) 0 0 10px -5px;
+  box-shadow: $lightShadow1;
   overflow: hidden;
 
   &_container {
@@ -29,13 +29,12 @@ $TableBorder: 1px solid darken($gray, 10%);
     align-items: center;
     justify-content: space-between;
     padding: 16px;
-    // position: relative;
 
     &_selected {
-      background-color: lighten($blue, 15%);
+      background-color: lighten($blue, 10%) !important;
       color: $white !important;
 
-      .feather-filter {
+      .fa-regular {
         color: $white !important;
       }
     }

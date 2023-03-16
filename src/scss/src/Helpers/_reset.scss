@@ -12,6 +12,10 @@
     -webkit-font-smoothing: antialiased;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 body, html, .app, input, a, p, button, select, table, td, tr, th {

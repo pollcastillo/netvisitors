@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"name": "Root",
+			"path": "./",
+		},
+		{
+			"name": "Scripts",
+			"path": "./src/ts"
+		},
+		{
+			"name": "Styles",
+			"path": "./src/scss"
+		},
+		{
+			"name": "App Views",
+			"path": "./src/ts/views"
+		}
+	],
+	"settings": {
+		"window.zoomLevel": 0,
+		"files.autoSave": "afterDelay",
+		"editor.fontSize": 12
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [],
+		"compounds": []
+	},
+}

@@ -11,7 +11,7 @@
     right: 0;
     position: absolute;
     opacity: 1;
-    background-color: rgba(black, 0.5);
+    background-color: rgba($dark, 0.4);
     animation-name: ShowContainer;
     animation-duration: 350ms;
     z-index: 100;
@@ -33,7 +33,7 @@
     max-width: 400px;
     background-color: $white;
     height: 100%;
-    box-shadow: 0px 5px 10px rgba(black, 0.2);
+    box-shadow: $lightShadow1;
     transform: translateX(0px);
     right: 0;
     position: absolute;

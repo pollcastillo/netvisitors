@@ -13,12 +13,12 @@
     position: absolute;
     top: 80px;
     right: 32px;
-    box-shadow: 0 2px 8px rgba(black, 0.2);
     border-radius: 10px 10px 10px 10px;
     background-color: $white;
     padding: 22px;
     opacity: 1;
     z-index: 100;
+    box-shadow: $lightShadow5;
 
     &_visible {
         display: flex;

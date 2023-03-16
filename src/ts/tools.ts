@@ -158,3 +158,60 @@ export const fixDate = () => {
     })
 
 }
+
+export class filterDataByHeaderType {
+    private readonly datatable: InterfaceElement = document.getElementById('datatable')
+
+    public filter = (): void => {
+
+        this.datatable.onclick = (e: any) => {
+            if (e.target.tagName != "SPAN") return
+            let span = e.target
+            let th = e.target.parentNode
+
+            const THead = this.datatable.querySelectorAll('tr th span')
+            THead.forEach((header: InterfaceElement) => {
+                header.classList.remove('datatable_header_selected')
+            })
+
+            e.target.classList.add('datatable_header_selected')
+            this.sortGrid(th.cellIndex, span.dataset.type)
+        }
+    }
+
+    private sortGrid = (colNum: number, type: string): void => {
+        let tbody: any = this.datatable.querySelector('tbody')
+        let rowsArray = Array.from(tbody.rows)
+        let compare: any
+
+        switch (type) {
+            case 'name':
+                compare = (rowA: any, rowB: any) => {
+                    return rowA.cells[colNum].innerHTML >
+                        rowB.cells[colNum].innerHTML ? 1 : -1
+                }
+                break
+            case 'id':
+                compare = (rowA: any, rowB: any) => {
+                    return rowA.cells[colNum].innerHTML >
+                        rowB.cells[colNum].innerHTML ? 1 : -1
+                }
+                break
+            case 'status':
+                compare = (rowA: any, rowB: any) => {
+                    return rowA.cells[colNum].innerHTML >
+                        rowB.cells[colNum].innerHTML ? 1 : -1
+                }
+                break
+            case 'citadel':
+                compare = (rowA: any, rowB: any) => {
+                    return rowA.cells[colNum].innerHTML >
+                        rowB.cells[colNum].innerHTML ? 1 : -1
+                }
+                break
+        }
+
+        rowsArray.sort(compare)
+        tbody.append(...rowsArray)
+    }
+}

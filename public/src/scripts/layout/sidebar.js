@@ -1,11 +1,11 @@
-import { WebAccess } from "../views/binnacle/Access/WebAccess.js";
 // Views
 import { Dashboard } from "../views/dashboard/dashboard.js";
 import { Notes } from "../views/binnacle/Notes/NotesView.js";
 import { Clients } from "../views/users/clients/clients.js";
-import { Visits } from "../views/binnacle/Visits.ts/VisitsView.js";
+import { Visits } from "../views/binnacle/Visits/VisitsView.js";
 import { Employees } from "../views/users/employees/employees.js";
 import { Contractors } from "../views/users/contractors/Contractors.js";
+import { AssistControl } from "../views/binnacle/AssistControl/AssistControl.js";
 export const renderSidebar = () => {
     const sidebar = document.getElementById('app-sidebar');
     sidebar.innerHTML = `
@@ -71,12 +71,6 @@ export const renderSidebar = () => {
                     <i class="fa-regular fa-marker"></i> Control de asistencia
                   </span>
                 </div>
-
-                <div class="sidebar_subitem" id="render-webAccess">
-                  <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-computer"></i> Inicios de sesión
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -130,9 +124,6 @@ const renders = () => {
     document.getElementById('render-contractors')?.addEventListener('click', () => {
         new Contractors().render();
     });
-    document.getElementById('render-webAccess')?.addEventListener('click', () => {
-        new WebAccess().render();
-    });
     // render notes
     document.getElementById('render-notes')?.addEventListener('click', () => {
         new Notes().render();
@@ -143,8 +134,7 @@ const renders = () => {
     });
     // render AssistControl
     document.getElementById('render-assistControl')?.addEventListener('click', () => {
-        new WebAccess().render();
+        new AssistControl().render();
     });
 };
-new Clients().render();
 // setNewPassword()

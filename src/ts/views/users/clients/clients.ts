@@ -5,7 +5,7 @@
 //
 import { deleteEntity, getEntitiesData, getEntityData, registerEntity, setPassword, updateEntity } from "../../../endpoints.js"
 import { NUsers } from "../../../namespaces.js"
-import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog } from "../../../tools.js"
+import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog, filterDataByHeaderType } from "../../../tools.js"
 import { InterfaceElement } from "../../../types.js"
 import { Config } from "../../../Configs.js"
 import { tableLayout } from "./Layout.js"
@@ -25,13 +25,13 @@ const getUsers = async (userType: string, superUser: boolean): Promise<void> => 
 }
 
 export class Clients implements NUsers.IClients {
-  private dialogContainer: InterfaceElement =
+  private readonly dialogContainer: InterfaceElement =
     document.getElementById('app-dialogs')
 
-  private entityDialogContainer: InterfaceElement =
+  private readonly entityDialogContainer: InterfaceElement =
     document.getElementById('entity-editor-container')
 
-  private content: InterfaceElement =
+  private readonly content: InterfaceElement =
     document.getElementById('datatable-container')
 
   public async render(): Promise<void> {
@@ -45,6 +45,7 @@ export class Clients implements NUsers.IClients {
 
     this.searchEntity(tableBody, data)
     console.log(data)
+    new filterDataByHeaderType().filter()
   }
 
   public load(table: InterfaceElement, currentPage: number, data: any) {
@@ -460,6 +461,11 @@ export class Clients implements NUsers.IClients {
       inputSelect('Business', 'entity-business')
       this.close()
       UUpdate(entityID)
+
+      this.entityDialogContainer.addEventListener('click', (): void => {
+        this.entityDialogContainer.innerHTML = ''
+        this.entityDialogContainer.style.display = 'none'
+      })
     }
 
     const UUpdate = async (entityId: any): Promise<void> => {
@@ -545,7 +551,6 @@ export class Clients implements NUsers.IClients {
     })
   }
 }
-
 
 export const setNewPassword: any = async (): Promise<void> => {
   const users: any = await getEntitiesData('User')
