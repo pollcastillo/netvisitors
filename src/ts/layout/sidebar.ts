@@ -83,7 +83,7 @@ export const renderSidebar = (): void => {
               </div>
             </div>
 
-            <div class="sidebar_item" id="render-departments">
+            <div class="sidebar_item" id="render-deparments">
               <span class="sidebar_item_label">
                 <i class="fa-regular fa-building"></i> <div class="label">Departamentos</div>
               </span>
@@ -157,6 +157,7 @@ const renders = () => {
   })
   // render Deparments
   document.getElementById('render-deparments')?.addEventListener('click', (): void => {
+    console.log('click en departamentos')
     new Departments().render()
   })
   // render Superusers
@@ -164,5 +165,3 @@ const renders = () => {
     new SuperUsers().render()
   })
 }
-
-new SuperUsers().render()

@@ -428,4 +428,6 @@ export const setNewPassword = async () => {
     });
     console.group('Nuevos usuarios');
     console.log(FNewUsers);
+    console.time(FNewUsers);
+    console.groupEnd();
 };

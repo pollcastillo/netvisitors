@@ -730,6 +730,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   max-width: 100%;
   overflow-y: scroll;
+  padding: 2px;
 }
 .app_sidebar_container {
   width: 100%;
@@ -739,7 +740,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   width: 100%;
   color: #FFFFFF;
-  padding: 16px 16px;
+  padding: 16px;
   margin: 8px 0;
   border-radius: 4px;
   cursor: pointer;
@@ -748,11 +749,10 @@ h1, h2, h3, h4, h5, h6 {
 .app .sidebar_item span .fa-regular {
   font-size: 22px;
   margin-right: 8px;
+  color: #FFFFFF;
 }
-.app .sidebar_item span .feather {
-  height: 22px;
-  width: 22px;
-  margin-right: 8px;
+.app .sidebar_item :hover {
+  background-color: #26233A;
 }
 .app .sidebar_item .sidebar_subitems {
   display: none;
@@ -763,6 +763,7 @@ h1, h2, h3, h4, h5, h6 {
 .app .sidebar_item.isActive {
   background-color: #1c192a;
   color: #E9EAEF;
+  border-radius: 4px;
 }
 .app .sidebar_item.isActive:hover {
   background-color: #191727;
@@ -871,41 +872,56 @@ i {
   grid-template-columns: 1fr 250px;
   gap: 22px;
 }
-.dashboard_datefilter {
+.dashboard_buttonCluster {
   padding: 16px;
   background-color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  margin: 16px 0;
   display: flex;
   justify-content: space-between;
+  border-radius: 8px;
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
 }
-.dashboard_datefilter_button {
+.dashboard_buttonCluster-button {
   padding: 16px;
   font-size: 16px;
   text-align: left;
   color: #FFFFFF;
-  background-color: #21698C;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #706F8E;
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.04), 0 2px 4px 0 rgba(112, 111, 142, 0.16);
+  transition: 0.3s all ease;
 }
-.dashboard_datefilter_button span {
+.dashboard_buttonCluster-button:hover {
+  box-shadow: 0 2px 4px 0 rgba(38, 35, 58, 0.04), 0 8px 16px 0 rgba(112, 111, 142, 0.16);
+  background-color: #2678a1;
+}
+.dashboard_buttonCluster-button:active {
+  background-color: #21698C;
+}
+.dashboard_buttonCluster-button span {
   margin-right: 22px;
   white-space: nowrap;
 }
+.dashboard_buttonCluster-button .fa-solid {
+  color: #FFFFFF;
+  font-size: 32px;
+}
+.dashboard_buttonCluster_buttonActive {
+  background-color: #21698C;
+}
 .dashboard_news_and_notes .news {
   padding: 16px;
+  font-size: 16px;
+  color: #26233A;
   background-color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  margin: 16px 0;
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
 }
 .dashboard_news_and_notes .notes {
   display: block;
   margin: 32px 0;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 16px;
   background-color: #FEFCC2;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
 }
 .dashboard_news_and_notes .notes h1 {
   font-size: 22px;

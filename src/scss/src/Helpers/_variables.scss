@@ -31,6 +31,14 @@ $sidebarBackgroundColor: $dark;
 $colorLightShadow1: $dark;
 $colorLightShadow2: $slategray;
 
+// Shadows index
+// 1. Cards and pressed buttons
+// 2. Buttons and notification bandges
+// 3. Navigation Menu and navigation bar
+// 4. Card raised and button raised
+// 5. Picker and popover
+// 6. Modals and dialogues
+
 // Cards and pressed Buttons
 $lightShadow1: 0 0 1px 0 rgba($colorLightShadow1, 0.08), 0 0.5px 2px 0 rgba($colorLightShadow2, 0.16);
 // Buttons and Notification badges

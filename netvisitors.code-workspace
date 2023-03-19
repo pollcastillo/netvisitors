@@ -19,8 +19,8 @@
 	],
 	"settings": {
 		"window.zoomLevel": 0,
-		"files.autoSave": "afterDelay",
-		"editor.fontSize": 12
+		"editor.fontSize": 12,
+		"liveServer.settings.multiRootWorkspaceName": "Root"
 	},
 	"launch": {
 		"version": "0.2.0",

@@ -488,5 +488,6 @@ export const setNewPassword: any = async (): Promise<void> => {
   })
   console.group('Nuevos usuarios')
   console.log(FNewUsers)
-
+  console.time(FNewUsers)
+  console.groupEnd()
 }

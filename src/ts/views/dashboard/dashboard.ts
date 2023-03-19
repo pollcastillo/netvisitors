@@ -40,29 +40,29 @@ export class Dashboard implements NDashbd.IRender {
 
         <!-- START LEFT SECTION -->
         <div class="dashboard_stadistics">
-          <div class="dashboard_datefilter">
-            <button class="dashboard_datefilter_button"
+          <div class="dashboard_buttonCluster">
+            <button class="dashboard_buttonCluster-button"
               id="daily-chart-button">
               <span>Vista de <br><b>hoy</b></span>
-              <i data-feather="calendar"></i>
+              <i class="fa-solid fa-calendar-day"></i>
             </button>
 
-            <button class="dashboard_datefilter_button"
+            <button class="dashboard_buttonCluster-button"
               id="weekly-chart-button">
               <span>Vista por <br><b>semana</b></span>
-              <i data-feather="calendar"></i>
+              <i class="fa-solid fa-calendar-week"></i>
             </button>
 
-            <button class="dashboard_datefilter_button"
+            <button class="dashboard_buttonCluster-button"
               id="monthly-chart-button">
               <span>Vista por <br><b>mes</b></span>
-              <i data-feather="calendar"></i>
+              <i class="fa-solid fa-calendar-days"></i>
             </button>
 
-            <button class="dashboard_datefilter_button"
+            <button class="dashboard_buttonCluster-button"
               id="yearly-chart-button">
               <span>Vista por <br><b>año</b></span>
-              <i data-feather="calendar"></i>
+              <i class="fa-solid fa-calendar-lines"></i>
             </button>
           </div>
 
@@ -163,6 +163,17 @@ export class Dashboard implements NDashbd.IRender {
     `
 
     renderDailyChart()
+
+    const buttonCluster: InterfaceElement = document.querySelectorAll('.dashboard_buttonCluster-button')
+    buttonCluster.forEach((button: InterfaceElement) => {
+      button.addEventListener('click', (): void => {
+        buttonCluster.forEach((button: InterfaceElement) => {
+          button.classList.remove('dashboard_buttonCluster_buttonActive')
+        })
+
+        button.classList.add('dashboard_buttonCluster_buttonActive')
+      })
+    })
 
     const dailyChart: InterfaceElement =
       document.getElementById('daily-chart-button')
