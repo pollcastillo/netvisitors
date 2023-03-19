@@ -752,13 +752,13 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
 }
 .app .sidebar_item :hover {
-  background-color: #26233A;
+  background-color: #373253;
 }
 .app .sidebar_item .sidebar_subitems {
   display: none;
 }
 .app .sidebar_item .sidebar_subitems .isActive {
-  background-color: #302d4a;
+  background-color: #50497a;
 }
 .app .sidebar_item.isActive {
   background-color: #1c192a;

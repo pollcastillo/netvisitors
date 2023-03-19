@@ -37,14 +37,14 @@
 
     }
     :hover {
-      background-color: $dark;
+      background-color: lighten($dark, 8%);
     }
 
     .sidebar_subitems {
       display: none;
 
       .isActive {
-        background-color: lighten($dark, 5%);
+        background-color: lighten($dark, 20%);
       }
     }
 
