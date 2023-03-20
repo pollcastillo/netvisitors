@@ -19,6 +19,8 @@ const connectionHeader = {
     Cookie: "JSESSIONID=CDD208A868EAABD1F523BB6F3C8946AF",
 }
 
+const platformSystem: string = 'clients'
+
 const reqOP: Request = {
     url: 'https://backend.netliinks.com:443/oauth/token',
     method: 'POST'

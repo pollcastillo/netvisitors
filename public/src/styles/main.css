@@ -871,6 +871,7 @@ i {
   display: grid;
   grid-template-columns: 1fr 250px;
   gap: 22px;
+  margin: 12px 0 0 0;
 }
 .dashboard_buttonCluster {
   padding: 16px;
@@ -885,13 +886,13 @@ i {
   font-size: 16px;
   text-align: left;
   color: #FFFFFF;
-  background-color: #706F8E;
+  background-color: #8c8ba5;
   box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.04), 0 2px 4px 0 rgba(112, 111, 142, 0.16);
   transition: 0.3s all ease;
 }
 .dashboard_buttonCluster-button:hover {
   box-shadow: 0 2px 4px 0 rgba(38, 35, 58, 0.04), 0 8px 16px 0 rgba(112, 111, 142, 0.16);
-  background-color: #2678a1;
+  background-color: #319bce;
 }
 .dashboard_buttonCluster-button:active {
   background-color: #21698C;

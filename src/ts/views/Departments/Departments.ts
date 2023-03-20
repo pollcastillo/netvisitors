@@ -13,12 +13,11 @@ const currentPage = Config.currentPage
 
 const getDepartments = async (): Promise<void> => {
   const department: any = await getEntitiesData('Department')
-  console.log(department)
   return department
 
 }
 
-export class Departments implements NUsers.IContractors {
+export class Departments {
   private dialogContainer: InterfaceElement =
     document.getElementById('app-dialogs')
 
@@ -40,7 +39,7 @@ export class Departments implements NUsers.IContractors {
     this.searchEntity(tableBody, data)
   }
 
-  public load(table: InterfaceElement, currentPage: number, data: any) {
+  public load(table: InterfaceElement, currentPage: number, data?: any) {
     table.innerHTML = ''
     currentPage--
     let start: number = tableRows * currentPage
@@ -69,12 +68,10 @@ export class Departments implements NUsers.IContractors {
           </dt>
         `
         table.appendChild(row)
-        drawTagsIntoTables()
       }
     }
 
     this.register()
-    this.edit(this.entityDialogContainer, data)
     this.remove()
   }
 
@@ -104,10 +101,10 @@ export class Departments implements NUsers.IContractors {
     // register entity
     const openEditor: InterfaceElement = document.getElementById('new-entity')
     openEditor.addEventListener('click', (): void => {
-      renderInterface('User')
+      renderInterface()
     })
 
-    const renderInterface = async (entities: string): Promise<void> => {
+    const renderInterface = async (): Promise<void> => {
       this.entityDialogContainer.innerHTML = ''
       this.entityDialogContainer.style.display = 'block'
       this.entityDialogContainer.innerHTML = `
@@ -115,7 +112,7 @@ export class Departments implements NUsers.IContractors {
           <div class="entity_editor_header">
             <div class="user_info">
               <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Registrar <br><small>Contratista</small></h1>
+              <h1 class="entity_editor_title">Registrar <br><small>Departamento</small></h1>
             </div>
 
             <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
@@ -124,51 +121,8 @@ export class Departments implements NUsers.IContractors {
           <!-- EDITOR BODY -->
           <div class="entity_editor_body">
             <div class="material_input">
-              <input type="text" id="entity-firstname" autocomplete="none">
-              <label for="entity-firstname">Nombre</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text" id="entity-lastname" autocomplete="none">
-              <label for="entity-lastname">Apellido</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text" id="entity-secondlastname" autocomplete="none">
-              <label for="entity-secondlastname">2do Apellido</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text"
-                id="entity-phone"
-                maxlength="10" autocomplete="none">
-              <label for="entity-phone">Teléfono</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
-              <label for="entity-username"><i class="input_locked fa-solid fa-lock"></i> Nombre de usuario</label>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-business">Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-citadel">Ciudadela</label>
-              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
+              <input type="text" id="entity-name" autocomplete="none">
+              <label for="entity-name">Nombre</label>
             </div>
 
             <div class="material_input_select">
@@ -177,20 +131,6 @@ export class Departments implements NUsers.IContractors {
               <div id="input-options" class="input_options">
               </div>
             </div>
-
-            <div class="material_input_select">
-              <label for="entity-department">Departamento</label>
-              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" autocomplete="false">
-              <label for="tempPass">Contraseña temporal</label>
-            </div>
-
           </div>
           <!-- END EDITOR BODY -->
 
@@ -202,205 +142,33 @@ export class Departments implements NUsers.IContractors {
 
       // @ts-ignore
       inputObserver()
-      inputSelect('Citadel', 'entity-citadel')
       inputSelect('Customer', 'entity-customer')
-      inputSelect('State', 'entity-state')
-      inputSelect('Department', 'entity-department')
-      inputSelect('Business', 'entity-business')
       this.close()
 
 
       const registerButton: InterfaceElement = document.getElementById('register-entity')
       registerButton.addEventListener('click', (): void => {
         const inputsCollection: any = {
-          firstName: document.getElementById('entity-firstname'),
-          lastName: document.getElementById('entity-lastname'),
-          secondLastName: document.getElementById('entity-secondlastname'),
-          phoneNumer: document.getElementById('entity-phone'),
-          state: document.getElementById('entity-state'),
+          name: document.getElementById('entity-name'),
           customer: document.getElementById('entity-customer'),
-          username: document.getElementById('entity-username'),
-          citadel: document.getElementById('entity-citadel'),
-          temporalPass: document.getElementById('tempPass')
         }
 
         const raw = JSON.stringify({
-          "lastName": `${inputsCollection.lastName.value}`,
-          "secondLastName": `${inputsCollection.secondLastName.value}`,
-          "isSuper": false,
-          "email": "",
-          "temp": `${inputsCollection.temporalPass.value}`,
-          "isWebUser": false,
-          "active": true,
-          "firstName": `${inputsCollection.firstName.value}`,
-          "state": {
-            "id": `${inputsCollection.state.dataset.entityid}`
-          },
-          "contractor": {
-            "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
-          },
+          "name": `${inputsCollection.name.value}`,
           "customer": {
             "id": `${inputsCollection.customer.dataset.optionid}`
-          },
-          "citadel": {
-            "id": `${inputsCollection.citadel.dataset.entityid}`
-          },
-          "phone": `${inputsCollection.phoneNumer.value}`,
-          "userType": "CONTRACTOR",
-          "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
+          }
         })
-        reg(raw)
+
+        registerEntity(raw, 'Department')
+        setTimeout(() => {
+          new Departments().render()
+        }, 1000)
       })
 
     }
 
     const reg = async (raw: any) => {
-      console.log(raw)
-      registerEntity(raw)
-        .then(res => {
-          console.log('done')
-          this.render()
-          setNewPassword()
-        })
-
-      const setNewPassword: any = async (): Promise<void> => {
-        const users: any = await getEntitiesData('User')
-        const FNewUsers: any = users.filter((data: any) => data.isSuper === true)
-
-        FNewUsers.forEach((newUser: any) => {
-
-        })
-
-        console.log(FNewUsers)
-
-      }
-    }
-  }
-
-  public edit(container: InterfaceElement, data: any) {
-    // Edit entity
-    const edit: InterfaceElement = document.querySelectorAll('#edit-entity')
-    edit.forEach((edit: InterfaceElement) => {
-      const entityId = edit.dataset.entityid
-      edit.addEventListener('click', (): void => {
-        RInterface('User', entityId)
-      })
-    })
-
-    const RInterface = async (entities: string, entityID: string): Promise<void> => {
-      const data: any = await getEntityData(entities, entityID)
-      this.entityDialogContainer.innerHTML = ''
-      this.entityDialogContainer.style.display = 'block'
-      this.entityDialogContainer.innerHTML = `
-        <div class="entity_editor" id="entity-editor">
-          <div class="entity_editor_header">
-            <div class="user_info">
-              <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
-            </div>
-
-            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
-          </div>
-
-          <!-- EDITOR BODY -->
-          <div class="entity_editor_body">
-            <div class="material_input">
-              <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}">
-              <label for="entity-firstname">Nombre</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}">
-              <label for="entity-lastname">Apellido</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}">
-              <label for="entity-secondlastname">2do Apellido</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text"
-                id="entity-phone"
-                class="input_filled"
-                maxlength="10"
-                value="${data.phone}">
-              <label for="entity-phone">Teléfono</label>
-            </div>
-
-            <div class="material_input">
-              <input type="text" id="entity-username" class="input_filled" value="${data.username}" readonly>
-              <label for="entity-username">Nombre de usuario</label>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-business">Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-citadel">Ciudadela</label>
-              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-customer">Cliente</label>
-              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <div class="material_input_select">
-              <label for="entity-department">Departamento</label>
-              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
-
-            <br><br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" >
-              <label for="tempPass">Clave temporal</label>
-            </div>
-
-          </div>
-          <!-- END EDITOR BODY -->
-
-          <div class="entity_editor_footer">
-            <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
-          </div>
-        </div>
-      `
-
-
-      inputObserver()
-      inputSelect('Business', 'entity-citadel')
-      inputSelect('Customer', 'entity-customer')
-      inputSelect('State', 'entity-state', data.state.name)
-      inputSelect('Department', 'entity-department')
-      inputSelect('Business', 'entity-business')
-      this.close()
-      UUpdate(entityID)
-    }
-
-    const UUpdate = async (entityId: any): Promise<void> => {
-      const updateButton: InterfaceElement =
-        document.getElementById('update-changes')
-
-      updateButton.addEventListener('click', () => {
-        console.log('updating')
-      })
     }
   }
 
@@ -441,9 +209,10 @@ export class Departments implements NUsers.IContractors {
         const dialogContent: InterfaceElement = document.getElementById('dialog-content')
 
         deleteButton.onclick = () => {
-          deleteEntity('User', entityId)
+          deleteEntity('Department', entityId)
+            .then(res => new Departments().render())
+
           new CloseDialog().x(dialogContent, this.dialogContainer)
-          this.render()
         }
 
         cancelButton.onclick = () => {
@@ -453,16 +222,6 @@ export class Departments implements NUsers.IContractors {
       })
     })
 
-  }
-
-  public convertToSuper() {
-    const convert: InterfaceElement = document.querySelectorAll('#convert-entity')
-    convert.forEach((convert: InterfaceElement) => {
-      const entityId = convert.dataset.entityid
-      convert.addEventListener('click', (): void => {
-        alert('Converting...')
-      })
-    })
   }
 
   public close(): void {

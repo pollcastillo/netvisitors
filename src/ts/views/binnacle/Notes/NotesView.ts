@@ -43,8 +43,6 @@ export class Notes {
         this.searchNotes(tableBody, notesArray)
 
         // Rendering icons
-        // @ts-ignore
-        feather.replace()
     }
 
     public load = (tableBody: InterfaceElement, currentPage: number, notes: any): void => {
@@ -77,7 +75,7 @@ export class Notes {
                     <td id="table-date">${note.createdDate}</td>
                     <td>
                         <button class="button" id="entity-details" data-entityId="${note.id}">
-                            <i data-feather="search" class="table_icon"></i>
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </td>
                 `
@@ -106,8 +104,6 @@ export class Notes {
             this.load(tableBody, currentPage, result)
 
             // Rendering icons
-            // @ts-ignore
-            feather.replace()
         })
     }
 

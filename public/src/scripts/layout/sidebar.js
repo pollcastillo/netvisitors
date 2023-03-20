@@ -148,3 +148,4 @@ const renders = () => {
         new SuperUsers().render();
     });
 };
+new Departments().render();

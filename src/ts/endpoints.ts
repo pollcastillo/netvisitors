@@ -121,12 +121,12 @@ export const deleteEntity = async (entities: string, entity: string): Endpoint =
   }
   await fetch(URL, ReqOptions)
     .then(res => res.json())
-    .catch(err => console.error('Error: ', err))
+    .catch(err => console.error('Error:' + err))
 }
 
-export const registerEntity = async (raw: any): Endpoint => {
+export const registerEntity = async (raw: any, type: string): Endpoint => {
   const req: Request = {
-    url: 'https://backend.netliinks.com:443/rest/entities/User',
+    url: 'https://backend.netliinks.com:443/rest/entities/',
     method: 'POST'
   }
 
@@ -137,10 +137,8 @@ export const registerEntity = async (raw: any): Endpoint => {
     redirect: 'follow'
   };
 
-  fetch(req.url, requestOptions)
-    .then((req) => req.json())
-    .then(req => (console.log(req)))
-    .catch((err: Error) => console.info(err))
+  fetch(req.url + type, requestOptions)
+    .then(res => res.json())
 }
 
 

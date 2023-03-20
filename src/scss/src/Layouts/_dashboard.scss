@@ -18,6 +18,7 @@
         display: grid;
         grid-template-columns: 1fr 250px;
         gap: 22px;
+        margin: 12px 0 0 0;
     }
 
     &_buttonCluster {
@@ -33,13 +34,13 @@
             font-size: 16px;
             text-align: left;
             color: $white;
-            background-color: $slategray;
+            background-color: lighten($slategray, 10%);
             box-shadow: $lightShadow2;
             transition: 0.3s all ease;
 
             &:hover {
                 box-shadow: $lightShadow4;
-                background-color:lighten(#21698c, 5%);
+                background-color: lighten(#21698c, 16%);
             }
 
             &:active {

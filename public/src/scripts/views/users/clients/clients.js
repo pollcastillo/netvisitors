@@ -101,7 +101,7 @@ export class Clients {
                 row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
-          <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
+          <td class="key"><button class="button" data-userid="${client.id}" id="change-user-password"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
           <td>${client.citadel.description}</dt>
           <td class="entity_options">
@@ -122,6 +122,7 @@ export class Clients {
                 drawTagsIntoTables();
             }
         }
+        changeUserPassword();
         this.register();
         this.import();
         this.edit(this.entityDialogContainer, data);
@@ -277,8 +278,7 @@ export class Clients {
             });
         };
         const reg = async (raw) => {
-            console.log(raw);
-            registerEntity(raw)
+            registerEntity(raw, 'User')
                 .then(res => {
                 console.log('done');
                 this.render();
@@ -320,7 +320,7 @@ export class Clients {
               <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
             </div>
 
-            <button class="btn btn_close_editor" id="close"><i data-feather="x"></i></button>
+            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
           </div>
 
           <!-- EDITOR BODY -->
@@ -484,10 +484,11 @@ export class Clients {
         });
     }
 }
-export const setNewPassword = async () => {
+export async function setUserPassword() {
     const users = await getEntitiesData('User');
-    const FNewUsers = users.filter((data) => data.isSuper === false);
-    const data = FNewUsers.filter((data) => `${data.userType}`.includes(userType));
+    const filterBySuperUsers = users.filter((data) => data.isSuper === false);
+    const filterByUserType = filterBySuperUsers.filter((data) => `${data.userType}`.includes('CUSTOMER'));
+    const data = filterByUserType;
     data.forEach((newUser) => {
         let raw = JSON.stringify({
             "id": `${newUser.id}`,
@@ -496,9 +497,21 @@ export const setNewPassword = async () => {
         let updateRaw = JSON.stringify({
             "newUser": false
         });
-        if (newUser.newUser === true && newUser.temp !== undefined) {
-            setPassword(raw);
-            updateEntity('User', newUser.id, updateRaw);
-        }
+        if (newUser.newUser === true && newUser.temp !== undefined)
+            setPassword(raw),
+                updateEntity('User', newUser.id, updateRaw);
     });
-};
+}
+export async function setRole() {
+    console.log('...setting user rol');
+}
+export async function changeUserPassword() {
+    const triggers = document.querySelectorAll('#change-user-password');
+    triggers.forEach((button) => {
+        const userId = button.dataset.userid;
+        button.addEventListener('click', () => {
+            console.log(userId);
+            alert('Aún estamos trabajando en esta función');
+        });
+    });
+}

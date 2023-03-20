@@ -71,7 +71,7 @@ export class Clients implements NUsers.IClients {
         row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
-          <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
+          <td class="key"><button class="button" data-userid="${client.id}" id="change-user-password"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
           <td>${client.citadel.description}</dt>
           <td class="entity_options">
@@ -92,6 +92,8 @@ export class Clients implements NUsers.IClients {
         drawTagsIntoTables()
       }
     }
+
+    changeUserPassword()
 
     this.register()
     this.import()
@@ -278,8 +280,7 @@ export class Clients implements NUsers.IClients {
     }
 
     const reg = async (raw: any) => {
-      console.log(raw)
-      registerEntity(raw)
+      registerEntity(raw, 'User')
         .then(res => {
           console.log('done')
           this.render()
@@ -368,7 +369,7 @@ export class Clients implements NUsers.IClients {
               <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
             </div>
 
-            <button class="btn btn_close_editor" id="close"><i data-feather="x"></i></button>
+            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
           </div>
 
           <!-- EDITOR BODY -->
@@ -552,25 +553,40 @@ export class Clients implements NUsers.IClients {
   }
 }
 
-export const setNewPassword: any = async (): Promise<void> => {
+export async function setUserPassword(): Promise<any> {
   const users: any = await getEntitiesData('User')
-  const FNewUsers: any = users.filter((data: any) => data.isSuper === false)
-  const data: any = FNewUsers.filter((data: any) => `${data.userType}`.includes(userType))
+  const filterBySuperUsers: any = users.filter((data: any) => data.isSuper === false)
+  const filterByUserType: any = filterBySuperUsers.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
+  const data: any = filterByUserType
 
   data.forEach((newUser: any) => {
     let raw: string = JSON.stringify({
       "id": `${newUser.id}`,
       "newPassword": `${newUser.temp}`
-    });
+    })
 
     let updateRaw: string = JSON.stringify({
       "newUser": false
     })
 
-    if (newUser.newUser === true && newUser.temp !== undefined) {
+    if (newUser.newUser === true && newUser.temp !== undefined)
+      setPassword(raw),
+        updateEntity('User', newUser.id, updateRaw)
+  })
+}
 
-      setPassword(raw)
-      updateEntity('User', newUser.id, updateRaw)
-    }
+export async function setRole(): Promise<void> {
+  console.log('...setting user rol')
+}
+
+export async function changeUserPassword(): Promise<void> {
+  const triggers: InterfaceElement = document.querySelectorAll('#change-user-password')
+
+  triggers.forEach((button: InterfaceElement) => {
+    const userId = button.dataset.userid
+    button.addEventListener('click', (): void => {
+      console.log(userId)
+      alert('Aún estamos trabajando en esta función')
+    })
   })
 }

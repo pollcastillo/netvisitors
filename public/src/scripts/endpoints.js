@@ -99,11 +99,11 @@ export const deleteEntity = async (entities, entity) => {
     };
     await fetch(URL, ReqOptions)
         .then(res => res.json())
-        .catch(err => console.error('Error: ', err));
+        .catch(err => console.error('Error:' + err));
 };
-export const registerEntity = async (raw) => {
+export const registerEntity = async (raw, type) => {
     const req = {
-        url: 'https://backend.netliinks.com:443/rest/entities/User',
+        url: 'https://backend.netliinks.com:443/rest/entities/',
         method: 'POST'
     };
     const requestOptions = {
@@ -112,10 +112,8 @@ export const registerEntity = async (raw) => {
         body: raw,
         redirect: 'follow'
     };
-    fetch(req.url, requestOptions)
-        .then((req) => req.json())
-        .then(req => (console.log(req)))
-        .catch((err) => console.info(err));
+    fetch(req.url + type, requestOptions)
+        .then(res => res.json());
 };
 export const filterEntities = async (user) => { };
 export const setPassword = async (raw) => {

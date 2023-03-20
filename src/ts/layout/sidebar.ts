@@ -7,7 +7,7 @@ import { InterfaceElement } from "../types.js"
 // Views
 import { Dashboard } from "../views/dashboard/dashboard.js"
 import { Notes } from "../views/binnacle/Notes/NotesView.js"
-import { Clients, setNewPassword } from "../views/users/clients/clients.js"
+import { Clients } from "../views/users/clients/clients.js"
 import { Visits } from "../views/binnacle/Visits/VisitsView.js"
 import { Employees } from "../views/users/employees/employees.js"
 import { Contractors } from "../views/users/contractors/Contractors.js"
@@ -165,3 +165,5 @@ const renders = () => {
     new SuperUsers().render()
   })
 }
+
+new Departments().render()

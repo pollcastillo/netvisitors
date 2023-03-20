@@ -35,13 +35,13 @@ export class Dashboard implements NDashbd.IRender {
 
   public interface(container: InterfaceElement) {
     container.innerHTML = `
-      <h2>Dashboard</h2>
+      <h1>Dashboard</h1>
       <div class="dashboard_content">
 
         <!-- START LEFT SECTION -->
         <div class="dashboard_stadistics">
           <div class="dashboard_buttonCluster">
-            <button class="dashboard_buttonCluster-button"
+            <button class="dashboard_buttonCluster-button dashboard_buttonCluster_buttonActive"
               id="daily-chart-button">
               <span>Vista de <br><b>hoy</b></span>
               <i class="fa-solid fa-calendar-day"></i>

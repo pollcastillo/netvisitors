@@ -35,8 +35,6 @@ export class Notes {
             this.load(tableBody, currentPage, notesArray);
             this.searchNotes(tableBody, notesArray);
             // Rendering icons
-            // @ts-ignore
-            feather.replace();
         };
         this.load = (tableBody, currentPage, notes) => {
             tableBody.innerHTML = ''; // clean table
@@ -65,7 +63,7 @@ export class Notes {
                     <td id="table-date">${note.createdDate}</td>
                     <td>
                         <button class="button" id="entity-details" data-entityId="${note.id}">
-                            <i data-feather="search" class="table_icon"></i>
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </td>
                 `;
@@ -87,8 +85,6 @@ export class Notes {
                     filteredNotes = Config.tableRows;
                 this.load(tableBody, currentPage, result);
                 // Rendering icons
-                // @ts-ignore
-                feather.replace();
             });
         };
         this.previewNote = async () => {
