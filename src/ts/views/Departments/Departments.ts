@@ -1,8 +1,7 @@
 // @filename: Departments.ts
 
-import { deleteEntity, getEntitiesData, getEntityData, registerEntity } from "../../endpoints.js"
-import { NUsers } from "../../namespaces.js"
-import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog } from "../../tools.js"
+import { deleteEntity, getEntitiesData, registerEntity } from "../../endpoints.js"
+import { inputObserver, inputSelect, CloseDialog } from "../../tools.js"
 import { InterfaceElement } from "../../types.js"
 import { Config } from "../../Configs.js"
 import { tableLayout } from "./Layout.js"
