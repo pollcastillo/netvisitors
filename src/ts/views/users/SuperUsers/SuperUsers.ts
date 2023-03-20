@@ -21,7 +21,6 @@ const getUsers = async (superUser: boolean): Promise<void> => {
   const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
   console.log(FSuper)
   return FSuper
-
 }
 
 export class SuperUsers implements NUsers.IContractors {
