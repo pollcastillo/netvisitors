@@ -276,8 +276,7 @@ export class Contractors {
             });
         };
         const reg = async (raw) => {
-            console.log(raw);
-            registerEntity(raw)
+            registerEntity(raw, 'User')
                 .then(res => {
                 console.log('done');
                 this.render();

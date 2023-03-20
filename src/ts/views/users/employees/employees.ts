@@ -282,7 +282,7 @@ export class Employees implements NUsers.IEmployees {
 
     const reg = async (raw: any) => {
       console.log(raw)
-      registerEntity(raw)
+      registerEntity(raw, 'User')
         .then(res => {
           console.log('done')
           this.render()

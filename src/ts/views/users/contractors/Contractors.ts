@@ -278,8 +278,7 @@ export class Contractors implements NUsers.IContractors {
     }
 
     const reg = async (raw: any) => {
-      console.log(raw)
-      registerEntity(raw)
+      registerEntity(raw, 'User')
         .then(res => {
           console.log('done')
           this.render()

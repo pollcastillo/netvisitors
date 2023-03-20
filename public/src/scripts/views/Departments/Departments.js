@@ -86,7 +86,7 @@ export class Departments {
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
             <div class="user_info">
-              <div class="avatar"><i class="fa-regular fa-user"></i></div>
+              <div class="avatar"><i class="fa-solid fa-building"></i></div>
               <h1 class="entity_editor_title">Registrar <br><small>Departamento</small></h1>
             </div>
 

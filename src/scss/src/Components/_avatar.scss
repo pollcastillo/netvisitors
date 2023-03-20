@@ -14,7 +14,7 @@
     margin-right: 16px;
     border-radius: 100px;
 
-    .fa-user {
+    .fa-regular, .fa-solid, .fa-light {
         color: lighten($dark, 50%);
         font-size: 14px;
     }

@@ -38,19 +38,19 @@ export const renderSidebar = (): void => {
               <div class="sidebar_subitems">
                 <div class="sidebar_subitem" id="render-clients">
                   <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-user-group"></i> Clientes
+                    <i class="fa-regular fa-user-group"></i> <div class="label">Clientes</div>
                   </span>
                 </div>
 
                 <div class="sidebar_subitem">
                   <span class="sidebar_subitem_label" id="render-employees">
-                    <i class="fa-regular fa-users"></i> Empleados
+                    <i class="fa-regular fa-users"></i> <div class="label">Empleados</div>
                   </span>
                 </div>
 
                 <div class="sidebar_subitem">
                   <span class="sidebar_subitem_label" id="render-contractors">
-                    <i class="fa-regular fa-briefcase"></i> Contratistas
+                    <i class="fa-regular fa-briefcase"></i> <div class="label">Contratistas</div>
                   </span>
                 </div>
 
@@ -65,19 +65,19 @@ export const renderSidebar = (): void => {
               <div class="sidebar_subitems">
                 <div class="sidebar_subitem" id="render-notes">
                   <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-notes"></i> Notas
+                    <i class="fa-regular fa-notes"></i> <div class="label">Notas</div>
                   </span>
                 </div>
 
                 <div class="sidebar_subitem" id="render-visits">
                   <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-user"></i> Visitas
+                    <i class="fa-regular fa-user"></i> <div class="label">Visitas</div>
                   </span>
                 </div>
 
                 <div class="sidebar_subitem" id="render-assistControl">
                   <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-marker"></i> Control de asistencia
+                    <i class="fa-regular fa-marker"></i> <div class="label">Control de asistencia</div>
                   </span>
                 </div>
               </div>
@@ -166,4 +166,4 @@ const renders = () => {
   })
 }
 
-new Departments().render()
+// new Dashboard().render()

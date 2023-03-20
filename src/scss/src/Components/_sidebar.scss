@@ -42,14 +42,25 @@
 
     .sidebar_subitems {
       display: none;
+      padding-top: 4px;
+
+      .fa-regular {
+        font-size: 16px;
+      }
 
       .isActive {
         background-color: lighten($dark, 20%);
       }
+
+      .sidebar_subitem {
+        margin: 4px;
+        border-radius: 4px;
+        text-align: center;
+      }
     }
 
     &.isActive {
-      background-color: darken($dark, 5%);
+      background-color: lighten($dark, 20%);
       color: $gray;
       border-radius: 4px;
 
