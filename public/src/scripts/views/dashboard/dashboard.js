@@ -89,6 +89,8 @@ export class Dashboard {
               <div class="cards_container" id="cards-container"></div>
               <div class="cards_controls_container" id="cards-controls-container"></div>
             </div>
+
+            <button class="btn btn_new_annuncement"><i class="fa-regular fa-plus"></i> Nuevo anuncio</button>
           </div>
         <!-- End news card -->
           <div class="notes">

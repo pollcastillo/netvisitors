@@ -40,7 +40,6 @@ export class Contractors {
         };
         this.generateUserName = async () => {
             const firstName = document.getElementById('entity-firstname');
-            const secondName = document.getElementById('');
             const lastName = document.getElementById('entity-lastname');
             const secondLastName = document.getElementById('entity-secondlastname');
             const clientName = document.getElementById('entity-customer');
@@ -386,13 +385,6 @@ export class Contractors {
               <div id="input-options" class="input_options">
               </div>
             </div>
-
-            <br><br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" >
-              <label for="tempPass">Clave temporal</label>
-            </div>
-
           </div>
           <!-- END EDITOR BODY -->
 

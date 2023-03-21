@@ -11,31 +11,31 @@ import { renderWeeklyChart } from "./DashboardWeeklySection.js"
 import { renderYearlyChart } from "./DashboardYearlySection.js"
 
 namespace NDashbd {
-  export interface IRender {
-    render(): void
-    interface(container: InterfaceElement): void
-  }
+    export interface IRender {
+        render(): void
+        interface(container: InterfaceElement): void
+    }
 }
 
 export class Dashboard implements NDashbd.IRender {
-  private interfaceContainer: InterfaceElement =
-    document.getElementById('datatable-container')
+    private interfaceContainer: InterfaceElement =
+        document.getElementById('datatable-container')
 
-  private dashboardContainer: InterfaceElement =
-    document.createElement('div')
+    private dashboardContainer: InterfaceElement =
+        document.createElement('div')
 
-  public render() {
-    this.dashboardContainer.classList.add('dashboard_container')
-    this.dashboardContainer.setAttribute('id', 'dashboard-container')
-    this.interfaceContainer.innerHTML = ""
-    this.interfaceContainer.appendChild(this.dashboardContainer)
-    this.interface(this.dashboardContainer)
-    // @ts-ignore
-    feather.replace()
-  }
+    public render() {
+        this.dashboardContainer.classList.add('dashboard_container')
+        this.dashboardContainer.setAttribute('id', 'dashboard-container')
+        this.interfaceContainer.innerHTML = ""
+        this.interfaceContainer.appendChild(this.dashboardContainer)
+        this.interface(this.dashboardContainer)
+        // @ts-ignore
+        feather.replace()
+    }
 
-  public interface(container: InterfaceElement) {
-    container.innerHTML = `
+    public interface(container: InterfaceElement) {
+        container.innerHTML = `
       <h1>Dashboard</h1>
       <div class="dashboard_content">
 
@@ -101,6 +101,8 @@ export class Dashboard implements NDashbd.IRender {
               <div class="cards_container" id="cards-container"></div>
               <div class="cards_controls_container" id="cards-controls-container"></div>
             </div>
+
+            <button class="btn btn_new_annuncement"><i class="fa-regular fa-plus"></i> Nuevo anuncio</button>
           </div>
         <!-- End news card -->
           <div class="notes">
@@ -156,95 +158,95 @@ export class Dashboard implements NDashbd.IRender {
       </div>
     `
 
-    renderDailyChart()
-    this.renderNews()
+        renderDailyChart()
+        this.renderNews()
 
-    const buttonCluster: InterfaceElement = document.querySelectorAll('.dashboard_buttonCluster-button')
-    buttonCluster.forEach((button: InterfaceElement) => {
-      button.addEventListener('click', (): void => {
+        const buttonCluster: InterfaceElement = document.querySelectorAll('.dashboard_buttonCluster-button')
         buttonCluster.forEach((button: InterfaceElement) => {
-          button.classList.remove('dashboard_buttonCluster_buttonActive')
+            button.addEventListener('click', (): void => {
+                buttonCluster.forEach((button: InterfaceElement) => {
+                    button.classList.remove('dashboard_buttonCluster_buttonActive')
+                })
+
+                button.classList.add('dashboard_buttonCluster_buttonActive')
+            })
         })
 
-        button.classList.add('dashboard_buttonCluster_buttonActive')
-      })
-    })
+        const dailyChart: InterfaceElement =
+            document.getElementById('daily-chart-button')
+        dailyChart.addEventListener('click', (): void => {
+            renderDailyChart()
+        })
 
-    const dailyChart: InterfaceElement =
-      document.getElementById('daily-chart-button')
-    dailyChart.addEventListener('click', (): void => {
-      renderDailyChart()
-    })
+        const weeklyChart: InterfaceElement =
+            document.getElementById('weekly-chart-button')
+        weeklyChart.addEventListener('click', (): void => {
+            renderWeeklyChart()
+        })
 
-    const weeklyChart: InterfaceElement =
-      document.getElementById('weekly-chart-button')
-    weeklyChart.addEventListener('click', (): void => {
-      renderWeeklyChart()
-    })
+        const monthlyChart: InterfaceElement =
+            document.getElementById('monthly-chart-button')
+        monthlyChart.addEventListener('click', (): void => {
+            renderMonthlyChart()
+        })
 
-    const monthlyChart: InterfaceElement =
-      document.getElementById('monthly-chart-button')
-    monthlyChart.addEventListener('click', (): void => {
-      renderMonthlyChart()
-    })
+        const yearlyChart: InterfaceElement =
+            document.getElementById('yearly-chart-button')
+        yearlyChart.addEventListener('click', (): void => {
+            renderYearlyChart()
+        })
+    }
 
-    const yearlyChart: InterfaceElement =
-      document.getElementById('yearly-chart-button')
-    yearlyChart.addEventListener('click', (): void => {
-      renderYearlyChart()
-    })
-  }
+    private async renderNews(): Promise<void> {
+        /*
+          <div class="news">
+            <div class="cards">
+              <div class="cards_container" id="cards-container"></div>
+              <div class="cards_controls_container" id="cards-controls-container"></div>
+            </div>
+          </div>
+        */
 
-  private async renderNews(): Promise<void> {
-    /*
-      <div class="news">
-        <div class="cards">
-          <div class="cards_container" id="cards-container"></div>
-          <div class="cards_controls_container" id="cards-controls-container"></div>
-        </div>
-      </div>
-    */
+        const announcements: any = await getEntitiesData('Announcement')
+        const cardsContainer: InterfaceElement = document.getElementById('cards-container')
+        const cardsControlsContainer: InterfaceElement = document.getElementById('cards-controls-container')
+        let prop: any
 
-    const announcements: any = await getEntitiesData('Announcement')
-    const cardsContainer: InterfaceElement = document.getElementById('cards-container')
-    const cardsControlsContainer: InterfaceElement = document.getElementById('cards-controls-container')
-    let prop: any
-
-    announcements.forEach((announcement: any) => {
-      const CARD = document.createElement('DIV')
-      CARD.classList.add('card')
-      CARD.innerHTML = `
+        announcements.forEach((announcement: any) => {
+            const CARD = document.createElement('DIV')
+            CARD.classList.add('card')
+            CARD.innerHTML = `
         <h3 class="card_title">${announcement.title}</h3>
         <p class="card_content">${announcement.content}</p>
       `
-      cardsContainer.appendChild(CARD)
+            cardsContainer.appendChild(CARD)
 
-      const DOTBUTTON = document.createElement('BUTTON')
-      DOTBUTTON.classList.add('card_dotbutton')
-      cardsControlsContainer.appendChild(DOTBUTTON)
-    })
+            const DOTBUTTON = document.createElement('BUTTON')
+            DOTBUTTON.classList.add('card_dotbutton')
+            cardsControlsContainer.appendChild(DOTBUTTON)
+        })
 
-    const buttons: InterfaceElement = document.querySelectorAll('.cards_controls_container button')
-    console.log(buttons)
-    buttons[0].classList.add('card_dotbutton-active')
-    buttons.forEach((button: InterfaceElement) => {
-      button.addEventListener('click', (e: any): void => {
-        const parent = button.parentNode
-        const grantParent = parent.parentNode
-        const container = grantParent.querySelector('.cards_container')
+        const buttons: InterfaceElement = document.querySelectorAll('.cards_controls_container button')
+        console.log(buttons)
+        buttons[0].classList.add('card_dotbutton-active')
+        buttons.forEach((button: InterfaceElement) => {
+            button.addEventListener('click', (e: any): void => {
+                const parent = button.parentNode
+                const grantParent = parent.parentNode
+                const container = grantParent.querySelector('.cards_container')
 
-        const childrenList = Array.from(parent.children)
-        const index = childrenList.indexOf(button)
+                const childrenList = Array.from(parent.children)
+                const index = childrenList.indexOf(button)
 
-        container.style.transform = `translatex(-${index * 100}%)`
+                container.style.transform = `translatex(-${index * 100}%)`
 
-        buttons.forEach((button: InterfaceElement) => button.classList.remove('card_dotbutton-active'))
+                buttons.forEach((button: InterfaceElement) => button.classList.remove('card_dotbutton-active'))
 
-        button.classList.add('card_dotbutton-active')
-      })
-    })
+                button.classList.add('card_dotbutton-active')
+            })
+        })
 
 
-    console.log(announcements)
-  }
+        console.log(announcements)
+    }
 }

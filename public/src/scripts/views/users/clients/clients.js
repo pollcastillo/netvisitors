@@ -121,7 +121,6 @@ export class Clients {
                 drawTagsIntoTables();
             }
         }
-        changeUserPassword();
         this.register();
         this.import();
         this.edit(this.entityDialogContainer, data);
@@ -138,94 +137,94 @@ export class Clients {
             this.entityDialogContainer.innerHTML = '';
             this.entityDialogContainer.style.display = 'flex';
             this.entityDialogContainer.innerHTML = `
-        <div class="entity_editor" id="entity-editor">
-          <div class="entity_editor_header">
-            <div class="user_info">
-              <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Registrar <br><small>Cliente</small></h1>
-            </div>
+                <div class="entity_editor" id="entity-editor">
+                <div class="entity_editor_header">
+                    <div class="user_info">
+                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                    <h1 class="entity_editor_title">Registrar <br><small>Cliente</small></h1>
+                    </div>
 
-            <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
-          </div>
+                    <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
+                </div>
 
-          <!-- EDITOR BODY -->
-          <div class="entity_editor_body">
-            <div class="material_input">
-              <input type="text" id="entity-firstname" autocomplete="none">
-              <label for="entity-firstname"><i class="fa-solid fa-user"></i> Nombre</label>
-            </div>
+                <!-- EDITOR BODY -->
+                <div class="entity_editor_body">
+                    <div class="material_input">
+                    <input type="text" id="entity-firstname" autocomplete="none">
+                    <label for="entity-firstname"><i class="fa-solid fa-user"></i> Nombre</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-lastname" autocomplete="none">
-              <label for="entity-lastname"><i class="fa-solid fa-user"></i> Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-lastname" autocomplete="none">
+                    <label for="entity-lastname"><i class="fa-solid fa-user"></i> Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-secondlastname" autocomplete="none">
-              <label for="entity-secondlastname"><i class="fa-solid fa-user"></i> 2do Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-secondlastname" autocomplete="none">
+                    <label for="entity-secondlastname"><i class="fa-solid fa-user"></i> 2do Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text"
-                id="entity-phone"
-                maxlength="10" autocomplete="none">
-              <label for="entity-phone"><i class="fa-solid fa-phone"></i> Teléfono</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text"
+                        id="entity-phone"
+                        maxlength="10" autocomplete="none">
+                    <label for="entity-phone"><i class="fa-solid fa-phone"></i> Teléfono</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
-              <label for="entity-username"><i class="input_locked fa-solid fa-lock"></i> Nombre de usuario</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
+                    <label for="entity-username"><i class="input_locked fa-solid fa-lock"></i> Nombre de usuario</label>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-state">Estado</label>
+                    <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-business"><i class="fa-solid fa-building"></i> Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-business"><i class="fa-solid fa-building"></i> Empresa</label>
+                    <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-citadel"><i class="fa-solid fa-buildings"></i> Ciudadela</label>
-              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-citadel"><i class="fa-solid fa-buildings"></i> Ciudadela</label>
+                    <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-customer">Cliente</label>
-              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-customer">Cliente</label>
+                    <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-department">Departamento</label>
-              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-department">Departamento</label>
+                    <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" autocomplete="false">
-              <label for="tempPass">Contraseña temporal</label>
-            </div>
+                    <br><br>
+                    <div class="material_input">
+                    <input type="password" id="tempPass" autocomplete="false">
+                    <label for="tempPass">Contraseña temporal</label>
+                    </div>
 
-          </div>
-          <!-- END EDITOR BODY -->
+                </div>
+                <!-- END EDITOR BODY -->
 
-          <div class="entity_editor_footer">
-            <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
-          </div>
-        </div>
-      `;
+                <div class="entity_editor_footer">
+                    <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
+                </div>
+                </div>
+            `;
             inputObserver();
             inputSelect('Citadel', 'entity-citadel');
             inputSelect('Customer', 'entity-customer');
@@ -309,96 +308,96 @@ export class Clients {
             this.entityDialogContainer.innerHTML = '';
             this.entityDialogContainer.style.display = 'flex';
             this.entityDialogContainer.innerHTML = `
-        <div class="entity_editor" id="entity-editor">
-          <div class="entity_editor_header">
-            <div class="user_info">
-              <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
-            </div>
+                <div class="entity_editor" id="entity-editor">
+                <div class="entity_editor_header">
+                    <div class="user_info">
+                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                    <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
+                    </div>
 
-            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
-          </div>
+                    <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
+                </div>
 
-          <!-- EDITOR BODY -->
-          <div class="entity_editor_body">
-            <div class="material_input">
-              <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}">
-              <label for="entity-firstname">Nombre</label>
-            </div>
+                <!-- EDITOR BODY -->
+                <div class="entity_editor_body">
+                    <div class="material_input">
+                    <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}">
+                    <label for="entity-firstname">Nombre</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}">
-              <label for="entity-lastname">Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}">
+                    <label for="entity-lastname">Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}">
-              <label for="entity-secondlastname">2do Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}">
+                    <label for="entity-secondlastname">2do Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text"
-                id="entity-phone"
-                class="input_filled"
-                maxlength="10"
-                value="${data.phone}">
-              <label for="entity-phone">Teléfono</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text"
+                        id="entity-phone"
+                        class="input_filled"
+                        maxlength="10"
+                        value="${data.phone}">
+                    <label for="entity-phone">Teléfono</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-username" class="input_filled" value="${data.username}" readonly>
-              <label for="entity-username">Nombre de usuario</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-username" class="input_filled" value="${data.username}" readonly>
+                    <label for="entity-username">Nombre de usuario</label>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-state">Estado</label>
+                    <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-business">Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-business">Empresa</label>
+                    <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-citadel">Ciudadela</label>
-              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-citadel">Ciudadela</label>
+                    <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-customer">Cliente</label>
-              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-customer">Cliente</label>
+                    <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-department">Departamento</label>
-              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-department">Departamento</label>
+                    <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <br><br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" >
-              <label for="tempPass">Clave temporal</label>
-            </div>
+                    <br><br><br>
+                    <div class="material_input">
+                    <input type="password" id="tempPass" >
+                    <label for="tempPass">Clave temporal</label>
+                    </div>
 
-          </div>
-          <!-- END EDITOR BODY -->
+                </div>
+                <!-- END EDITOR BODY -->
 
-          <div class="entity_editor_footer">
-            <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
-          </div>
-        </div>
-      `;
+                <div class="entity_editor_footer">
+                    <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
+                </div>
+                </div>
+            `;
             inputObserver();
             inputSelect('Business', 'entity-citadel');
             inputSelect('Customer', 'entity-customer');
@@ -410,7 +409,32 @@ export class Clients {
         };
         const UUpdate = async (entityId) => {
             const updateButton = document.getElementById('update-changes');
+            const $value = {
+                // @ts-ignore
+                firstName: document.getElementById('entity-firstname').value,
+                // @ts-ignore
+                lastName: document.getElementById('entity-lastname').value,
+                // @ts-ignore
+                secondLastName: document.getElementById('entity-secondlastname').value,
+                // @ts-ignore
+                phone: document.getElementById('entity-phone').value,
+                // @ts-ignore
+                status: document.getElementById('entity-state'),
+                // @ts-ignore
+                business: document.getElementById('entity-business'),
+                // @ts-ignore
+                client: document.getElementById('entity-customer'),
+                // @ts-ignore
+                department: document.getElementById('entity-department')
+            };
             updateButton.addEventListener('click', () => {
+                let raw = JSON.stringify({
+                    "lastName": `${$value.lastName}`,
+                    "secondLastName": `${$value.secondLastName}`,
+                    "active": true,
+                    "firstName": `${$value.firstName}`
+                });
+                console.log(raw);
             });
         };
     }
@@ -440,9 +464,6 @@ export class Clients {
             </div>
           </div>
         `;
-                // delete button
-                // cancel button
-                // dialog content
                 const deleteButton = document.getElementById('delete');
                 const cancelButton = document.getElementById('cancel');
                 const dialogContent = document.getElementById('dialog-content');
@@ -502,6 +523,9 @@ export async function setRole() {
         let raw = JSON.stringify({
             "id": `${newUser.id}`,
             "roleCode": 'app_web_clientes'
+        });
+        let updateNewUser = JSON.stringify({
+            "newUser": false
         });
         if (newUser.newUser === true) {
             setUserRole(raw);

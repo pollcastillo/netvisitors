@@ -32,6 +32,10 @@ table button {
     padding: 0 16px;
     font-size: 14px;
 
+    i {
+        margin-right: 8px;
+    }
+
     &_widder {
         width: 100%;
     }
@@ -62,12 +66,21 @@ table button {
             background-color: lighten($red, 15%);
         }
     }
+
+    &_new_annuncement {
+        background: transparent !important;
+        color: $slategray;
+
+        &:hover, &:hover i  {
+            color: $dark;
+        }
+    }
 }
 
 .btn_transparent {
     background-color: transparent;
 
-    &:hover {
+    &:hover{
         border: 1px solid $gray;
     }
 }

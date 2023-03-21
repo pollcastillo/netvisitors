@@ -73,10 +73,12 @@
             background-color: $white;
             border-radius: 16px;
             box-shadow: $lightShadow1;
+            width: auto;
 
             .cards {
                 overflow: hidden;
-                height: 250px;
+                height: fit-content;
+                width: auto;
 
                 &_container {
                     display: flex;
@@ -132,6 +134,7 @@
             border-radius: 16px;
             background-color: #FEFCC2;
             box-shadow: $lightShadow1;
+            width: auto;
 
             h1 {
                 font-size: 22px;

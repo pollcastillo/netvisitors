@@ -38,15 +38,35 @@
         overflow-x: scroll;
     }
 
+    .dashboard_container {
+        margin: 0;
+        padding: 16px !important;
+    }
+
     .dashboard_datefilter {
       display: none;
     }
 
     .dashboard_content {
         grid-template-columns: 1fr !important;
-        grid-template-rows: fit-content fit-content !important;
+        // grid-template-rows: fit-content fit-content !important;
         padding: 0;
     }
+
+    // .dashboard_news_and_notes {
+    //     display: grid !important;
+    //     grid-template-columns: repeat(2, 1fr) !important;
+    //     width: 100%;
+    //     column-gap: 10px;
+
+    //     .news {
+    //         grid-column: 1 / 2;
+    //     }
+
+    //     .notes {
+    //         grid-column: 2 / 2;
+    //     }
+    // }
 
     #datatable-container {
       display: block;
