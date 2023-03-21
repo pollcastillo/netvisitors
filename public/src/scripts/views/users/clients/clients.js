@@ -53,11 +53,11 @@ export class Clients {
                 userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`);
             });
             lastName.addEventListener('keyup', (e) => {
-                UserNameLNFragment = lastName.value.toLowerCase();
+                UserNameLNFragment = lastName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`);
             });
             secondLastName.addEventListener('keyup', (e) => {
-                UserNameSLNFragment = secondLastName.value.toLowerCase();
+                UserNameSLNFragment = secondLastName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 if (secondLastName.value.length > 0) {
                     UserNameFFragment[0];
                     userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment[0]}`);
@@ -79,11 +79,16 @@ export class Clients {
         new filterDataByHeaderType().filter();
     }
     load(table, currentPage, data) {
+        setUserPassword();
+        setRole();
         table.innerHTML = '';
         currentPage--;
-        let start = tableRows * currentPage;
+        let start = tableRows * currentPage + 1;
         let end = start + tableRows;
         let paginatedItems = data.slice(start, end);
+        console.log(paginatedItems);
+        console.log(start);
+        console.log(end);
         if (data.length === 0) {
             let row = document.createElement('tr');
             row.innerHTML = `
@@ -269,24 +274,22 @@ export class Clients {
                     },
                     "phone": `${inputsCollection.phoneNumer.value}`,
                     "userType": "CUSTOMER",
-                    "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
+                    "username": `${inputsCollection.username.value}@${inputsCollection.customer.value.toLowerCase()}.com`
                 });
                 reg(raw);
             });
         };
         const reg = async (raw) => {
             registerEntity(raw, 'User')
-                .then(res => {
-                this.render();
-                setNewPassword();
-                setRole();
+                .then((res) => {
+                setTimeout(async () => {
+                    let data = await getUsers(userType, SUser);
+                    const tableBody = document.getElementById('datatable-body');
+                    const container = document.getElementById('entity-editor-container');
+                    new CloseDialog().x(container);
+                    this.load(tableBody, currentPage, data);
+                }, 1000);
             });
-            const setNewPassword = async () => {
-                const users = await getEntitiesData('User');
-                const FNewUsers = users.filter((data) => data.isSuper === true);
-                FNewUsers.forEach((newUser) => {
-                });
-            };
         };
     }
     import() {
@@ -487,6 +490,31 @@ export class Clients {
             });
         });
     }
+    pagination(items, limitRows, currentPage, load) {
+        const tableBody = document.getElementById('datatable-body');
+        const paginationWrapper = document.getElementById('pagination-container');
+        paginationWrapper.innerHTML = '';
+        let pageCount;
+        pageCount = Math.ceil(items.length / limitRows);
+        let button;
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(i, items, currentPage, tableBody, limitRows, load);
+            paginationWrapper.appendChild(button);
+        }
+        function setupButtons(page, items, currentPage, tableBody, limitRows, load) {
+            const button = document.createElement('button');
+            button.innerText = page;
+            if (currentPage == page)
+                button.classList.add('isActive');
+            button.addEventListener('click', () => {
+                currentPage = page;
+                let currentButton = document.querySelector('button.isActive');
+                currentButton.classList.remove('isActive');
+                button.classList.add('isActive');
+            });
+            return button;
+        }
+    }
     close() {
         const closeButton = document.getElementById('close');
         const editor = document.getElementById('entity-editor-container');
@@ -506,12 +534,8 @@ export async function setUserPassword() {
             "id": `${newUser.id}`,
             "newPassword": `${newUser.temp}`
         });
-        let updateRaw = JSON.stringify({
-            "newUser": false
-        });
         if (newUser.newUser === true && newUser.temp !== undefined)
-            setPassword(raw),
-                updateEntity('User', newUser.id, updateRaw);
+            setPassword(raw);
     });
 }
 export async function setRole() {
@@ -522,18 +546,18 @@ export async function setRole() {
     data.forEach((newUser) => {
         let raw = JSON.stringify({
             "id": `${newUser.id}`,
-            "roleCode": 'app_web_clientes'
+            "roleCode": 'app_clientes'
         });
         let updateNewUser = JSON.stringify({
             "newUser": false
         });
-        if (newUser.newUser === true) {
+        if (newUser.newUser == true) {
             setUserRole(raw);
+            setTimeout(() => {
+                updateEntity('User', newUser.id, updateNewUser);
+            }, 1000);
         }
     });
-    console.group('Role asignment users');
-    console.log(data);
-    console.groupEnd();
 }
 export async function changeUserPassword() {
     const triggers = document.querySelectorAll('#change-user-password');

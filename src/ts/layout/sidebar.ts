@@ -166,4 +166,4 @@ const renders = () => {
 }
 
 // new Clients().render()
-new Dashboard().render()
+// new Dashboard().render()

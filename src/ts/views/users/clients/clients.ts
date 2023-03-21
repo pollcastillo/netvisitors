@@ -16,57 +16,64 @@ const userType = Config.customerUser
 const SUser = Config.isSuperUser
 
 const getUsers = async (userType: string, superUser: boolean): Promise<void> => {
-    const users: any = await getEntitiesData('User')
-    const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
-    const data: any = FSuper.filter((data: any) => `${data.userType}`.includes(userType))
-    return data
+  const users: any = await getEntitiesData('User')
+  const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
+  const data: any = FSuper.filter((data: any) => `${data.userType}`.includes(userType))
+  return data
 
 }
 
 export class Clients {
-    private readonly dialogContainer: InterfaceElement =
-        document.getElementById('app-dialogs')
+  private readonly dialogContainer: InterfaceElement =
+    document.getElementById('app-dialogs')
 
-    private readonly entityDialogContainer: InterfaceElement =
-        document.getElementById('entity-editor-container')
+  private readonly entityDialogContainer: InterfaceElement =
+    document.getElementById('entity-editor-container')
 
-    private readonly content: InterfaceElement =
-        document.getElementById('datatable-container')
+  private readonly content: InterfaceElement =
+    document.getElementById('datatable-container')
 
-    public async render(): Promise<void> {
-        let data = await getUsers(userType, SUser)
-        this.content.innerHTML = ''
-        this.content.innerHTML = tableLayout
-        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+  public async render(): Promise<void> {
+    let data = await getUsers(userType, SUser)
+    this.content.innerHTML = ''
+    this.content.innerHTML = tableLayout
+    const tableBody: InterfaceElement = document.getElementById('datatable-body')
 
-        tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows)
-        this.load(tableBody, currentPage, data)
+    tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows)
+    this.load(tableBody, currentPage, data)
 
-        this.searchEntity(tableBody, data)
-        new filterDataByHeaderType().filter()
-    }
+    this.searchEntity(tableBody, data)
+    new filterDataByHeaderType().filter()
+  }
 
-    private load(table: InterfaceElement, currentPage: number, data: any) {
-        table.innerHTML = ''
-        currentPage--
-        let start: number = tableRows * currentPage
-        let end: number = start + tableRows
-        let paginatedItems: any = data.slice(start, end)
-        if (data.length === 0) {
-            let row: InterfaceElement = document.createElement('tr')
-            row.innerHTML = `
+  private load(table: InterfaceElement, currentPage: number, data: any) {
+    setUserPassword()
+    setRole()
+    table.innerHTML = ''
+    currentPage--
+    let start: number = tableRows * currentPage + 1
+    let end: number = start + tableRows
+    let paginatedItems: any = data.slice(start, end)
+
+    console.log(paginatedItems)
+    console.log(start)
+    console.log(end)
+
+    if (data.length === 0) {
+      let row: InterfaceElement = document.createElement('tr')
+      row.innerHTML = `
         <td>los datos no coinciden con su búsqueda</td>
         <td></td>
         <td></td>
       `
-            table.appendChild(row)
-        }
-        else {
-            for (let i = 0; i < paginatedItems.length; i++) {
-                let client = paginatedItems[i]
-                let row: InterfaceElement =
-                    document.createElement('tr')
-                row.innerHTML += `
+      table.appendChild(row)
+    }
+    else {
+      for (let i = 0; i < paginatedItems.length; i++) {
+        let client = paginatedItems[i]
+        let row: InterfaceElement =
+          document.createElement('tr')
+        row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
           <td class="key"><button class="button" data-userid="${client.id}" id="change-user-password"><i class="fa-regular fa-key"></i></button></td>
@@ -86,51 +93,51 @@ export class Clients {
             </button>
           </dt>
         `
-                table.appendChild(row)
-                drawTagsIntoTables()
-            }
-        }
-
-        this.register()
-        this.import()
-        this.edit(this.entityDialogContainer, data)
-        this.remove()
-        this.convertToSuper()
+        table.appendChild(row)
+        drawTagsIntoTables()
+      }
     }
 
-    public searchEntity = async (tableBody: InterfaceElement, data: any) => {
-        const search: InterfaceElement = document.getElementById('search')
+    this.register()
+    this.import()
+    this.edit(this.entityDialogContainer, data)
+    this.remove()
+    this.convertToSuper()
+  }
 
-        await search.addEventListener('keyup', () => {
-            const arrayData: any = data.filter((user: any) =>
-                `${user.firstName}
+  public searchEntity = async (tableBody: InterfaceElement, data: any) => {
+    const search: InterfaceElement = document.getElementById('search')
+
+    await search.addEventListener('keyup', () => {
+      const arrayData: any = data.filter((user: any) =>
+        `${user.firstName}
                  ${user.lastName}
                  ${user.username}`
-                    .toLowerCase()
-                    .includes(search.value.toLowerCase())
-            )
+          .toLowerCase()
+          .includes(search.value.toLowerCase())
+      )
 
-            let filteredResult = arrayData.length
-            let result = arrayData
-            if (filteredResult >= tableRows) filteredResult = tableRows
+      let filteredResult = arrayData.length
+      let result = arrayData
+      if (filteredResult >= tableRows) filteredResult = tableRows
 
-            this.load(tableBody, currentPage, result)
+      this.load(tableBody, currentPage, result)
 
-        })
+    })
 
-    }
+  }
 
-    private register() {
-        // register entity
-        const openEditor: InterfaceElement = document.getElementById('new-entity')
-        openEditor.addEventListener('click', (): void => {
-            renderInterface('User')
-        })
+  private register() {
+    // register entity
+    const openEditor: InterfaceElement = document.getElementById('new-entity')
+    openEditor.addEventListener('click', (): void => {
+      renderInterface('User')
+    })
 
-        const renderInterface = async (entities: string): Promise<void> => {
-            this.entityDialogContainer.innerHTML = ''
-            this.entityDialogContainer.style.display = 'flex'
-            this.entityDialogContainer.innerHTML = `
+    const renderInterface = async (entities: string): Promise<void> => {
+      this.entityDialogContainer.innerHTML = ''
+      this.entityDialogContainer.style.display = 'flex'
+      this.entityDialogContainer.innerHTML = `
                 <div class="entity_editor" id="entity-editor">
                 <div class="entity_editor_header">
                     <div class="user_info">
@@ -220,137 +227,133 @@ export class Clients {
                 </div>
             `
 
-            inputObserver()
-            inputSelect('Citadel', 'entity-citadel')
-            inputSelect('Customer', 'entity-customer')
-            inputSelect('State', 'entity-state')
-            inputSelect('Department', 'entity-department')
-            inputSelect('Business', 'entity-business')
-            this.close()
-            this.generateUserName()
+      inputObserver()
+      inputSelect('Citadel', 'entity-citadel')
+      inputSelect('Customer', 'entity-customer')
+      inputSelect('State', 'entity-state')
+      inputSelect('Department', 'entity-department')
+      inputSelect('Business', 'entity-business')
+      this.close()
+      this.generateUserName()
 
-            const registerButton: InterfaceElement = document.getElementById('register-entity')
-            registerButton.addEventListener('click', (): void => {
-                const inputsCollection: any = {
-                    firstName: document.getElementById('entity-firstname'),
-                    lastName: document.getElementById('entity-lastname'),
-                    secondLastName: document.getElementById('entity-secondlastname'),
-                    phoneNumer: document.getElementById('entity-phone'),
-                    state: document.getElementById('entity-state'),
-                    customer: document.getElementById('entity-customer'),
-                    username: document.getElementById('entity-username'),
-                    citadel: document.getElementById('entity-citadel'),
-                    temporalPass: document.getElementById('tempPass')
-                }
-
-                const raw = JSON.stringify({
-                    "lastName": `${inputsCollection.lastName.value}`,
-                    "secondLastName": `${inputsCollection.secondLastName.value}`,
-                    "isSuper": false,
-                    "email": "",
-                    "temp": `${inputsCollection.temporalPass.value}`,
-                    "isWebUser": false,
-                    "active": true,
-                    "firstName": `${inputsCollection.firstName.value}`,
-                    "state": {
-                        "id": `${inputsCollection.state.dataset.entityid}`
-                    },
-                    "contractor": {
-                        "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
-                    },
-                    "customer": {
-                        "id": `${inputsCollection.customer.dataset.optionid}`
-                    },
-                    "citadel": {
-                        "id": `${inputsCollection.citadel.dataset.entityid}`
-                    },
-                    "phone": `${inputsCollection.phoneNumer.value}`,
-                    "userType": "CUSTOMER",
-                    "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
-                })
-                reg(raw)
-            })
-
+      const registerButton: InterfaceElement = document.getElementById('register-entity')
+      registerButton.addEventListener('click', (): void => {
+        const inputsCollection: any = {
+          firstName: document.getElementById('entity-firstname'),
+          lastName: document.getElementById('entity-lastname'),
+          secondLastName: document.getElementById('entity-secondlastname'),
+          phoneNumer: document.getElementById('entity-phone'),
+          state: document.getElementById('entity-state'),
+          customer: document.getElementById('entity-customer'),
+          username: document.getElementById('entity-username'),
+          citadel: document.getElementById('entity-citadel'),
+          temporalPass: document.getElementById('tempPass')
         }
 
-        const reg = async (raw: any) => {
-            registerEntity(raw, 'User')
-                .then(res => {
-                    this.render()
-                    setNewPassword()
-                    setRole()
-                })
-
-            const setNewPassword: any = async (): Promise<void> => {
-                const users: any = await getEntitiesData('User')
-                const FNewUsers: any = users.filter((data: any) => data.isSuper === true)
-
-                FNewUsers.forEach((newUser: any) => {
-
-                })
-            }
-        }
-    }
-
-    private generateUserName = async (): Promise<void> => {
-        const firstName: InterfaceElement = document.getElementById('entity-firstname')
-        const secondName: InterfaceElement = document.getElementById('')
-        const lastName: InterfaceElement = document.getElementById('entity-lastname')
-        const secondLastName: InterfaceElement = document.getElementById('entity-secondlastname')
-        const clientName: InterfaceElement = document.getElementById('entity-customer')
-
-        const userName: InterfaceElement = document.getElementById('entity-username')
-
-        let UserNameFFragment: string = ''
-        let UserNameLNFragment: string = ''
-        let UserNameSLNFragment: string = ''
-
-
-        firstName.addEventListener('keyup', (e: any): void => {
-            UserNameFFragment = firstName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
+        const raw = JSON.stringify({
+          "lastName": `${inputsCollection.lastName.value}`,
+          "secondLastName": `${inputsCollection.secondLastName.value}`,
+          "isSuper": false,
+          "email": "",
+          "temp": `${inputsCollection.temporalPass.value}`,
+          "isWebUser": false,
+          "active": true,
+          "firstName": `${inputsCollection.firstName.value}`,
+          "state": {
+            "id": `${inputsCollection.state.dataset.entityid}`
+          },
+          "contractor": {
+            "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
+          },
+          "customer": {
+            "id": `${inputsCollection.customer.dataset.optionid}`
+          },
+          "citadel": {
+            "id": `${inputsCollection.citadel.dataset.entityid}`
+          },
+          "phone": `${inputsCollection.phoneNumer.value}`,
+          "userType": "CUSTOMER",
+          "username": `${inputsCollection.username.value}@${inputsCollection.customer.value.toLowerCase()}.com`
         })
-
-        lastName.addEventListener('keyup', (e: any): void => {
-            UserNameLNFragment = lastName.value.toLowerCase()
-            userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
-        })
-
-        secondLastName.addEventListener('keyup', (e: any): void => {
-            UserNameSLNFragment = secondLastName.value.toLowerCase()
-            if (secondLastName.value.length > 0) {
-                UserNameFFragment[0]
-                userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment[0]}`)
-            }
-            else {
-                userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment}`)
-            }
-        })
+        reg(raw)
+      })
 
     }
 
-    public import() {
-        const importButton: InterfaceElement = document.getElementById('import-entities')
-        importButton.addEventListener('click', (): void => {
+    const reg = async (raw: any) => {
+      registerEntity(raw, 'User')
+        .then((res) => {
+          setTimeout(async () => {
+            let data = await getUsers(userType, SUser)
+            const tableBody: InterfaceElement = document.getElementById('datatable-body')
+            const container: InterfaceElement = document.getElementById('entity-editor-container')
 
+            new CloseDialog().x(container)
+            this.load(tableBody, currentPage, data)
+          }, 1000)
         })
     }
+  }
 
-    private edit(container: InterfaceElement, data: any) {
-        // Edit entity
-        const edit: InterfaceElement = document.querySelectorAll('#edit-entity')
-        edit.forEach((edit: InterfaceElement) => {
-            const entityId = edit.dataset.entityid
-            edit.addEventListener('click', (): void => {
-                RInterface('User', entityId)
-            })
-        })
+  private generateUserName = async (): Promise<void> => {
+    const firstName: InterfaceElement = document.getElementById('entity-firstname')
+    const secondName: InterfaceElement = document.getElementById('')
+    const lastName: InterfaceElement = document.getElementById('entity-lastname')
+    const secondLastName: InterfaceElement = document.getElementById('entity-secondlastname')
+    const clientName: InterfaceElement = document.getElementById('entity-customer')
 
-        const RInterface = async (entities: string, entityID: string): Promise<void> => {
-            const data: any = await getEntityData(entities, entityID)
-            this.entityDialogContainer.innerHTML = ''
-            this.entityDialogContainer.style.display = 'flex'
-            this.entityDialogContainer.innerHTML = `
+    const userName: InterfaceElement = document.getElementById('entity-username')
+
+    let UserNameFFragment: string = ''
+    let UserNameLNFragment: string = ''
+    let UserNameSLNFragment: string = ''
+
+
+    firstName.addEventListener('keyup', (e: any): void => {
+      UserNameFFragment = firstName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
+    })
+
+    lastName.addEventListener('keyup', (e: any): void => {
+      UserNameLNFragment = lastName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
+    })
+
+    secondLastName.addEventListener('keyup', (e: any): void => {
+      UserNameSLNFragment = secondLastName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      if (secondLastName.value.length > 0) {
+        UserNameFFragment[0]
+        userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment[0]}`)
+      }
+      else {
+        userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment}`)
+      }
+    })
+
+  }
+
+  public import() {
+    const importButton: InterfaceElement = document.getElementById('import-entities')
+    importButton.addEventListener('click', (): void => {
+
+    })
+  }
+
+  private edit(container: InterfaceElement, data: any) {
+    // Edit entity
+    const edit: InterfaceElement = document.querySelectorAll('#edit-entity')
+    edit.forEach((edit: InterfaceElement) => {
+      const entityId = edit.dataset.entityid
+      edit.addEventListener('click', (): void => {
+        RInterface('User', entityId)
+      })
+    })
+
+    const RInterface = async (entities: string, entityID: string): Promise<void> => {
+      const data: any = await getEntityData(entities, entityID)
+      this.entityDialogContainer.innerHTML = ''
+      this.entityDialogContainer.style.display = 'flex'
+      this.entityDialogContainer.innerHTML = `
                 <div class="entity_editor" id="entity-editor">
                 <div class="entity_editor_header">
                     <div class="user_info">
@@ -442,62 +445,62 @@ export class Clients {
                 </div>
             `
 
-            inputObserver()
-            inputSelect('Business', 'entity-citadel')
-            inputSelect('Customer', 'entity-customer')
-            inputSelect('State', 'entity-state', data.state.name)
-            inputSelect('Department', 'entity-department')
-            inputSelect('Business', 'entity-business')
-            this.close()
-            UUpdate(entityID)
-        }
-
-        const UUpdate = async (entityId: any): Promise<void> => {
-            const updateButton: InterfaceElement =
-                document.getElementById('update-changes')
-
-            const $value = {
-                // @ts-ignore
-                firstName: document.getElementById('entity-firstname').value,
-                // @ts-ignore
-                lastName: document.getElementById('entity-lastname').value,
-                // @ts-ignore
-                secondLastName: document.getElementById('entity-secondlastname').value,
-                // @ts-ignore
-                phone: document.getElementById('entity-phone').value,
-                // @ts-ignore
-                status: document.getElementById('entity-state'),
-                // @ts-ignore
-                business: document.getElementById('entity-business'),
-                // @ts-ignore
-                client: document.getElementById('entity-customer'),
-                // @ts-ignore
-                department: document.getElementById('entity-department')
-            }
-
-            updateButton.addEventListener('click', () => {
-                let raw = JSON.stringify({
-                    "lastName": `${$value.lastName}`,
-                    "secondLastName": `${$value.secondLastName}`,
-                    "active": true,
-                    "firstName": `${$value.firstName}`
-
-                })
-
-                console.log(raw)
-            })
-        }
+      inputObserver()
+      inputSelect('Business', 'entity-citadel')
+      inputSelect('Customer', 'entity-customer')
+      inputSelect('State', 'entity-state', data.state.name)
+      inputSelect('Department', 'entity-department')
+      inputSelect('Business', 'entity-business')
+      this.close()
+      UUpdate(entityID)
     }
 
-    private remove() {
-        const remove: InterfaceElement = document.querySelectorAll('#remove-entity')
-        remove.forEach((remove: InterfaceElement) => {
+    const UUpdate = async (entityId: any): Promise<void> => {
+      const updateButton: InterfaceElement =
+        document.getElementById('update-changes')
 
-            const entityId = remove.dataset.entityid
+      const $value = {
+        // @ts-ignore
+        firstName: document.getElementById('entity-firstname').value,
+        // @ts-ignore
+        lastName: document.getElementById('entity-lastname').value,
+        // @ts-ignore
+        secondLastName: document.getElementById('entity-secondlastname').value,
+        // @ts-ignore
+        phone: document.getElementById('entity-phone').value,
+        // @ts-ignore
+        status: document.getElementById('entity-state'),
+        // @ts-ignore
+        business: document.getElementById('entity-business'),
+        // @ts-ignore
+        client: document.getElementById('entity-customer'),
+        // @ts-ignore
+        department: document.getElementById('entity-department')
+      }
 
-            remove.addEventListener('click', (): void => {
-                this.dialogContainer.style.display = 'block'
-                this.dialogContainer.innerHTML = `
+      updateButton.addEventListener('click', () => {
+        let raw = JSON.stringify({
+          "lastName": `${$value.lastName}`,
+          "secondLastName": `${$value.secondLastName}`,
+          "active": true,
+          "firstName": `${$value.firstName}`
+
+        })
+
+        console.log(raw)
+      })
+    }
+  }
+
+  private remove() {
+    const remove: InterfaceElement = document.querySelectorAll('#remove-entity')
+    remove.forEach((remove: InterfaceElement) => {
+
+      const entityId = remove.dataset.entityid
+
+      remove.addEventListener('click', (): void => {
+        this.dialogContainer.style.display = 'block'
+        this.dialogContainer.innerHTML = `
           <div class="dialog_content" id="dialog-content">
             <div class="dialog dialog_danger">
               <div class="dialog_container">
@@ -518,101 +521,130 @@ export class Clients {
           </div>
         `
 
-                const deleteButton: InterfaceElement = document.getElementById('delete')
-                const cancelButton: InterfaceElement = document.getElementById('cancel')
-                const dialogContent: InterfaceElement = document.getElementById('dialog-content')
+        const deleteButton: InterfaceElement = document.getElementById('delete')
+        const cancelButton: InterfaceElement = document.getElementById('cancel')
+        const dialogContent: InterfaceElement = document.getElementById('dialog-content')
 
-                deleteButton.onclick = () => {
-                    deleteEntity('User', entityId)
-                    new CloseDialog().x(dialogContent)
-                    this.render()
-                }
+        deleteButton.onclick = () => {
+          deleteEntity('User', entityId)
+          new CloseDialog().x(dialogContent)
+          this.render()
+        }
 
-                cancelButton.onclick = () => {
-                    new CloseDialog().x(dialogContent)
-                }
-            })
-        })
+        cancelButton.onclick = () => {
+          new CloseDialog().x(dialogContent)
+        }
+      })
+    })
 
+  }
+
+  private convertToSuper() {
+    const convert: InterfaceElement = document.querySelectorAll('#convert-entity')
+    convert.forEach((convert: InterfaceElement) => {
+      const entityId = convert.dataset.entityid
+      convert.addEventListener('click', (): void => {
+        alert('Converting...')
+      })
+    })
+  }
+
+  private pagination(items: [], limitRows: number, currentPage: number, load?: any) {
+    const tableBody: InterfaceElement = document.getElementById('datatable-body')
+    const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+    paginationWrapper.innerHTML = ''
+
+    let pageCount: number
+    pageCount = Math.ceil(items.length / limitRows)
+
+    let button: InterfaceElement
+    for (let i = 1; i < pageCount + 1; i++) {
+      button = setupButtons(
+        i, items, currentPage, tableBody, limitRows, load
+      )
+
+      paginationWrapper.appendChild(button)
     }
 
-    public convertToSuper() {
-        const convert: InterfaceElement = document.querySelectorAll('#convert-entity')
-        convert.forEach((convert: InterfaceElement) => {
-            const entityId = convert.dataset.entityid
-            convert.addEventListener('click', (): void => {
-                alert('Converting...')
-            })
-        })
+    function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number, load: any): void {
+      const button: InterfaceElement = document.createElement('button')
+      button.innerText = page
+      if (currentPage == page) button.classList.add('isActive')
+
+      button.addEventListener('click', () => {
+        currentPage = page
+
+        let currentButton: InterfaceElement = document.querySelector('button.isActive')
+        currentButton.classList.remove('isActive')
+        button.classList.add('isActive')
+      })
+
+      return button
     }
 
-    public close(): void {
-        const closeButton: InterfaceElement = document.getElementById('close')
-        const editor: InterfaceElement = document.getElementById('entity-editor-container')
+  }
 
-        closeButton.addEventListener('click', () => {
-            console.log('close')
-            new CloseDialog().x(editor)
-        }, false)
-    }
+  private close(): void {
+    const closeButton: InterfaceElement = document.getElementById('close')
+    const editor: InterfaceElement = document.getElementById('entity-editor-container')
+
+    closeButton.addEventListener('click', () => {
+      console.log('close')
+      new CloseDialog().x(editor)
+    }, false)
+  }
 }
 
 export async function setUserPassword(): Promise<any> {
-    const users: any = await getEntitiesData('User')
-    const filterBySuperUsers: any = users.filter((data: any) => data.isSuper === false)
-    const filterByUserType: any = filterBySuperUsers.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
-    const data: any = filterByUserType
+  const users: any = await getEntitiesData('User')
+  const filterBySuperUsers: any = users.filter((data: any) => data.isSuper === false)
+  const filterByUserType: any = filterBySuperUsers.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
+  const data: any = filterByUserType
 
-    data.forEach((newUser: any) => {
-        let raw: string = JSON.stringify({
-            "id": `${newUser.id}`,
-            "newPassword": `${newUser.temp}`
-        })
-
-        let updateRaw: string = JSON.stringify({
-            "newUser": false
-        })
-
-        if (newUser.newUser === true && newUser.temp !== undefined)
-            setPassword(raw),
-                updateEntity('User', newUser.id, updateRaw)
+  data.forEach((newUser: any) => {
+    let raw: string = JSON.stringify({
+      "id": `${newUser.id}`,
+      "newPassword": `${newUser.temp}`
     })
+
+    if (newUser.newUser === true && newUser.temp !== undefined)
+      setPassword(raw)
+  })
 }
 
 export async function setRole(): Promise<void> {
-    const users: any = await getEntitiesData('User')
-    const filterByNewUsers: any = users.filter((data: any) => data.newUser == true)
-    const filterByUserType: any = filterByNewUsers.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
-    const data: any = filterByUserType
+  const users: any = await getEntitiesData('User')
+  const filterByNewUsers: any = users.filter((data: any) => data.newUser == true)
+  const filterByUserType: any = filterByNewUsers.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
+  const data: any = filterByUserType
 
-    data.forEach((newUser: any) => {
-        let raw: string = JSON.stringify({
-            "id": `${newUser.id}`,
-            "roleCode": 'app_web_clientes'
-        })
-
-        let updateNewUser: string = JSON.stringify({
-            "newUser": false
-        })
-
-        if (newUser.newUser === true) {
-            setUserRole(raw)
-        }
+  data.forEach((newUser: any) => {
+    let raw: string = JSON.stringify({
+      "id": `${newUser.id}`,
+      "roleCode": 'app_clientes'
     })
 
-    console.group('Role asignment users')
-    console.log(data)
-    console.groupEnd()
+    let updateNewUser: string = JSON.stringify({
+      "newUser": false
+    })
+
+    if (newUser.newUser == true) {
+      setUserRole(raw)
+      setTimeout(() => {
+        updateEntity('User', newUser.id, updateNewUser)
+      }, 1000)
+    }
+  })
 }
 
 export async function changeUserPassword(): Promise<void> {
-    const triggers: InterfaceElement = document.querySelectorAll('#change-user-password')
+  const triggers: InterfaceElement = document.querySelectorAll('#change-user-password')
 
-    triggers.forEach((button: InterfaceElement) => {
-        const userId = button.dataset.userid
-        button.addEventListener('click', (): void => {
-            console.log(userId)
-            alert('Aún estamos trabajando en esta función')
-        })
+  triggers.forEach((button: InterfaceElement) => {
+    const userId = button.dataset.userid
+    button.addEventListener('click', (): void => {
+      console.log(userId)
+      alert('Aún estamos trabajando en esta función')
     })
+  })
 }

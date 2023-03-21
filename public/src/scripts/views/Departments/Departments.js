@@ -132,6 +132,8 @@ export class Departments {
                 });
                 registerEntity(raw, 'Department');
                 setTimeout(() => {
+                    const container = document.getElementById('entity-editor-container');
+                    new CloseDialog().x(container);
                     new Departments().render();
                 }, 1000);
             });
