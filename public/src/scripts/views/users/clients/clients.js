@@ -414,13 +414,13 @@ export class Clients {
             const updateButton = document.getElementById('update-changes');
             const $value = {
                 // @ts-ignore
-                firstName: document.getElementById('entity-firstname').value,
+                firstName: document.getElementById('entity-firstname'),
                 // @ts-ignore
-                lastName: document.getElementById('entity-lastname').value,
+                lastName: document.getElementById('entity-lastname'),
                 // @ts-ignore
-                secondLastName: document.getElementById('entity-secondlastname').value,
+                secondLastName: document.getElementById('entity-secondlastname'),
                 // @ts-ignore
-                phone: document.getElementById('entity-phone').value,
+                phone: document.getElementById('entity-phone'),
                 // @ts-ignore
                 status: document.getElementById('entity-state'),
                 // @ts-ignore
@@ -428,17 +428,34 @@ export class Clients {
                 // @ts-ignore
                 client: document.getElementById('entity-customer'),
                 // @ts-ignore
-                department: document.getElementById('entity-department')
+                department: document.getElementById('entity-department'),
+                // @ts-ignore
+                customer: document.getElementById('entity-customer')
             };
             updateButton.addEventListener('click', () => {
                 let raw = JSON.stringify({
-                    "lastName": `${$value.lastName}`,
-                    "secondLastName": `${$value.secondLastName}`,
+                    // @ts-ignore
+                    "lastName": `${$value.lastName?.value}`,
+                    // @ts-ignore
+                    "secondLastName": `${$value.secondLastName?.value}`,
                     "active": true,
-                    "firstName": `${$value.firstName}`
+                    // @ts-ignore
+                    "firstName": `${$value.firstName?.value}`,
+                    "state": {
+                        "id": `${$value.status?.dataset.optionid}`
+                    },
+                    "customer": {
+                        "id": `${$value.customer?.dataset.optionid}`
+                    },
+                    // @ts-ignore
+                    "phone": `${$value.phone?.value}`
                 });
+                update(raw);
                 console.log(raw);
             });
+            async function update(raw) {
+                await updateEntity('User', entityId, raw);
+            }
         };
     }
     remove() {
