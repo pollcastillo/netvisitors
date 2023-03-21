@@ -57,7 +57,8 @@ export const inputSelect = async (entity: string, selectId: string, currentStatu
     options.forEach((option: any) => {
         option.addEventListener('click', (): void => {
             select.value = option.innerText
-            select.setAttribute('data-entityid', option.getAttribute('id'))
+            select.removeAttribute('data-optionid')
+            select.setAttribute('data-optionid', option.getAttribute('id'))
             inputParent.classList.remove('select_active')
         })
     })

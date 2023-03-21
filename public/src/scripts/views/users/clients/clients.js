@@ -261,7 +261,7 @@ export class Clients {
                     "active": true,
                     "firstName": `${inputsCollection.firstName.value}`,
                     "state": {
-                        "id": `${inputsCollection.state.dataset.entityid}`
+                        "id": `${inputsCollection.state.dataset.optionid}`
                     },
                     "contractor": {
                         "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
@@ -270,7 +270,7 @@ export class Clients {
                         "id": `${inputsCollection.customer.dataset.optionid}`
                     },
                     "citadel": {
-                        "id": `${inputsCollection.citadel.dataset.entityid}`
+                        "id": `${inputsCollection.citadel.dataset.optionid}`
                     },
                     "phone": `${inputsCollection.phoneNumer.value}`,
                     "userType": "CUSTOMER",
