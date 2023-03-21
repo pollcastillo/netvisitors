@@ -105,7 +105,7 @@ export class Departments {
 
     const renderInterface = async (): Promise<void> => {
       this.entityDialogContainer.innerHTML = ''
-      this.entityDialogContainer.style.display = 'block'
+      this.entityDialogContainer.style.display = 'flex'
       this.entityDialogContainer.innerHTML = `
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
@@ -178,7 +178,7 @@ export class Departments {
       const entityId = remove.dataset.entityid
 
       remove.addEventListener('click', (): void => {
-        this.dialogContainer.style.display = 'block'
+        this.dialogContainer.style.display = 'flex'
         this.dialogContainer.innerHTML = `
           <div class="dialog_content" id="dialog-content">
             <div class="dialog dialog_danger">
@@ -211,12 +211,11 @@ export class Departments {
           deleteEntity('Department', entityId)
             .then(res => new Departments().render())
 
-          new CloseDialog().x(dialogContent, this.dialogContainer)
+          new CloseDialog().x(dialogContent)
         }
 
         cancelButton.onclick = () => {
-          new CloseDialog().x(dialogContent, this.dialogContainer)
-          this.render()
+          new CloseDialog().x(dialogContent)
         }
       })
     })
@@ -224,14 +223,12 @@ export class Departments {
   }
 
   public close(): void {
-    const closeButton: InterfaceElement =
-      document.getElementById('close')
+    const closeButton: InterfaceElement = document.getElementById('close')
+    const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
-    const editor: InterfaceElement =
-      document.getElementById('entity-editor')
-
-    closeButton.addEventListener('click', (): void => {
-      new CloseDialog().x(editor, this.entityDialogContainer)
+    closeButton.addEventListener('click', () => {
+      console.log('close')
+      new CloseDialog().x(editor)
     })
   }
 }

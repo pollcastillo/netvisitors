@@ -81,7 +81,7 @@ export class Departments {
         });
         const renderInterface = async () => {
             this.entityDialogContainer.innerHTML = '';
-            this.entityDialogContainer.style.display = 'block';
+            this.entityDialogContainer.style.display = 'flex';
             this.entityDialogContainer.innerHTML = `
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
@@ -144,7 +144,7 @@ export class Departments {
         remove.forEach((remove) => {
             const entityId = remove.dataset.entityid;
             remove.addEventListener('click', () => {
-                this.dialogContainer.style.display = 'block';
+                this.dialogContainer.style.display = 'flex';
                 this.dialogContainer.innerHTML = `
           <div class="dialog_content" id="dialog-content">
             <div class="dialog dialog_danger">
@@ -174,20 +174,20 @@ export class Departments {
                 deleteButton.onclick = () => {
                     deleteEntity('Department', entityId)
                         .then(res => new Departments().render());
-                    new CloseDialog().x(dialogContent, this.dialogContainer);
+                    new CloseDialog().x(dialogContent);
                 };
                 cancelButton.onclick = () => {
-                    new CloseDialog().x(dialogContent, this.dialogContainer);
-                    this.render();
+                    new CloseDialog().x(dialogContent);
                 };
             });
         });
     }
     close() {
         const closeButton = document.getElementById('close');
-        const editor = document.getElementById('entity-editor');
+        const editor = document.getElementById('entity-editor-container');
         closeButton.addEventListener('click', () => {
-            new CloseDialog().x(editor, this.entityDialogContainer);
+            console.log('close');
+            new CloseDialog().x(editor);
         });
     }
 }

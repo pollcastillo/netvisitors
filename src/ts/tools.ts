@@ -116,9 +116,10 @@ export const drawTagsIntoTables = (): void => {
 }
 
 export class CloseDialog {
-    public x(dialog: any, container: any) {
+    public x(container?: any) {
         container.style.display = 'none'
-        dialog.remove()
+        // const dialog: InterfaceElement = container.firstElementChild
+        // dialog.remove()
     }
 }
 
@@ -127,7 +128,7 @@ export const renderRightSidebar = (UIFragment: InterfaceElement) => {
     const dialogContainer: InterfaceElement = document.getElementById('entity-editor-container')
 
     dialogContainer.innerHTML = ''
-    dialogContainer.style.display = 'block'
+    dialogContainer.style.display = 'flex'
     dialogContainer.innerHTML = UIFragment
 }
 

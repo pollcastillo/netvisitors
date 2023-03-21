@@ -162,3 +162,22 @@ export const setPassword = async (raw: string): Endpoint => {
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
 }
+
+export const setUserRole = async (raw: string): Endpoint => {
+  const req: Request = {
+    url: 'https://backend.netliinks.com:443/rest/services/UserServiceBean/assignRol',
+    method: 'POST'
+  }
+
+  const requestOptions: {} = {
+    method: req.method,
+    headers: headers,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  fetch(req.url, requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}

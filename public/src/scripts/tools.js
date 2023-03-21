@@ -107,16 +107,17 @@ export const drawTagsIntoTables = () => {
     });
 };
 export class CloseDialog {
-    x(dialog, container) {
+    x(container) {
         container.style.display = 'none';
-        dialog.remove();
+        // const dialog: InterfaceElement = container.firstElementChild
+        // dialog.remove()
     }
 }
 // SIDEBAR RENDERING TOOLS
 export const renderRightSidebar = (UIFragment) => {
     const dialogContainer = document.getElementById('entity-editor-container');
     dialogContainer.innerHTML = '';
-    dialogContainer.style.display = 'block';
+    dialogContainer.style.display = 'flex';
     dialogContainer.innerHTML = UIFragment;
 };
 export const fixDate = () => {

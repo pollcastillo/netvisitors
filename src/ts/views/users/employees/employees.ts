@@ -125,7 +125,7 @@ export class Employees implements NUsers.IEmployees {
 
     const renderInterface = async (entities: string): Promise<void> => {
       this.entityDialogContainer.innerHTML = ''
-      this.entityDialogContainer.style.display = 'block'
+      this.entityDialogContainer.style.display = 'flex'
       this.entityDialogContainer.innerHTML = `
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
@@ -361,7 +361,7 @@ export class Employees implements NUsers.IEmployees {
     const RInterface = async (entities: string, entityID: string): Promise<void> => {
       const data: any = await getEntityData(entities, entityID)
       this.entityDialogContainer.innerHTML = ''
-      this.entityDialogContainer.style.display = 'block'
+      this.entityDialogContainer.style.display = 'flex'
       this.entityDialogContainer.innerHTML = `
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
@@ -522,12 +522,12 @@ export class Employees implements NUsers.IEmployees {
 
         deleteButton.onclick = () => {
           deleteEntity('User', entityId)
-          new CloseDialog().x(dialogContent, this.dialogContainer)
+          new CloseDialog().x(dialogContent)
           this.render()
         }
 
         cancelButton.onclick = () => {
-          new CloseDialog().x(dialogContent, this.dialogContainer)
+          new CloseDialog().x(dialogContent)
           this.render()
         }
       })
@@ -536,14 +536,12 @@ export class Employees implements NUsers.IEmployees {
   }
 
   public close(): void {
-    const closeButton: InterfaceElement =
-      document.getElementById('close')
+    const closeButton: InterfaceElement = document.getElementById('close')
+    const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
-    const editor: InterfaceElement =
-      document.getElementById('entity-editor')
-
-    closeButton.addEventListener('click', (): void => {
-      new CloseDialog().x(editor, this.entityDialogContainer)
+    closeButton.addEventListener('click', () => {
+      console.log('close')
+      new CloseDialog().x(editor)
     })
   }
 }

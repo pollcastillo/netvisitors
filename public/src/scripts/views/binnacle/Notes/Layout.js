@@ -43,44 +43,36 @@ export const UIContentLayout = `
         </div>
     </div>`;
 export const UIRightSidebar = `
-<div class="entity_editor" id="entity-editor">
-<div class="entity_editor_header">
-  <div class="user_info">
-    <div class="avatar"><i class="fa-regular fa-user"></i></div>
-    <h1 class="entity_editor_title">Detalles <br><small>Notas</small></h1>
-  </div>
+    <div class="entity_editor" id="entity-editor">
+    <div class="entity_editor_header">
+      <div class="user_info">
+        <div class="avatar"><i class="fa-regular fa-user"></i></div>
+        <h1 class="entity_editor_title">Detalles de <br><small>la nota</small></h1>
+      </div>
 
-  <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
-</div>
+      <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
+    </div>
 
-<!-- EDITOR BODY -->
-<div class="entity_editor_body">
-  <div class="material_input">
-    <input type="text" id="entity-firstname" autocomplete="none">
-    <label for="entity-firstname">Nombre</label>
-  </div>
+    <!-- EDITOR BODY -->
+    <div class="entity_editor_body">
+      <h2 id="note-title">Título</h2>
+      <p id="note-content">Lorem ipsum dolor sit amet...</p><br><br>
 
-  <div class="material_input">
-    <input type="text" id="entity-lastname" autocomplete="none">
-    <label for="entity-lastname">Apellido</label>
-  </div>
+      <div class="material_input">
+        <input type="text" id="note-author" class="input_filled" value="" readonly>
+        <label for="note-author"><i class="fa-solid fa-user"></i> Autor</label>
+      </div>
 
-  <div class="material_input">
-    <input type="text" id="entity-secondlastname" autocomplete="none">
-    <label for="entity-secondlastname">2do Apellido</label>
-  </div>
+      <div class="material_input">
+        <input type="text" id="note-creationdate" class="input_filled" value="" readonly>
+        <label for="note-creationdate"><i class="fa-solid fa-calendar"></i> Fecha de creación</label>
+      </div>
 
-  <div class="material_input">
-    <input type="text"
-      id="entity-phone"
-      maxlength="10" autocomplete="none">
-    <label for="entity-phone">Teléfono</label>
-  </div>
-</div>
-<!-- END EDITOR BODY -->
+    </div>
+    <!-- END EDITOR BODY -->
 
-<div class="entity_editor_footer">
-  <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
-</div>
-</div>
-`;
+    <div class="entity_editor_footer">
+      <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
+    </div>
+    </div>
+    `;

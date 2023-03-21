@@ -123,10 +123,10 @@ export class Notes {
     private closeRightSidebar = (): void => {
         const closeButton: InterfaceElement = document.getElementById('close')
 
-        const editor: InterfaceElement = document.getElementById('entity-editor')
+        const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
         closeButton.addEventListener('click', (): void => {
-            new CloseDialog().x(editor, this.siebarDialogContainer)
+            new CloseDialog().x(editor)
         })
     }
 }

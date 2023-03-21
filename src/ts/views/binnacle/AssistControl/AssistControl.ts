@@ -85,7 +85,7 @@ export class AssistControl {
                 tableBody.appendChild(row)
                 drawTagsIntoTables()
             }
-            this.previewVisit()
+            this.previewAssist()
             this.fixCreatedDate()
         }
     }
@@ -109,7 +109,7 @@ export class AssistControl {
         })
     }
 
-    private previewVisit = async (): Promise<void> => {
+    private previewAssist = async (): Promise<void> => {
         const openButtons: InterfaceElement = document.querySelectorAll('#entity-details')
         openButtons.forEach((openButton: InterfaceElement) => {
             const entityId: string = openButton.dataset.entityid
@@ -120,32 +120,53 @@ export class AssistControl {
 
 
         const renderInterface = async (entity: string): Promise<void> => {
-            let entityData = await getEntityData('Visit', entity)
+            let entityData = await getEntityData('Marcation', entity)
             console.log(entityData)
             renderRightSidebar(UIRightSidebar)
 
-            const visitName: InterfaceElement = document.getElementById('visit-name')
-            visitName.value = `${entityData.firstName} ${entityData.firstLastName}`
+            const marcationName: InterfaceElement = document.getElementById('entity-firstname')
+            marcationName.value = `${entityData.user.firstName} ${entityData.user.lastName} ${entityData.user.secondLastName}`
 
-            const visitReason: InterfaceElement = document.getElementById('visit-reason')
-            visitReason.value = entityData.reason
+            const userDni: InterfaceElement = document.getElementById('entity-dni')
+            if (await !entityData.user.dni) {
+                let dniParent = userDni.parentNode
+                dniParent.style.display = "none"
+            } else {
+                userDni.value = entityData.user.dni
+            }
 
-            const visitAutorizedBy: InterfaceElement = document.getElementById('visit-authorizedby')
-            visitAutorizedBy.value = entityData.authorizer
+            const userType: InterfaceElement = document.getElementById('entity-type')
+            let userTypeParent = userType.parentNode
 
-            const visitStatus: InterfaceElement = document.getElementById('visit-status')
-            visitStatus.innerText = entityData.visitState.name
+            if (await !entityData.user.userType)
+                userTypeParent.style.display = "none"
+            else
+                if (entityData.user.userType == 'CUSTOMER')
+                    userType.value = 'Cliente'
+                else if (entityData.user.userType == 'GUARD')
+                    userType.value = 'Guardia'
 
-            const visitCitadel: InterfaceElement = document.getElementById('visit-citadel')
-            visitCitadel.value = entityData.citadel.description
+            const marcationStatus: InterfaceElement = document.getElementById('marcation-status')
+            marcationStatus.innerText = entityData.marcationState.name
 
-            const visitCitadelID: InterfaceElement = document.getElementById('visit-citadelid')
-            visitCitadelID.value = entityData.citadel.name
+            drawTagsIntoTables()
 
-            const visitDepartment: InterfaceElement = document.getElementById('visit-department')
-            visitDepartment.value = entityData.department.name
+            // const visitAutorizedBy: InterfaceElement = document.getElementById('visit-authorizedby')
+            // visitAutorizedBy.value = entityData.authorizer
 
-            console.log(entityData.citadel.name)
+            // const visitStatus: InterfaceElement = document.getElementById('visit-status')
+            // visitStatus.innerText = entityData.visitState.name
+
+            // const visitCitadel: InterfaceElement = document.getElementById('visit-citadel')
+            // visitCitadel.value = entityData.citadel.description
+
+            // const visitCitadelID: InterfaceElement = document.getElementById('visit-citadelid')
+            // visitCitadelID.value = entityData.citadel.name
+
+            // const visitDepartment: InterfaceElement = document.getElementById('visit-department')
+            // visitDepartment.value = entityData.department.name
+
+            // console.log(entityData.citadel.name)
 
             this.closeRightSidebar()
             drawTagsIntoTables()
@@ -156,10 +177,10 @@ export class AssistControl {
     private closeRightSidebar = (): void => {
         const closeButton: InterfaceElement = document.getElementById('close')
 
-        const editor: InterfaceElement = document.getElementById('entity-editor')
+        const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
         closeButton.addEventListener('click', (): void => {
-            new CloseDialog().x(editor, this.siebarDialogContainer)
+            new CloseDialog().x(editor)
         })
     }
 

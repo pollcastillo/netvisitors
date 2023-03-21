@@ -135,7 +135,7 @@ export class Contractors {
         });
         const renderInterface = async (entities) => {
             this.entityDialogContainer.innerHTML = '';
-            this.entityDialogContainer.style.display = 'block';
+            this.entityDialogContainer.style.display = 'flex';
             this.entityDialogContainer.innerHTML = `
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
@@ -309,7 +309,7 @@ export class Contractors {
         const RInterface = async (entities, entityID) => {
             const data = await getEntityData(entities, entityID);
             this.entityDialogContainer.innerHTML = '';
-            this.entityDialogContainer.style.display = 'block';
+            this.entityDialogContainer.style.display = 'flex';
             this.entityDialogContainer.innerHTML = `
         <div class="entity_editor" id="entity-editor">
           <div class="entity_editor_header">
@@ -451,12 +451,11 @@ export class Contractors {
                 const dialogContent = document.getElementById('dialog-content');
                 deleteButton.onclick = () => {
                     deleteEntity('User', entityId);
-                    new CloseDialog().x(dialogContent, this.dialogContainer);
+                    new CloseDialog().x(dialogContent);
                     this.render();
                 };
                 cancelButton.onclick = () => {
-                    new CloseDialog().x(dialogContent, this.dialogContainer);
-                    this.render();
+                    new CloseDialog().x(dialogContent);
                 };
             });
         });
@@ -472,9 +471,10 @@ export class Contractors {
     }
     close() {
         const closeButton = document.getElementById('close');
-        const editor = document.getElementById('entity-editor');
+        const editor = document.getElementById('entity-editor-container');
         closeButton.addEventListener('click', () => {
-            new CloseDialog().x(editor, this.entityDialogContainer);
+            console.log('close');
+            new CloseDialog().x(editor);
         });
     }
 }

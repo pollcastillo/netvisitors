@@ -125,9 +125,9 @@ export class Visits {
         };
         this.closeRightSidebar = () => {
             const closeButton = document.getElementById('close');
-            const editor = document.getElementById('entity-editor');
+            const editor = document.getElementById('entity-editor-container');
             closeButton.addEventListener('click', () => {
-                new CloseDialog().x(editor, this.siebarDialogContainer);
+                new CloseDialog().x(editor);
             });
         };
         this.fixCreatedDate = () => {

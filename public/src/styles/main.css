@@ -488,71 +488,77 @@ table button:hover {
 
 .entity_editor_container {
   display: none;
-  width: 100%;
-  height: 100vh;
-  right: 0;
+  align-items: flex-start;
+  justify-content: flex-end;
   position: absolute;
-  opacity: 1;
   background-color: rgba(38, 35, 58, 0.4);
-  animation-name: ShowContainer;
-  animation-duration: 350ms;
-  z-index: 100;
-}
-@keyframes ShowContainer {
-  from {
-    transform: opacity(0);
-  }
-  to {
-    transform: opacity(1);
-  }
-}
-
-.entity_editor {
-  display: block;
+  opacity: 1;
+  right: 0;
+  z-index: 2000;
+  height: 100vh;
   width: 100%;
-  max-width: 400px;
+  animation-name: FadeIn;
+  animation-duration: 400ms;
+}
+.entity_editor_container .entity_editor {
+  display: block;
   background-color: #FFFFFF;
+  width: 100%;
   height: 100%;
   box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
-  transform: translateX(0px);
-  right: 0;
-  position: absolute;
-  animation-name: EditorAppear;
+  transform: translateX(0);
+  max-width: 400px;
+  background: #FFFFFF;
+  animation-name: SlideInFromRight;
   animation-duration: 300ms;
 }
-@keyframes EditorAppear {
-  from {
-    transform: translateX(5000px);
-  }
-  to {
-    transform: translateX(0px);
-  }
-}
-.entity_editor hr {
+.entity_editor_container .entity_editor tr {
   border-top: 1px solid #E9EAEF;
   border-right: 0;
   border-bottom: 0;
   border-left: 0;
 }
-.entity_editor_header {
+.entity_editor_container .entity_editor_header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #F5F6FA;
-  padding: 32px 32px;
-  height: 110px;
-  position: absolute;
+  padding: 32px;
+  height: 100px;
   width: 100%;
   border-bottom: 1px solid #e4e7f2;
-  z-index: 99999999;
 }
-.entity_editor_body {
+.entity_editor_container .entity_editor_header .btn_close_editor {
+  background-color: #e4e7f2;
+  height: 40px;
+}
+.entity_editor_container .entity_editor_header .btn_close_editor .fa-regular, .entity_editor_container .entity_editor_header .btn_close_editor .fa-solid {
+  color: #a9a8bb;
+  font-size: 18px !important;
+}
+.entity_editor_container .entity_editor_header .btn_close_editor:hover {
+  background-color: #d3d7e9;
+}
+.entity_editor_container .entity_editor_header .btn_close_editor:hover .fa-regular, .entity_editor_container .entity_editor_header .btn_close_editor:hover .fa-solid {
+  color: #706F8E;
+}
+.entity_editor_container .entity_editor_title {
+  display: inline-block;
+  font-size: 24px;
+  line-height: 22px;
+  color: #26233A;
+}
+.entity_editor_container .entity_editor_title small {
+  color: #706F8E;
+}
+.entity_editor_container .entity_editor_body {
   display: block;
-  padding: 150px 32px 137px 32px;
+  position: relative;
+  padding: 50px 32px 250px 32px;
   overflow-y: scroll;
   height: 100%;
 }
-.entity_editor_footer {
+.entity_editor_container .entity_editor_footer {
   display: block;
   position: absolute;
   border-top: 1px solid #E9EAEF;
@@ -560,24 +566,25 @@ table button:hover {
   background-color: #FFFFFF;
   bottom: 0;
   padding: 32px;
-}
-.entity_editor_title {
-  display: inline-block;
-  font-size: 24px;
-  line-height: 22px;
-  color: #26233A;
-}
-.entity_editor_title small {
-  color: #706F8E;
+  z-index: 2;
 }
 
-.btn_close_editor {
-  background-color: transparent;
+@keyframes FadeIn {
+  from {
+    transform: opacity(0);
+  }
+  to {
+    transform: opacity(1);
+  }
 }
-.btn_close_editor:hover {
-  background-color: #e4e7f2;
+@keyframes SlideInFromRight {
+  from {
+    transform: translateX(5000px);
+  }
+  to {
+    transform: translateX(0px);
+  }
 }
-
 h1, h2, h3, h4, h5, h6 {
   color: #26233A;
 }
@@ -602,7 +609,7 @@ h1, h2, h3, h4, h5, h6 {
   -ms-appearance: none;
   display: inline;
   border: none;
-  border-bottom: 1px solid #E9EAEF;
+  border-bottom: 1px solid #706F8E;
   outline: none;
   height: 32px;
   padding-left: 36px;
@@ -637,11 +644,14 @@ h1, h2, h3, h4, h5, h6 {
 .material_input label {
   position: absolute;
   bottom: 6px;
-  color: #E9EAEF;
+  color: #9a9ab0;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 700;
   transition: 0.3s all ease-in-out;
+}
+.material_input label i {
+  color: #9a9ab0;
 }
 .material_input input {
   display: block;
@@ -649,7 +659,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   outline: none;
   border: none;
-  border-bottom: 1px solid #E9EAEF;
+  border-bottom: 1px solid #9a9ab0;
   background-color: transparent;
   color: #FFFFFF;
 }
@@ -662,6 +672,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #6F7ADD;
   transform: translateY(-25px);
   font-size: 10px;
+}
+.material_input input:focus + label i {
+  color: #6F7ADD;
 }
 .material_input_select {
   position: relative;
@@ -677,6 +690,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 10px;
   text-transform: uppercase;
   font-weight: 700;
+}
+.material_input_select label i {
+  color: #706F8E;
 }
 .material_input_select input {
   position: inherit;
@@ -695,7 +711,7 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #E9EAEF;
   width: fit-content;
   border-radius: 8px;
-  z-index: 10;
+  z-index: 1;
   box-shadow: 0 2px 8px -4px rgba(0, 0, 0, 0.2);
 }
 .material_input_select .input_options_container {
@@ -721,7 +737,14 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 10px !important;
 }
 
+.input_filled + label i {
+  color: #706F8E !important;
+}
+
 .input_filled {
+  color: #26233A !important;
+}
+.input_filled i {
   color: #26233A !important;
 }
 

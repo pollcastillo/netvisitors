@@ -73,7 +73,7 @@ export class AssistControl {
                     tableBody.appendChild(row);
                     drawTagsIntoTables();
                 }
-                this.previewVisit();
+                this.previewAssist();
                 this.fixCreatedDate();
             }
         };
@@ -90,7 +90,7 @@ export class AssistControl {
                 this.load(tableBody, currentPage, result);
             });
         };
-        this.previewVisit = async () => {
+        this.previewAssist = async () => {
             const openButtons = document.querySelectorAll('#entity-details');
             openButtons.forEach((openButton) => {
                 const entityId = openButton.dataset.entityid;
@@ -99,33 +99,50 @@ export class AssistControl {
                 });
             });
             const renderInterface = async (entity) => {
-                let entityData = await getEntityData('Visit', entity);
+                let entityData = await getEntityData('Marcation', entity);
                 console.log(entityData);
                 renderRightSidebar(UIRightSidebar);
-                const visitName = document.getElementById('visit-name');
-                visitName.value = `${entityData.firstName} ${entityData.firstLastName}`;
-                const visitReason = document.getElementById('visit-reason');
-                visitReason.value = entityData.reason;
-                const visitAutorizedBy = document.getElementById('visit-authorizedby');
-                visitAutorizedBy.value = entityData.authorizer;
-                const visitStatus = document.getElementById('visit-status');
-                visitStatus.innerText = entityData.visitState.name;
-                const visitCitadel = document.getElementById('visit-citadel');
-                visitCitadel.value = entityData.citadel.description;
-                const visitCitadelID = document.getElementById('visit-citadelid');
-                visitCitadelID.value = entityData.citadel.name;
-                const visitDepartment = document.getElementById('visit-department');
-                visitDepartment.value = entityData.department.name;
-                console.log(entityData.citadel.name);
+                const marcationName = document.getElementById('entity-firstname');
+                marcationName.value = `${entityData.user.firstName} ${entityData.user.lastName} ${entityData.user.secondLastName}`;
+                const userDni = document.getElementById('entity-dni');
+                if (await !entityData.user.dni) {
+                    let dniParent = userDni.parentNode;
+                    dniParent.style.display = "none";
+                }
+                else {
+                    userDni.value = entityData.user.dni;
+                }
+                const userType = document.getElementById('entity-type');
+                let userTypeParent = userType.parentNode;
+                if (await !entityData.user.userType)
+                    userTypeParent.style.display = "none";
+                else if (entityData.user.userType == 'CUSTOMER')
+                    userType.value = 'Cliente';
+                else if (entityData.user.userType == 'GUARD')
+                    userType.value = 'Guardia';
+                const marcationStatus = document.getElementById('marcation-status');
+                marcationStatus.innerText = entityData.marcationState.name;
+                drawTagsIntoTables();
+                // const visitAutorizedBy: InterfaceElement = document.getElementById('visit-authorizedby')
+                // visitAutorizedBy.value = entityData.authorizer
+                // const visitStatus: InterfaceElement = document.getElementById('visit-status')
+                // visitStatus.innerText = entityData.visitState.name
+                // const visitCitadel: InterfaceElement = document.getElementById('visit-citadel')
+                // visitCitadel.value = entityData.citadel.description
+                // const visitCitadelID: InterfaceElement = document.getElementById('visit-citadelid')
+                // visitCitadelID.value = entityData.citadel.name
+                // const visitDepartment: InterfaceElement = document.getElementById('visit-department')
+                // visitDepartment.value = entityData.department.name
+                // console.log(entityData.citadel.name)
                 this.closeRightSidebar();
                 drawTagsIntoTables();
             };
         };
         this.closeRightSidebar = () => {
             const closeButton = document.getElementById('close');
-            const editor = document.getElementById('entity-editor');
+            const editor = document.getElementById('entity-editor-container');
             closeButton.addEventListener('click', () => {
-                new CloseDialog().x(editor, this.siebarDialogContainer);
+                new CloseDialog().x(editor);
             });
         };
         this.fixCreatedDate = () => {

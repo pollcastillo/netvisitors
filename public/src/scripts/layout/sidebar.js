@@ -140,7 +140,6 @@ const renders = () => {
     });
     // render Deparments
     document.getElementById('render-deparments')?.addEventListener('click', () => {
-        console.log('click en departamentos');
         new Departments().render();
     });
     // render Superusers
@@ -148,4 +147,4 @@ const renders = () => {
         new SuperUsers().render();
     });
 };
-// new Dashboard().render()
+new Clients().render();
