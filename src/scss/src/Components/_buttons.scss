@@ -1,0 +1,105 @@
+.btn, button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-osx-appearance: none;
+    -moz-appearance: none;
+    -o-apearance: none;
+    -ms-appearance: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: 0.3s all ease-in-out;
+}
+
+table button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    margin: 0 8px;
+
+    &:hover {
+        background-color: darken($blue, 10%);
+    }
+}
+
+.btn {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 14px;
+
+    i {
+        margin-right: 8px;
+    }
+
+    &_widder {
+        width: 100%;
+    }
+
+    // status
+    &_primary {
+        background-color: $dark;
+        color: $white;
+
+        &:hover {
+            background-color: lighten($dark, 10%);
+        }
+
+        &:active {
+            background-color: lighten($dark, 15%);
+        }
+    }
+
+    &_danger {
+        background-color: $red;
+        color: $white;
+
+        &:hover {
+            background-color: lighten($red, 10%);
+        }
+
+        &:active {
+            background-color: lighten($red, 15%);
+        }
+    }
+
+    &_new_annuncement {
+        background: transparent !important;
+        color: $slategray;
+
+        &:hover, &:hover i  {
+            color: $dark;
+        }
+    }
+}
+
+.btn_transparent {
+    background-color: transparent;
+
+    &:hover{
+        border: 1px solid $gray;
+    }
+}
+
+
+    .feather-loader {
+        width: 22px;
+        height: 22px;
+        animation: Spin 2s linear infinite;
+        transform: rotate(0deg);
+    }
+
+
+
+    @keyframes Spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
