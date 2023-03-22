@@ -10,12 +10,10 @@ import { tableLayout } from "./Layout.js";
 import { tableLayoutTemplate } from "./Templates.js";
 const tableRows = Config.tableRows;
 const currentPage = Config.currentPage;
-const userType = Config.customerUser;
-const SUser = Config.isSuperUser;
-const getUsers = async (userType, superUser) => {
+const getUsers = async () => {
     const users = await getEntitiesData('User');
-    const FSuper = users.filter((data) => data.isSuper === superUser);
-    const data = FSuper.filter((data) => `${data.userType}`.includes(userType));
+    const FSuper = users.filter((data) => data.isSuper === false);
+    const data = FSuper.filter((data) => `${data.userType}`.includes('CUSTOMER'));
     return data;
 };
 export class Clients {
@@ -26,7 +24,8 @@ export class Clients {
         this.searchEntity = async (tableBody, data) => {
             const search = document.getElementById('search');
             await search.addEventListener('keyup', () => {
-                const arrayData = data.filter((user) => `${user.firstName}
+                const arrayData = data.filter((user) => `${user.id}
+                ${user.firstName}
                  ${user.lastName}
                  ${user.username}`
                     .toLowerCase()
@@ -69,7 +68,7 @@ export class Clients {
         };
     }
     async render() {
-        let data = await getUsers(userType, SUser);
+        let data = await getUsers();
         this.content.innerHTML = '';
         this.content.innerHTML = tableLayout;
         const tableBody = document.getElementById('datatable-body');
@@ -188,11 +187,11 @@ export class Clients {
                     </div>
                     </div>
 
-                    <div class="material_input_select">
-                    <label for="entity-business"><i class="fa-solid fa-building"></i> Empresa</label>
-                    <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-                    <div id="input-options" class="input_options">
-                    </div>
+                    <div class="material_input_select" style="display: none">
+                        <label for="entity-business"><i class="fa-solid fa-building"></i> Empresa</label>
+                        <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
+                        <div id="input-options" class="input_options">
+                        </div>
                     </div>
 
                     <div class="material_input_select">
@@ -202,24 +201,24 @@ export class Clients {
                     </div>
                     </div>
 
-                    <div class="material_input_select">
+                    <div class="material_input_select" style="display: none">
                     <label for="entity-customer">Cliente</label>
                     <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
                     <div id="input-options" class="input_options">
                     </div>
                     </div>
 
-                    <div class="material_input_select">
+                    <div class="material_input_select" style="display: none">
                     <label for="entity-department">Departamento</label>
                     <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
                     <div id="input-options" class="input_options">
                     </div>
                     </div>
 
-                    <br><br>
+                    <br>
                     <div class="material_input">
                     <input type="password" id="tempPass" autocomplete="false">
-                    <label for="tempPass">Contraseña temporal</label>
+                    <label for="tempPass">Contraseña</label>
                     </div>
 
                 </div>
@@ -283,7 +282,7 @@ export class Clients {
             registerEntity(raw, 'User')
                 .then((res) => {
                 setTimeout(async () => {
-                    let data = await getUsers(userType, SUser);
+                    let data = await getUsers();
                     const tableBody = document.getElementById('datatable-body');
                     const container = document.getElementById('entity-editor-container');
                     new CloseDialog().x(container);
@@ -324,17 +323,17 @@ export class Clients {
                 <!-- EDITOR BODY -->
                 <div class="entity_editor_body">
                     <div class="material_input">
-                    <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}">
+                    <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}" readonly>
                     <label for="entity-firstname">Nombre</label>
                     </div>
 
                     <div class="material_input">
-                    <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}">
+                    <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}" readonly>
                     <label for="entity-lastname">Apellido</label>
                     </div>
 
                     <div class="material_input">
-                    <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}">
+                    <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}" readonly>
                     <label for="entity-secondlastname">2do Apellido</label>
                     </div>
 
@@ -359,7 +358,7 @@ export class Clients {
                     </div>
                     </div>
 
-                    <div class="material_input_select">
+                    <div class="material_input_select" style="display: none">
                     <label for="entity-business">Empresa</label>
                     <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
                     <div id="input-options" class="input_options">
@@ -373,14 +372,14 @@ export class Clients {
                     </div>
                     </div>
 
-                    <div class="material_input_select">
+                    <div class="material_input_select" style="display: none">
                     <label for="entity-customer">Cliente</label>
                     <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
                     <div id="input-options" class="input_options">
                     </div>
                     </div>
 
-                    <div class="material_input_select">
+                    <div class="material_input_select" style="display: none">
                     <label for="entity-department">Departamento</label>
                     <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
                     <div id="input-options" class="input_options">
@@ -390,7 +389,7 @@ export class Clients {
                     <br><br><br>
                     <div class="material_input">
                     <input type="password" id="tempPass" >
-                    <label for="tempPass">Clave temporal</label>
+                    <label for="tempPass">Contraseña</label>
                     </div>
 
                 </div>
@@ -451,11 +450,23 @@ export class Clients {
                     "phone": `${$value.phone?.value}`
                 });
                 update(raw);
-                console.log(raw);
             });
-            async function update(raw) {
-                await updateEntity('User', entityId, raw);
-            }
+            const update = (raw) => {
+                updateEntity('User', entityId, raw)
+                    .then((res) => {
+                    setTimeout(async () => {
+                        let tableBody;
+                        let container;
+                        let data;
+                        data = await getUsers();
+                        new CloseDialog()
+                            .x(container =
+                            document.getElementById('entity-editor-container'));
+                        this.load(tableBody
+                            = document.getElementById('datatable-body'), currentPage, data);
+                    }, 100);
+                });
+            };
         };
     }
     remove() {
@@ -541,7 +552,7 @@ export class Clients {
         }, false);
     }
 }
-export async function setUserPassword() {
+export const setUserPassword = async () => {
     const users = await getEntitiesData('User');
     const filterBySuperUsers = users.filter((data) => data.isSuper === false);
     const filterByUserType = filterBySuperUsers.filter((data) => `${data.userType}`.includes('CUSTOMER'));
@@ -554,7 +565,7 @@ export async function setUserPassword() {
         if (newUser.newUser === true && newUser.temp !== undefined)
             setPassword(raw);
     });
-}
+};
 export async function setRole() {
     const users = await getEntitiesData('User');
     const filterByNewUsers = users.filter((data) => data.newUser == true);

@@ -1,10 +1,28 @@
+// @filename: endpoints.ts
+// GENERAL URL
+// ===================================================
 const NetliinksUrl = 'https://backend.netliinks.com:443/rest/entities/';
+// ===================================================
+// TOOLS
+// ===================================================
 export let token = localStorage.getItem('access_token');
 export const _userAgent = navigator.userAgent;
+// ===================================================
+// HEADERS
+// ===================================================
 let headers = new Headers();
 headers.append('Authorization', `Bearer ${token}`);
 headers.append('Content-Type', "application/json");
 headers.append('Cookie', "JSESSIONID=CDD208A868EAABD1F523BB6F3C8946AF");
+// ===================================================
+// GET TOKEN
+// ===================================================
+/**
+ *
+ * @param mail is the username
+ * @param password
+ * @returns token
+ */
 export const getToken = async (mail, password) => {
     const URL = 'https://backend.netliinks.com:443/oauth/token';
     const ReqOptions = {
@@ -21,6 +39,9 @@ export const getToken = async (mail, password) => {
     const res = await fetch(URL, ReqOptions);
     return res.json();
 };
+// ===================================================
+// GET USER INFORMATION
+// ===================================================
 /**
  *
  * @returns user information, type, business,
@@ -40,6 +61,7 @@ export const getUserInfo = async () => {
         .then((req) => req.json())
         .catch((err) => console.info(err));
 };
+// ===================================================
 /**
  *
  * @param url
@@ -64,7 +86,7 @@ export const getData = async (url) => {
  * entity (all bussines data for example).
  */
 export const getEntitiesData = async (entities) => {
-    const URL = `${NetliinksUrl}${entities}?fetchPlan=full&orderby=createdDate`;
+    const URL = `${NetliinksUrl}${entities}?fetchPlan=full&orderBy=createdDate`;
     return await getData(URL);
 };
 /**
