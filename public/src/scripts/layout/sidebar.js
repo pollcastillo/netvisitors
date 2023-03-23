@@ -4,7 +4,6 @@ import { Notes } from "../views/binnacle/notes/NotesView.js";
 import { Clients } from "../views/users/clients/clients.js";
 import { Visits } from "../views/binnacle/visits/VisitsView.js";
 import { Employees } from "../views/users/employees/employees.js";
-// import { Contractors } from "../views/users/contractors/Contractors.js"
 // @ts-ignore
 import { Contractors } from "../views/users/contractors/Contractors.js";
 import { AssistControl } from "../views/binnacle/assistcontrol/AssistControl.js";
@@ -150,6 +149,6 @@ const renders = () => {
     });
 };
 // new Clients().render()
-new Employees()
+new Contractors()
     .render();
 // new Dashboard().render()
