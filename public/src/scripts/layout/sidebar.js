@@ -147,5 +147,7 @@ const renders = () => {
         new SuperUsers().render();
     });
 };
-new Clients().render();
+// new Clients().render()
+new Employees()
+    .render();
 // new Dashboard().render()

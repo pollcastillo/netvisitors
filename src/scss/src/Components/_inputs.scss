@@ -11,6 +11,16 @@
     width: 100%;
     margin-bottom: 24px;
 
+    &_time {
+        border: none;
+        border-bottom: 1px solid $gray;
+        padding: 4px 16px;
+
+        &:focus {
+            border-color: $blue;
+        }
+    }
+
     &_locked {
         height: 12px;
         width: 12px;

@@ -6,21 +6,18 @@
 import { deleteEntity, getEntitiesData, getEntityData, registerEntity, setPassword, setUserRole, updateEntity } from "../../../endpoints.js"
 import { NUsers } from "../../../namespaces.js"
 import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog } from "../../../tools.js"
-import { InterfaceElement } from "../../../types.js"
+import { InterfaceElement, InterfaceElementCollection } from "../../../types.js"
 import { Config } from "../../../Configs.js"
 import { tableLayout } from "./Layout.js"
 import { tableLayoutTemplate } from "./Templates.js"
 
 const tableRows = Config.tableRows
 const currentPage = Config.currentPage
-const userType = Config.employeeUser
-const SUser = Config.isSuperUser
 
-
-const getUsers = async (userType: string, superUser: boolean): Promise<void> => {
+const getUsers = async (): Promise<void> => {
     const users: any = await getEntitiesData('User')
-    const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
-    const data: any = FSuper.filter((data: any) => `${data.userType}`.includes(userType))
+    const FSuper: any = users.filter((data: any) => data.isSuper === false)
+    const data: any = FSuper.filter((data: any) => `${data.userType}`.includes('EMPLOYEE'))
     return data
 
 }
@@ -36,7 +33,7 @@ export class Employees implements NUsers.IEmployees {
         document.getElementById('datatable-container')
 
     public async render(): Promise<void> {
-        let data = await getUsers(userType, SUser)
+        let data = await getUsers()
         this.content.innerHTML = ''
         this.content.innerHTML = tableLayout
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
@@ -72,6 +69,7 @@ export class Employees implements NUsers.IEmployees {
                     document.createElement('tr')
                 row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
+          <td>${client.dni}</dt>
           <td>${client.username}</dt>
           <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
@@ -210,10 +208,22 @@ export class Employees implements NUsers.IEmployees {
               </div>
             </div>
 
+            <div class="form_group">
+                <div class="form_input">
+                    <label class="form_label" for="start-time">Entrada:</label>
+                    <input type="time" class="input_time input_time-start" id="start-time" name="start-time">
+                </div>
+
+                <div class="form_input">
+                    <label class="form_label" for="end-time">Salida:</label>
+                    <input type="time" class="input_time input_time-end" id="end-time" name="end-time">
+                </div>
+            </div>
+
             <br>
             <div class="material_input">
               <input type="password" id="tempPass" autocomplete="false">
-              <label for="tempPass">Contraseña temporal</label>
+              <label for="tempPass">Contraseña</label>
             </div>
 
           </div>
@@ -238,7 +248,8 @@ export class Employees implements NUsers.IEmployees {
 
             const registerButton: InterfaceElement = document.getElementById('register-entity')
             registerButton.addEventListener('click', (): void => {
-                const inputsCollection: any = {
+                let _values: InterfaceElementCollection
+                _values = {
                     firstName: document.getElementById('entity-firstname'),
                     lastName: document.getElementById('entity-lastname'),
                     secondLastName: document.getElementById('entity-secondlastname'),
@@ -248,35 +259,44 @@ export class Employees implements NUsers.IEmployees {
                     customer: document.getElementById('entity-customer'),
                     username: document.getElementById('entity-username'),
                     citadel: document.getElementById('entity-citadel'),
-                    temporalPass: document.getElementById('tempPass')
+                    temporalPass: document.getElementById('tempPass'),
+                    ingressHour: document.getElementById('start-time'),
+                    turnChange: document.getElementById('end-time'),
+                    departments: document.getElementById('entity-department')
                 }
 
                 const raw = JSON.stringify({
-                    "lastName": `${inputsCollection.lastName.value}`,
-                    "secondLastName": `${inputsCollection.secondLastName.value}`,
+                    "lastName": `${_values.lastName.value}`,
+                    "secondLastName": `${_values.secondLastName.value}`,
                     "isSuper": false,
                     "email": "",
-                    "temp": `${inputsCollection.temporalPass.value}`,
+                    "temp": `${_values.temporalPass.value}`,
                     "isWebUser": false,
                     "active": true,
-                    "firstName": `${inputsCollection.firstName.value}`,
+                    "firstName": `${_values.firstName.value}`,
+                    "ingressHour": `${_values.ingressHour.value}`,
+                    "turnChange": `${_values.turnChange.value}`,
                     "state": {
-                        "id": `${inputsCollection.state.dataset.entityid}`
+                        "id": `${_values.state.dataset.optionid}`
                     },
                     "contractor": {
                         "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
                     },
                     "customer": {
-                        "id": `${inputsCollection.customer.dataset.optionid}`
+                        "id": `${_values.customer.dataset.optionid}`
                     },
                     "citadel": {
-                        "id": `${inputsCollection.citadel.dataset.entityid}`
+                        "id": `${_values.citadel.dataset.optionid}`
                     },
-                    "phone": `${inputsCollection.phoneNumer.value}`,
-                    "dni": `${inputsCollection.dni.value}`,
+                    "department": {
+                        "id": `${_values.department.dataset.optionid}`
+                    },
+                    "phone": `${_values.phoneNumer.value}`,
+                    "dni": `${_values.dni.value}`,
                     "userType": "EMPLOYEE",
-                    "username": `${inputsCollection.username.value}@${inputsCollection.customer.value.toLowerCase()}.com`
+                    "username": `${_values.username.value}@${_values.customer.value.toLowerCase()}.com`
                 })
+
                 reg(raw)
             })
 
@@ -286,7 +306,7 @@ export class Employees implements NUsers.IEmployees {
             registerEntity(raw, 'User')
                 .then((res) => {
                     setTimeout(async () => {
-                        let data = await getUsers(userType, SUser)
+                        let data = await getUsers()
                         const tableBody: InterfaceElement = document.getElementById('datatable-body')
                         const container: InterfaceElement = document.getElementById('entity-editor-container')
 
@@ -298,36 +318,44 @@ export class Employees implements NUsers.IEmployees {
     }
 
     private generateUserName = async (): Promise<void> => {
-        const firstName: InterfaceElement = document.getElementById('entity-firstname')
-        const lastName: InterfaceElement = document.getElementById('entity-lastname')
-        const secondLastName: InterfaceElement = document.getElementById('entity-secondlastname')
-        const clientName: InterfaceElement = document.getElementById('entity-customer')
+        let firstName: InterfaceElement
+        let lastName: InterfaceElement
+        let secondLastName: InterfaceElement
+        let clientName: InterfaceElement
+        let userName: InterfaceElement
 
-        const userName: InterfaceElement = document.getElementById('entity-username')
+        firstName = document.getElementById('entity-firstname')
+        lastName = document.getElementById('entity-lastname')
+        secondLastName = document.getElementById('entity-secondlastname')
+        clientName = document.getElementById('entity-customer')
+        userName = document.getElementById('entity-username')
 
-        let UserNameFFragment: string = ''
-        let UserNameLNFragment: string = ''
-        let UserNameSLNFragment: string = ''
+        let _fragmentOne: string
+        let _fragmentTwo: string
+        let _fragmentThree: string
 
+        _fragmentOne = ''
+        _fragmentTwo = ''
+        _fragmentThree = ''
 
         firstName.addEventListener('keyup', (e: any): void => {
-            UserNameFFragment = firstName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-            userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
+            _fragmentOne = firstName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            userName.setAttribute('value', `${_fragmentOne.trim()}.${_fragmentTwo}${_fragmentThree}`)
         })
 
         lastName.addEventListener('keyup', (e: any): void => {
-            UserNameLNFragment = lastName.value.toLowerCase()
-            userName.setAttribute('value', `${UserNameFFragment.trim()}.${UserNameLNFragment}${UserNameSLNFragment}`)
+            _fragmentTwo = lastName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            userName.setAttribute('value', `${_fragmentOne.trim()}.${_fragmentTwo}${_fragmentThree}`)
         })
 
         secondLastName.addEventListener('keyup', (e: any): void => {
-            UserNameSLNFragment = secondLastName.value.toLowerCase()
+            _fragmentThree = secondLastName.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
             if (secondLastName.value.length > 0) {
-                UserNameFFragment[0]
-                userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment[0]}`)
+                _fragmentOne[0]
+                userName.setAttribute('value', `${_fragmentOne}.${_fragmentTwo}${_fragmentThree[0]}`)
             }
             else {
-                userName.setAttribute('value', `${UserNameFFragment}.${UserNameLNFragment}${UserNameSLNFragment}`)
+                userName.setAttribute('value', `${_fragmentOne}.${_fragmentTwo}${_fragmentThree}`)
             }
         })
 
@@ -357,106 +385,105 @@ export class Employees implements NUsers.IEmployees {
             this.entityDialogContainer.innerHTML = ''
             this.entityDialogContainer.style.display = 'flex'
             this.entityDialogContainer.innerHTML = `
-        <div class="entity_editor" id="entity-editor">
-          <div class="entity_editor_header">
-            <div class="user_info">
-              <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
-            </div>
+                <div class="entity_editor" id="entity-editor">
+                <div class="entity_editor_header">
+                    <div class="user_info">
+                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                    <h1 class="entity_editor_title">Editar <br><small>${data.firstName} ${data.lastName}</small></h1>
+                    </div>
 
-            <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
-          </div>
+                    <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
+                </div>
 
-          <!-- EDITOR BODY -->
-          <div class="entity_editor_body">
-            <div class="material_input">
-              <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}" readonly>
-              <label for="entity-firstname">Nombre</label>
-            </div>
+                <!-- EDITOR BODY -->
+                <div class="entity_editor_body">
+                    <div class="material_input">
+                    <input type="text" id="entity-firstname" class="input_filled" value="${data.firstName}" readonly>
+                    <label for="entity-firstname">Nombre</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}" reandonly>
-              <label for="entity-lastname">Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-lastname" class="input_filled" value="${data.lastName}" reandonly>
+                    <label for="entity-lastname">Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}" readonly>
-              <label for="entity-secondlastname">2do Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-secondlastname" class="input_filled" value="${data.secondLastName}" readonly>
+                    <label for="entity-secondlastname">2do Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text"
-                id="entity-dni"
-                class="input_filled"
-                maxlength="10"
-                value="${data.dni}" readonly>
-              <label for="entity-dni">Cédula</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text"
+                        id="entity-dni"
+                        class="input_filled"
+                        maxlength="10"
+                        value="${data.dni}" readonly>
+                    <label for="entity-dni">Cédula</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text"
-                id="entity-phone"
-                class="input_filled"
-                maxlength="10"
-                value="${data.phone}">
-              <label for="entity-phone">Teléfono</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text"
+                        id="entity-phone"
+                        class="input_filled"
+                        maxlength="10"
+                        value="${data.phone}">
+                    <label for="entity-phone">Teléfono</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-username" class="input_filled" value="${data.username}" readonly>
-              <label for="entity-username">Nombre de usuario</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-username" class="input_filled" value="${data.username}" readonly>
+                    <label for="entity-username">Nombre de usuario</label>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-state">Estado</label>
+                    <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-business">Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select" style="display: none">
+                    <label for="entity-business">Empresa</label>
+                    <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-citadel">Ciudadela</label>
-              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select" style="display: none">
+                    <label for="entity-citadel">Ciudadela</label>
+                    <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-customer">Cliente</label>
-              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select" style="display: none">
+                    <label for="entity-customer">Cliente</label>
+                    <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-department">Departamento</label>
-              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-department">Departamento</label>
+                    <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <br><br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" >
-              <label for="tempPass">Clave temporal</label>
-            </div>
+                    <br><br>
+                    <div class="material_input">
+                    <input type="password" id="tempPass" >
+                    <label for="tempPass">Contraseña:</label>
+                    </div>
 
-          </div>
-          <!-- END EDITOR BODY -->
+                </div>
+                <!-- END EDITOR BODY -->
 
-          <div class="entity_editor_footer">
-            <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
-          </div>
-        </div>
-      `
-
+                <div class="entity_editor_footer">
+                    <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
+                </div>
+                </div>
+            `
 
             inputObserver()
             inputSelect('Business', 'entity-citadel')
@@ -465,16 +492,60 @@ export class Employees implements NUsers.IEmployees {
             inputSelect('Department', 'entity-department')
             inputSelect('Business', 'entity-business')
             this.close()
-            UUpdate(entityID)
+            updateEmployee(entityID)
         }
 
-        const UUpdate = async (entityId: any): Promise<void> => {
-            const updateButton: InterfaceElement =
-                document.getElementById('update-changes')
+        const updateEmployee = async (employeeId: any): Promise<void> => {
+            let updateButton: InterfaceElement
+            updateButton = document.getElementById('update-changes')
+
+            const $values: InterfaceElementCollection = {
+                firstName: document.getElementById('entity-firstname'),
+                lastName: document.getElementById('entity-lastname'),
+                secondLastName: document.getElementById('entity-secondlastname'),
+                phone: document.getElementById('entity-phone'),
+                status: document.getElementById('entity-state'),
+                department: document.getElementById('entity-department'),
+            }
 
             updateButton.addEventListener('click', () => {
-                console.log('updating')
+                let employeeRaw = JSON.stringify({
+                    "lastName": `${$values.lastName.value}`,
+                    "secondLastName": `${$values.secondLastName.value}`,
+                    "active": true,
+                    "firstName": `${$values.firstName.value}`,
+                    "state": {
+                        "id": `${$values.status.dataset.optionid}`
+                    },
+                    "department": {
+                        "id": `${$values.department.dataset.optionid}`
+                    }
+                })
+
+                update(employeeRaw)
             })
+
+            /**
+             * Update entity and execute functions to finish defying user
+             * @param raw
+             */
+            const update = (raw: string) => {
+                updateEntity('User', employeeId, raw)
+                    .then((res) => {
+                        setTimeout(async () => {
+                            let tableBody: InterfaceElement
+                            let container: InterfaceElement
+                            let data: any
+
+                            tableBody = document.getElementById('datatable-body')
+                            container = document.getElementById('entity-editor-container')
+                            data = await getUsers()
+
+                            new CloseDialog().x(container)
+                            this.load(tableBody, currentPage, data)
+                        }, 100)
+                    })
+            }
         }
     }
 

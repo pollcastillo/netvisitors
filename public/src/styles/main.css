@@ -597,6 +597,19 @@ table button:hover {
 }
 h1, h2, h3, h4, h5, h6 {
   color: #26233A;
+} /* FORMS */
+.form_group {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.form_label {
+  display: block;
+  color: #706F8E;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 .input {
@@ -605,6 +618,14 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   margin-bottom: 24px;
+}
+.input_time {
+  border: none;
+  border-bottom: 1px solid #E9EAEF;
+  padding: 4px 16px;
+}
+.input_time:focus {
+  border-color: #6F7ADD;
 }
 .input_locked {
   height: 12px;
