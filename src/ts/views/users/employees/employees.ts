@@ -41,7 +41,6 @@ export class Employees implements NUsers.IEmployees {
         this.load(tableBody, currentPage, data)
 
         this.searchEntity(tableBody, data)
-        console.log(data)
     }
 
     public load(table: InterfaceElement, currentPage: number, data: any) {
@@ -372,7 +371,7 @@ export class Employees implements NUsers.IEmployees {
             document.getElementById('import-entities')
 
         importButton.addEventListener('click', (): void => {
-            console.log('Importing...')
+
         })
     }
 
@@ -637,7 +636,6 @@ export class Employees implements NUsers.IEmployees {
         const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
         closeButton.addEventListener('click', () => {
-            console.log('close')
             new CloseDialog().x(editor)
         })
     }

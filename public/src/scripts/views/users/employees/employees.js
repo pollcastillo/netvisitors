@@ -82,7 +82,6 @@ export class Employees {
         tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows);
         this.load(tableBody, currentPage, data);
         this.searchEntity(tableBody, data);
-        console.log(data);
     }
     load(table, currentPage, data) {
         setUserPassword();
@@ -330,7 +329,6 @@ export class Employees {
     import() {
         const importButton = document.getElementById('import-entities');
         importButton.addEventListener('click', () => {
-            console.log('Importing...');
         });
     }
     edit(container, data) {
@@ -576,7 +574,6 @@ export class Employees {
         const closeButton = document.getElementById('close');
         const editor = document.getElementById('entity-editor-container');
         closeButton.addEventListener('click', () => {
-            console.log('close');
             new CloseDialog().x(editor);
         });
     }
