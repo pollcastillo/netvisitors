@@ -101,7 +101,8 @@ export class Employees implements NUsers.IEmployees {
             const arrayData: any = data.filter((user: any) =>
                 `${user.firstName}
                  ${user.lastName}
-                 ${user.username}`
+                 ${user.username}
+                 ${user.dni}`
                     .toLowerCase()
                     .includes(search.value.toLowerCase())
             )

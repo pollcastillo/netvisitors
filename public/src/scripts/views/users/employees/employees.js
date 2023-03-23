@@ -26,7 +26,8 @@ export class Employees {
             await search.addEventListener('keyup', () => {
                 const arrayData = data.filter((user) => `${user.firstName}
                  ${user.lastName}
-                 ${user.username}`
+                 ${user.username}
+                 ${user.dni}`
                     .toLowerCase()
                     .includes(search.value.toLowerCase()));
                 let filteredResult = arrayData.length;
