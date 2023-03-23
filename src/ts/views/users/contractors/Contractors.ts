@@ -197,7 +197,7 @@ export class Contractors {
               </div>
             </div>
 
-            <div class="material_input_select">
+            <div class="material_input_select" style="display: none">
               <label for="entity-department">Departamento</label>
               <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
               <div id="input-options" class="input_options">
@@ -239,7 +239,7 @@ export class Contractors {
             inputSelect('Department', 'entity-department')
             inputSelect('Business', 'entity-business')
             this.close()
-            this.generateUserName()
+            this.generateContractorName()
 
 
             const registerButton: InterfaceElement = document.getElementById('register-entity')
@@ -261,7 +261,7 @@ export class Contractors {
                     departments: document.getElementById('entity-department')
                 }
 
-                const raw = JSON.stringify({
+                const contractorRaw = JSON.stringify({
                     "lastName": `${_values.lastName.value}`,
                     "secondLastName": `${_values.secondLastName.value}`,
                     "isSuper": false,
@@ -293,12 +293,12 @@ export class Contractors {
                     "username": `${_values.username.value}@${_values.customer.value.toLowerCase()}.com`,
                 })
 
-                reg(raw)
+                reg(contractorRaw)
             })
 
         }
 
-        const reg = async (raw: any) => {
+        const reg = async (raw: string) => {
             registerEntity(raw, 'User')
                 .then((res) => {
                     setTimeout(async () => {
@@ -313,7 +313,7 @@ export class Contractors {
         }
     }
 
-    private generateUserName = async (): Promise<void> => {
+    private generateContractorName = async (): Promise<void> => {
         let firstName: InterfaceElement
         let lastName: InterfaceElement
         let secondLastName: InterfaceElement
@@ -413,7 +413,7 @@ export class Contractors {
                         id="entity-dni"
                         class="input_filled"
                         maxlength="10"
-                        value="${data.dni}" readonly>
+                        value="${data.dni}">
                     <label for="entity-dni">Cédula</label>
                     </div>
 
@@ -460,8 +460,8 @@ export class Contractors {
                     </div>
 
                     <div class="material_input_select">
-                    <label for="entity-department">Departamento</label>
-                    <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+                    <label for="entity-contractor">Contratista</label>
+                    <input type="text" id="entity-contractor" class="input_select" readonly placeholder="cargando...">
                     <div id="input-options" class="input_options">
                     </div>
                     </div>
@@ -492,17 +492,12 @@ export class Contractors {
                 </div>
                 </div>
             `
-            const checkbox = document.getElementById('allow-visits')
-            if (data.createVisit === true) {
-                checkbox?.setAttribute('checked', 'true')
-            }
-
             inputObserver()
             inputSelect('Business', 'entity-citadel')
             inputSelect('Customer', 'entity-customer')
             inputSelect('State', 'entity-state', data.state.name)
-            inputSelect('Department', 'entity-department')
             inputSelect('Business', 'entity-business')
+            inputSelect('Contractor', 'entity-contractor')
             this.close()
             updatecontractor(entityID)
         }
@@ -516,11 +511,11 @@ export class Contractors {
                 lastName: document.getElementById('entity-lastname'),
                 secondLastName: document.getElementById('entity-secondlastname'),
                 phone: document.getElementById('entity-phone'),
+                dni: document.getElementById('entity-dni'),
                 status: document.getElementById('entity-state'),
-                department: document.getElementById('entity-department'),
                 ingressHour: document.getElementById('start-time'),
                 turnChange: document.getElementById('end-time'),
-                allowVisits: document.getElementById('allow-visits')
+                contractor: document.getElementById('entity-contractor'),
             }
 
             updateButton.addEventListener('click', () => {
@@ -532,12 +527,13 @@ export class Contractors {
                     "state": {
                         "id": `${_values.status.dataset.optionid}`
                     },
-                    "department": {
-                        "id": `${_values.department.dataset.optionid}`
-                    },
                     "ingressHour": `${_values.ingressHour.value}`,
                     "turnChange": `${_values.turnChange.value}`,
-                    "createVisit": `${_values.allowVisits.checked ? true : false}`
+                    "phone": `${_values.phone.value}`,
+                    "dni": `${_values.dni.value}`,
+                    "contractor": {
+                        "id": `${_values.contractor.optionid}`
+                    }
                 })
 
                 update(contractorRaw)

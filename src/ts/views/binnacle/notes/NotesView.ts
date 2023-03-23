@@ -72,7 +72,7 @@ export class Notes {
                 row.innerHTML += `
                     <td>${note.title}</td>
                     <td>${note.content}</td>
-                    <td id="table-date">${note.createdDate}</td>
+                    <td id="table-date">${note.creationDate}</td>
                     <td>
                         <button class="button" id="entity-details" data-entityId="${note.id}">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -81,7 +81,8 @@ export class Notes {
                 `
                 tableBody.appendChild(row)
                 this.previewNote()
-                fixDate()
+                // TODO: Corret this fixer
+                // fixDate()
             }
         }
     }
