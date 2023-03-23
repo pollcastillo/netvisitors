@@ -470,6 +470,18 @@ export class Employees implements NUsers.IEmployees {
                     </div>
                     </div>
 
+                    <div class="form_group">
+                        <div class="form_input">
+                            <label class="form_label" for="start-time">Entrada:</label>
+                            <input type="time" class="input_time input_time-start" id="start-time" name="start-time" value="${data.ingressHour}">
+                        </div>
+
+                        <div class="form_input">
+                            <label class="form_label" for="end-time">Salida:</label>
+                            <input type="time" class="input_time input_time-end" id="end-time" name="end-time" value="${data.turnChange}">
+                        </div>
+                    </div>
+
                     <br><br>
                     <div class="material_input">
                     <input type="password" id="tempPass" >
@@ -506,6 +518,8 @@ export class Employees implements NUsers.IEmployees {
                 phone: document.getElementById('entity-phone'),
                 status: document.getElementById('entity-state'),
                 department: document.getElementById('entity-department'),
+                ingressHour: document.getElementById('start-time'),
+                turnChange: document.getElementById('end-time')
             }
 
             updateButton.addEventListener('click', () => {
@@ -519,7 +533,9 @@ export class Employees implements NUsers.IEmployees {
                     },
                     "department": {
                         "id": `${$values.department.dataset.optionid}`
-                    }
+                    },
+                    "ingressHour": `${$values.ingressHour.value}`,
+                    "turnChange": `${$values.turnChange.value}`
                 })
 
                 update(employeeRaw)
