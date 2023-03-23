@@ -149,6 +149,6 @@ const renders = () => {
     });
 };
 // new Clients().render()
-new Contractors()
+new Notes()
     .render();
 // new Dashboard().render()

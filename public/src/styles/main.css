@@ -94,7 +94,7 @@ table button:hover {
   padding: 0 16px;
   font-size: 14px;
 }
-.btn i {
+.btn_wicon i {
   margin-right: 8px;
 }
 .btn_widder {
@@ -641,6 +641,15 @@ h1, h2, h3, h4, h5, h6 {
   color: #706F8E;
   text-transform: uppercase;
 }
+.input_detail input {
+  border: none;
+  color: #706F8E !important;
+  font-size: 14px !important;
+}
+.input_detail i {
+  font-size: 14px;
+  color: #7e7d99;
+}
 .input_locked {
   height: 12px;
   width: 12px;
@@ -791,6 +800,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 .input_filled i {
   color: #26233A !important;
+}
+
+.note_picture {
+  display: block;
+  height: 200px;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+  background-color: #F5F6FA;
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
+  margin-bottom: 22px;
+}
+.note_picture img {
+  display: block;
+  object-fit: cover;
 }
 
 .app_sidebar {

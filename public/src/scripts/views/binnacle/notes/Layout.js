@@ -20,7 +20,7 @@ export const UIContentLayout = `
             Título <i class="fa-regular fa-filter"></i>
             </span></th>
 
-            <th><span data-type="content">
+            <th width="500px"><span data-type="content">
             Contenido <i class="fa-regular fa-filter"></i>
             </span></th>
 
@@ -46,7 +46,7 @@ export const UIRightSidebar = `
     <div class="entity_editor" id="entity-editor">
     <div class="entity_editor_header">
       <div class="user_info">
-        <div class="avatar"><i class="fa-regular fa-user"></i></div>
+        <div class="avatar"><i class="fa-regular fa-magnifying-glass"></i></div>
         <h1 class="entity_editor_title">Detalles de <br><small>la nota</small></h1>
       </div>
 
@@ -55,24 +55,30 @@ export const UIRightSidebar = `
 
     <!-- EDITOR BODY -->
     <div class="entity_editor_body">
-      <h2 id="note-title">Título</h2>
-      <p id="note-content">Lorem ipsum dolor sit amet...</p><br><br>
+        <h2 id="note-title">Título</h2>
+        <p id="note-content">Lorem ipsum dolor sit amet...</p><br><br>
 
-      <div class="material_input">
-        <input type="text" id="note-author" class="input_filled" value="" readonly>
-        <label for="note-author"><i class="fa-solid fa-user"></i> Autor</label>
-      </div>
-
-      <div class="material_input">
-        <input type="text" id="note-creationdate" class="input_filled" value="" readonly>
-        <label for="note-creationdate"><i class="fa-solid fa-calendar"></i> Fecha de creación</label>
-      </div>
+        <div class="input_detail">
+            <label for="note-author"><i class="fa-solid fa-user"></i></label>
+            <input type="text" id="note-author" class="input_filled" readonly>
+        </div>
+        <br>
+        <div class="input_detail">
+            <label for="note-author-id"><i class="fa-solid fa-at"></i></label>
+            <input type="text" id="note-author-id" class="input_filled" readonly>
+        </div>
+        <br>
+        <div class="input_detail">
+            <label for="creation-date"><i class="fa-solid fa-calendar"></i></label>
+            <input type="date" id="creation-date" class="input_filled" readonly>
+        </div>
+        <br>
+        <div class="input_detail">
+            <label for="creation-time"><i class="fa-solid fa-clock"></i></label>
+            <input type="time" id="creation-time" class="input_filled" readonly>
+        </div>
 
     </div>
     <!-- END EDITOR BODY -->
-
-    <div class="entity_editor_footer">
-      <button class="btn btn_primary btn_widder" id="update-changes">Guardar</button>
-    </div>
     </div>
     `;

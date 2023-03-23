@@ -32,8 +32,10 @@ table button {
     padding: 0 16px;
     font-size: 14px;
 
-    i {
-        margin-right: 8px;
+    &_wicon {
+        i {
+            margin-right: 8px;
+        }
     }
 
     &_widder {

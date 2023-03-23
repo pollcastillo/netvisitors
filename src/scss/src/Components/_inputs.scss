@@ -38,6 +38,19 @@
         }
     }
 
+    &_detail {
+        input {
+            border: none;
+            color: $slategray !important;
+            font-size: 14px !important;
+        }
+
+        i {
+            font-size: 14px;
+            color: lighten($slategray, 5%);
+        }
+    }
+
     &_locked {
         height: 12px;
         width: 12px;

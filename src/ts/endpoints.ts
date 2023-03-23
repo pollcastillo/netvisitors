@@ -198,3 +198,16 @@ export const setUserRole = async (raw: string): Endpoint => {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 }
+
+export const getFile = async (fileUrl: string): Endpoint => {
+    const url: string = 'https://backend.netliinks.com:443/rest/files?fileRef='
+
+    const requestOptions: {} = {
+        method: 'GET',
+        headers: headers,
+        redirect: 'follow'
+    };
+
+    const file = await fetch(url + fileUrl, requestOptions)
+    return file.text()
+}

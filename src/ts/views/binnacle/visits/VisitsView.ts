@@ -120,7 +120,6 @@ export class Visits {
             })
         })
 
-
         const renderInterface = async (entity: string): Promise<void> => {
             let entityData = await getEntityData('Visit', entity)
             console.log(entityData)

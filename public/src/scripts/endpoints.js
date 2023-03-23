@@ -170,3 +170,13 @@ export const setUserRole = async (raw) => {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
 };
+export const getFile = async (fileUrl) => {
+    const url = 'https://backend.netliinks.com:443/rest/files?fileRef=';
+    const requestOptions = {
+        method: 'GET',
+        headers: headers,
+        redirect: 'follow'
+    };
+    const file = await fetch(url + fileUrl, requestOptions);
+    return file.text();
+};
