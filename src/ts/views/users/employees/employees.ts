@@ -19,7 +19,6 @@ const getUsers = async (): Promise<void> => {
     const FSuper: any = users.filter((data: any) => data.isSuper === false)
     const data: any = FSuper.filter((data: any) => `${data.userType}`.includes('EMPLOYEE'))
     return data
-
 }
 
 export class Employees implements NUsers.IEmployees {
@@ -221,6 +220,10 @@ export class Employees implements NUsers.IEmployees {
                 </div>
             </div>
 
+            <div class="input_checkbox">
+                <label><input type="checkbox" class="checkbox" id="allow-visits"> Permitir visitas</label>
+            </div>
+
             <br>
             <div class="material_input">
               <input type="password" id="tempPass" autocomplete="false">
@@ -263,7 +266,8 @@ export class Employees implements NUsers.IEmployees {
                     temporalPass: document.getElementById('tempPass'),
                     ingressHour: document.getElementById('start-time'),
                     turnChange: document.getElementById('end-time'),
-                    departments: document.getElementById('entity-department')
+                    departments: document.getElementById('entity-department'),
+                    allowVisits: document.getElementById('allow-visits')
                 }
 
                 const raw = JSON.stringify({
@@ -290,12 +294,13 @@ export class Employees implements NUsers.IEmployees {
                         "id": `${_values.citadel.dataset.optionid}`
                     },
                     "department": {
-                        "id": `${_values.department.dataset.optionid}`
+                        "id": `${_values.departments.dataset.optionid}`
                     },
                     "phone": `${_values.phoneNumer.value}`,
                     "dni": `${_values.dni.value}`,
                     "userType": "EMPLOYEE",
-                    "username": `${_values.username.value}@${_values.customer.value.toLowerCase()}.com`
+                    "username": `${_values.username.value}@${_values.customer.value.toLowerCase()}.com`,
+                    "createVisit": `${_values.allowVisits.checked ? true : false}`
                 })
 
                 reg(raw)
@@ -483,7 +488,11 @@ export class Employees implements NUsers.IEmployees {
                         </div>
                     </div>
 
-                    <br><br>
+                    <div class="input_checkbox">
+                        <label><input type="checkbox" class="checkbox" id="allow-visits"> Permitir visitas</label>
+                    </div>
+
+                    <br>
                     <div class="material_input">
                     <input type="password" id="tempPass" >
                     <label for="tempPass">Contraseña:</label>
@@ -497,6 +506,10 @@ export class Employees implements NUsers.IEmployees {
                 </div>
                 </div>
             `
+            const checkbox = document.getElementById('allow-visits')
+            if (data.createVisit === true) {
+                checkbox?.setAttribute('checked', 'true')
+            }
 
             inputObserver()
             inputSelect('Business', 'entity-citadel')
@@ -512,7 +525,7 @@ export class Employees implements NUsers.IEmployees {
             let updateButton: InterfaceElement
             updateButton = document.getElementById('update-changes')
 
-            const $values: InterfaceElementCollection = {
+            const _values: InterfaceElementCollection = {
                 firstName: document.getElementById('entity-firstname'),
                 lastName: document.getElementById('entity-lastname'),
                 secondLastName: document.getElementById('entity-secondlastname'),
@@ -520,23 +533,25 @@ export class Employees implements NUsers.IEmployees {
                 status: document.getElementById('entity-state'),
                 department: document.getElementById('entity-department'),
                 ingressHour: document.getElementById('start-time'),
-                turnChange: document.getElementById('end-time')
+                turnChange: document.getElementById('end-time'),
+                allowVisits: document.getElementById('allow-visits')
             }
 
             updateButton.addEventListener('click', () => {
                 let employeeRaw = JSON.stringify({
-                    "lastName": `${$values.lastName.value}`,
-                    "secondLastName": `${$values.secondLastName.value}`,
+                    "lastName": `${_values.lastName.value}`,
+                    "secondLastName": `${_values.secondLastName.value}`,
                     "active": true,
-                    "firstName": `${$values.firstName.value}`,
+                    "firstName": `${_values.firstName.value}`,
                     "state": {
-                        "id": `${$values.status.dataset.optionid}`
+                        "id": `${_values.status.dataset.optionid}`
                     },
                     "department": {
-                        "id": `${$values.department.dataset.optionid}`
+                        "id": `${_values.department.dataset.optionid}`
                     },
-                    "ingressHour": `${$values.ingressHour.value}`,
-                    "turnChange": `${$values.turnChange.value}`
+                    "ingressHour": `${_values.ingressHour.value}`,
+                    "turnChange": `${_values.turnChange.value}`,
+                    "createVisit": `${_values.allowVisits.checked ? true : false}`
                 })
 
                 update(employeeRaw)

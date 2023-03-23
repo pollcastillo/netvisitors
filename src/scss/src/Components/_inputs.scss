@@ -21,6 +21,23 @@
         }
     }
 
+    &_checkbox {
+        display: flex;
+        align-items: center;
+        margin-top: 24px;
+
+        .checkbox {
+            margin-right: 8px;
+        }
+
+        label {
+            font-weight: bolder;
+            font-size: 11px;
+            color: $slategray;
+            text-transform: uppercase;
+        }
+    }
+
     &_locked {
         height: 12px;
         width: 12px;

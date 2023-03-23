@@ -627,6 +627,20 @@ h1, h2, h3, h4, h5, h6 {
 .input_time:focus {
   border-color: #6F7ADD;
 }
+.input_checkbox {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+}
+.input_checkbox .checkbox {
+  margin-right: 8px;
+}
+.input_checkbox label {
+  font-weight: bolder;
+  font-size: 11px;
+  color: #706F8E;
+  text-transform: uppercase;
+}
 .input_locked {
   height: 12px;
   width: 12px;
