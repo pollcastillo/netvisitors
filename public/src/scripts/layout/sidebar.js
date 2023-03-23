@@ -149,6 +149,6 @@ const renders = () => {
     });
 };
 // new Clients().render()
-new Notes()
+new AssistControl()
     .render();
 // new Dashboard().render()

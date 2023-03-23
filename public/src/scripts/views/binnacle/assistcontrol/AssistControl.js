@@ -99,41 +99,44 @@ export class AssistControl {
                 });
             });
             const renderInterface = async (entity) => {
-                let entityData = await getEntityData('Marcation', entity);
-                console.log(entityData);
+                let markingData = await getEntityData('Marcation', entity);
+                console.log(markingData);
                 renderRightSidebar(UIRightSidebar);
-                const marcationName = document.getElementById('entity-firstname');
-                marcationName.value = `${entityData.user.firstName} ${entityData.user.lastName} ${entityData.user.secondLastName}`;
-                const userDni = document.getElementById('entity-dni');
-                if (await !entityData.user.dni) {
-                    let dniParent = userDni.parentNode;
-                    dniParent.style.display = "none";
-                }
-                else {
-                    userDni.value = entityData.user.dni;
-                }
-                const userType = document.getElementById('entity-type');
-                let userTypeParent = userType.parentNode;
-                if (await !entityData.user.userType)
-                    userTypeParent.style.display = "none";
-                else if (entityData.user.userType == 'CUSTOMER')
-                    userType.value = 'Cliente';
-                else if (entityData.user.userType == 'GUARD')
-                    userType.value = 'Guardia';
-                const marcationStatus = document.getElementById('marcation-status');
-                marcationStatus.innerText = entityData.marcationState.name;
+                const _values = {
+                    status: document.getElementById('marking-status'),
+                    name: document.getElementById('marking-name'),
+                    dni: document.getElementById('marking-dni'),
+                    type: document.getElementById('marking-type'),
+                    department: document.getElementById('marking-department'),
+                    contractor: document.getElementById('marking-contractor'),
+                    // Start marking
+                    startDate: document.getElementById('marking-start-date'),
+                    startTime: document.getElementById('marking-start-time'),
+                    startGuardID: document.getElementById('marking-start-guard-id'),
+                    startGuardName: document.getElementById('marking-start-guard-name'),
+                    // End marking
+                    endDate: document.getElementById('marking-end-date'),
+                    endTime: document.getElementById('marking-end-time'),
+                    endGuardID: document.getElementById('marking-end-guard-id'),
+                    endGuardName: document.getElementById('marking-end-guard-name')
+                };
+                _values.status.innerText = markingData.marcationState.name;
+                _values.name.value = markingData.user.firstName + ' ' + markingData.user.lastName;
+                _values.dni.value = markingData.user.dni;
+                _values.type.value = markingData.user.userType;
+                _values.department.value = markingData.user.department;
+                _values.contractor.value = markingData.user.contractor;
+                // Start marking
+                _values.startDate.value = markingData.ingressDate;
+                _values.startTime.value = markingData.ingressTime;
+                _values.startGuardID.value = markingData.ingressIssued.username;
+                _values.startGuardName.value = markingData.ingressIssued.firstName + ' ' + markingData.ingressIssued.lastName;
+                // End marking
+                _values.endDate.value = markingData.egressDate;
+                _values.endTime.value = markingData.egressTime;
+                _values.endGuardID.value = markingData.egressIssued.username;
+                _values.endGuardName.value = markingData.egressIssued.firstName + ' ' + markingData.egressIssued.lastName;
                 drawTagsIntoTables();
-                // const visitAutorizedBy: InterfaceElement = document.getElementById('visit-authorizedby')
-                // visitAutorizedBy.value = entityData.authorizer
-                // const visitStatus: InterfaceElement = document.getElementById('visit-status')
-                // visitStatus.innerText = entityData.visitState.name
-                // const visitCitadel: InterfaceElement = document.getElementById('visit-citadel')
-                // visitCitadel.value = entityData.citadel.description
-                // const visitCitadelID: InterfaceElement = document.getElementById('visit-citadelid')
-                // visitCitadelID.value = entityData.citadel.name
-                // const visitDepartment: InterfaceElement = document.getElementById('visit-department')
-                // visitDepartment.value = entityData.department.name
-                // console.log(entityData.citadel.name)
                 this.closeRightSidebar();
                 drawTagsIntoTables();
             };
