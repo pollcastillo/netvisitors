@@ -1,6 +1,7 @@
 // @filename: endpoints.ts
 
 // Imports
+import { SignIn } from "./login.js"
 import { Endpoint, Request } from "./types.js"
 
 // GENERAL URL
@@ -90,6 +91,7 @@ export const getData = async (url: RequestInfo): Endpoint => {
     }
     const res: Response = await fetch(url, ReqOptions)
     return await res.json()
+        .catch(err => new SignIn().signOut())
 }
 
 /**

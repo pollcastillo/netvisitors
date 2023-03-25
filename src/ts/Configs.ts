@@ -6,7 +6,5 @@
 export const Config = {
     tableRows: 16,
     currentPage: 1,
-    employeeUser: "EMPLOYEE",
-    contractorUser: "CONTRACTOR",
     isSuperUser: false
 }

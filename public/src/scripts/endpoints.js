@@ -1,4 +1,6 @@
 // @filename: endpoints.ts
+// Imports
+import { SignIn } from "./login.js";
 // GENERAL URL
 // ===================================================
 const NetliinksUrl = 'https://backend.netliinks.com:443/rest/entities/';
@@ -76,7 +78,8 @@ export const getData = async (url) => {
         redirect: 'follow'
     };
     const res = await fetch(url, ReqOptions);
-    return await res.json();
+    return await res.json()
+        .catch(err => new SignIn().signOut());
 };
 /**
  *

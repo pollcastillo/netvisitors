@@ -106,8 +106,8 @@ export class Clients {
     public searchEntity = async (tableBody: InterfaceElement, data: any) => {
         const search: InterfaceElement = document.getElementById('search')
 
-        await search.addEventListener('keyup', () => {
-            const arrayData: any = data.filter((user: any) =>
+        await search.addEventListener('keyup', async () => {
+            const arrayData: any = await data.filter((user: any) =>
                 `${user.id}
                 ${user.firstName}
                  ${user.lastName}

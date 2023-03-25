@@ -23,8 +23,8 @@ export class Clients {
         this.content = document.getElementById('datatable-container');
         this.searchEntity = async (tableBody, data) => {
             const search = document.getElementById('search');
-            await search.addEventListener('keyup', () => {
-                const arrayData = data.filter((user) => `${user.id}
+            await search.addEventListener('keyup', async () => {
+                const arrayData = await data.filter((user) => `${user.id}
                 ${user.firstName}
                  ${user.lastName}
                  ${user.username}`
