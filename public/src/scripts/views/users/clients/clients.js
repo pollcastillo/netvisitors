@@ -82,7 +82,7 @@ export class Clients {
         setRole();
         table.innerHTML = '';
         currentPage--;
-        let start = tableRows * currentPage + 1;
+        let start = tableRows * currentPage;
         let end = start + tableRows;
         let paginatedItems = data.slice(start, end);
         console.log(paginatedItems);

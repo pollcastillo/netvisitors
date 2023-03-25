@@ -49,7 +49,7 @@ export class Clients {
         setRole()
         table.innerHTML = ''
         currentPage--
-        let start: number = tableRows * currentPage + 1
+        let start: number = tableRows * currentPage
         let end: number = start + tableRows
         let paginatedItems: any = data.slice(start, end)
 
