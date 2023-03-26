@@ -375,6 +375,30 @@ table button:hover {
   text-align: center;
   white-space: nowrap;
 }
+.datatable_footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  width: 100%;
+}
+.datatable_pagination {
+  display: block;
+  width: fit-content;
+}
+.datatable_pagination .pagination_button {
+  border: 0 transparent;
+  width: 24px;
+  height: 24px;
+  margin: 0 4px;
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
+  background-color: #FFFFFF;
+  color: #706F8E;
+  transition: 0.3s all ease-in;
+}
+.datatable_pagination .pagination_button:hover {
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.04), 0 2px 4px 0 rgba(112, 111, 142, 0.16);
+}
 
 .dialog_content {
   position: fixed;

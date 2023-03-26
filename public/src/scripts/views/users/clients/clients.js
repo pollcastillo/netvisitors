@@ -130,6 +130,8 @@ export class Clients {
         this.edit(this.entityDialogContainer, data);
         this.remove();
         this.convertToSuper();
+        // this.pagination(data, tableRows, currentPage)
+        this.pagination(data, tableRows, currentPage);
     }
     register() {
         // register entity
@@ -531,14 +533,15 @@ export class Clients {
         }
         function setupButtons(page, items, currentPage, tableBody, limitRows, load) {
             const button = document.createElement('button');
+            button.classList.add('pagination_button');
             button.innerText = page;
             if (currentPage == page)
                 button.classList.add('isActive');
             button.addEventListener('click', () => {
                 currentPage = page;
-                let currentButton = document.querySelector('button.isActive');
-                currentButton.classList.remove('isActive');
-                button.classList.add('isActive');
+                // let currentButton: InterfaceElement = document.querySelectorAll('.pagination_button')
+                // currentButton.classList.remove('isActive')
+                // button.classList.add('isActive')
             });
             return button;
         }
