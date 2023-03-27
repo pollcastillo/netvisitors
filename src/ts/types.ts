@@ -7,6 +7,7 @@ export type Endpoint = Promise<any>
 export type TokenGenerator = Promise<void>
 export type InterfaceElement = HTMLElement | any
 export type InterfaceElementCollection = HTMLCollectionOf<Element> | any
+export type Data = [] | {} | any
 
 export type HttpStatus = {
     code: number

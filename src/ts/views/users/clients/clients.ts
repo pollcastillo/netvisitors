@@ -5,7 +5,7 @@
 //
 import { deleteEntity, getEntitiesData, getEntityData, registerEntity, setPassword, setUserRole, updateEntity } from "../../../endpoints.js"
 import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog, filterDataByHeaderType, UserTools } from "../../../tools.js"
-import { InterfaceElement } from "../../../types.js"
+import { Data, InterfaceElement } from "../../../types.js"
 import { Config } from "../../../Configs.js"
 import { tableLayout } from "./Layout.js"
 import { tableLayoutTemplate } from "./Templates.js"
@@ -14,9 +14,9 @@ const tableRows = Config.tableRows
 const currentPage = Config.currentPage
 
 const getUsers = async (): Promise<void> => {
-    const users: any = await getEntitiesData('User')
-    const FSuper: any = users.filter((data: any) => data.isSuper === false)
-    const data: any = FSuper.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
+    const users: Data = await getEntitiesData('User')
+    const FSuper: Data = users.filter((data: any) => data.isSuper === false)
+    const data: Data = FSuper.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
     return data
 }
 
@@ -28,13 +28,13 @@ export class Clients {
     private readonly entityDialogContainer: InterfaceElement =
         document.getElementById('entity-editor-container')
 
-    private readonly content: InterfaceElement =
+    private readonly datatableContainer: InterfaceElement =
         document.getElementById('datatable-container')
 
     public async render(): Promise<void> {
         let data = await getUsers()
-        this.content.innerHTML = ''
-        this.content.innerHTML = tableLayout
+        this.datatableContainer.innerHTML = ''
+        this.datatableContainer.innerHTML = tableLayout
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
 
         tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows)
@@ -44,7 +44,7 @@ export class Clients {
         new filterDataByHeaderType().filter()
     }
 
-    private load(table: InterfaceElement, currentPage: number, data: any) {
+    private load(table: InterfaceElement, currentPage: number, data: Data) {
         setUserPassword()
         setRole()
         table.innerHTML = ''
@@ -60,10 +60,10 @@ export class Clients {
         if (data.length === 0) {
             let row: InterfaceElement = document.createElement('tr')
             row.innerHTML = `
-        <td>los datos no coinciden con su búsqueda</td>
-        <td></td>
-        <td></td>
-      `
+                <td>los datos no coinciden con su búsqueda</td>
+                <td></td>
+                <td></td>
+            `
             table.appendChild(row)
         }
         else {
@@ -101,7 +101,6 @@ export class Clients {
         this.edit(this.entityDialogContainer, data)
         this.remove()
         this.convertToSuper()
-        // this.pagination(data, tableRows, currentPage)
         this.pagination(data, tableRows, currentPage)
 
     }
@@ -607,7 +606,7 @@ export class Clients {
             const button: InterfaceElement = document.createElement('button')
             button.classList.add('pagination_button')
             button.innerText = page
-            if (currentPage == page) button.classList.add('isActive')
+            if (currentPage === page) button.classList.add('isActive')
 
             button.addEventListener('click', () => {
                 currentPage = page
@@ -652,7 +651,7 @@ export const setUserPassword = async (): Promise<any> => {
 
 export async function setRole(): Promise<void> {
     const users: any = await getEntitiesData('User')
-    const filterByNewUsers: any = users.filter((data: any) => data.newUser == true)
+    const filterByNewUsers: any = users.filter((data: any) => data.newUser === true)
     const filterByUserType: any = filterByNewUsers.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
     const data: any = filterByUserType
 
@@ -666,7 +665,7 @@ export async function setRole(): Promise<void> {
             "newUser": false
         })
 
-        if (newUser.newUser == true) {
+        if (newUser.newUser === true) {
             setUserRole(raw)
             setTimeout(() => {
                 updateEntity('User', newUser.id, updateNewUser)

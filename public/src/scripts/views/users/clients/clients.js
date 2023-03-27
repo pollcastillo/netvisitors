@@ -20,7 +20,7 @@ export class Clients {
     constructor() {
         this.dialogContainer = document.getElementById('app-dialogs');
         this.entityDialogContainer = document.getElementById('entity-editor-container');
-        this.content = document.getElementById('datatable-container');
+        this.datatableContainer = document.getElementById('datatable-container');
         this.searchEntity = async (tableBody, data) => {
             const search = document.getElementById('search');
             await search.addEventListener('keyup', async () => {
@@ -69,8 +69,8 @@ export class Clients {
     }
     async render() {
         let data = await getUsers();
-        this.content.innerHTML = '';
-        this.content.innerHTML = tableLayout;
+        this.datatableContainer.innerHTML = '';
+        this.datatableContainer.innerHTML = tableLayout;
         const tableBody = document.getElementById('datatable-body');
         tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows);
         this.load(tableBody, currentPage, data);
@@ -91,10 +91,10 @@ export class Clients {
         if (data.length === 0) {
             let row = document.createElement('tr');
             row.innerHTML = `
-        <td>los datos no coinciden con su búsqueda</td>
-        <td></td>
-        <td></td>
-      `;
+                <td>los datos no coinciden con su búsqueda</td>
+                <td></td>
+                <td></td>
+            `;
             table.appendChild(row);
         }
         else {
@@ -130,7 +130,6 @@ export class Clients {
         this.edit(this.entityDialogContainer, data);
         this.remove();
         this.convertToSuper();
-        // this.pagination(data, tableRows, currentPage)
         this.pagination(data, tableRows, currentPage);
     }
     register() {
@@ -535,7 +534,7 @@ export class Clients {
             const button = document.createElement('button');
             button.classList.add('pagination_button');
             button.innerText = page;
-            if (currentPage == page)
+            if (currentPage === page)
                 button.classList.add('isActive');
             button.addEventListener('click', () => {
                 currentPage = page;
@@ -571,7 +570,7 @@ export const setUserPassword = async () => {
 };
 export async function setRole() {
     const users = await getEntitiesData('User');
-    const filterByNewUsers = users.filter((data) => data.newUser == true);
+    const filterByNewUsers = users.filter((data) => data.newUser === true);
     const filterByUserType = filterByNewUsers.filter((data) => `${data.userType}`.includes('CUSTOMER'));
     const data = filterByUserType;
     data.forEach((newUser) => {
@@ -582,7 +581,7 @@ export async function setRole() {
         let updateNewUser = JSON.stringify({
             "newUser": false
         });
-        if (newUser.newUser == true) {
+        if (newUser.newUser === true) {
             setUserRole(raw);
             setTimeout(() => {
                 updateEntity('User', newUser.id, updateNewUser);
