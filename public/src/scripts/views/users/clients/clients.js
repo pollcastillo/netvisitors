@@ -527,20 +527,18 @@ export class Clients {
         pageCount = Math.ceil(items.length / limitRows);
         let button;
         for (let i = 1; i < pageCount + 1; i++) {
-            button = setupButtons(i, items, currentPage, tableBody, limitRows, load);
+            button = setupButtons(i, items, currentPage, tableBody, limitRows);
             paginationWrapper.appendChild(button);
         }
-        function setupButtons(page, items, currentPage, tableBody, limitRows, load) {
+        function setupButtons(page, items, currentPage, tableBody, limitRows) {
             const button = document.createElement('button');
             button.classList.add('pagination_button');
             button.innerText = page;
-            if (currentPage === page)
-                button.classList.add('isActive');
+            const buttons = document.querySelectorAll('.pagination_button');
             button.addEventListener('click', () => {
                 currentPage = page;
-                // let currentButton: InterfaceElement = document.querySelectorAll('.pagination_button')
-                // currentButton.classList.remove('isActive')
-                // button.classList.add('isActive')
+                new Clients().load(tableBody, page, items);
+                buttons[page - 1].classList.add('isActive');
             });
             return button;
         }

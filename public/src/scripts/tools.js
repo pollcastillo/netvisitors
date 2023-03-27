@@ -195,23 +195,3 @@ export class filterDataByHeaderType {
         };
     }
 }
-export class UserTools {
-    pagination(items, limitRows, currentPage) {
-        const tableBody = document.getElementById('datatable-body');
-        const paginationWrapper = document.getElementById('pagination-container');
-        paginationWrapper.innerHTML = '';
-        let pageCount;
-        pageCount = Math.ceil(items.length / limitRows);
-        let button;
-        for (let i = 1; i < pageCount + 1; i++) {
-            button = setupButtons(i, items, currentPage, tableBody, limitRows);
-            paginationWrapper.appendChild(button);
-        }
-        function setupButtons(page, items, currentPage, tableBody, limitRows, load) {
-            const button = document.createElement('BUTTON');
-            button.classList.add('pagination_button');
-            button.innerText = page;
-        }
-        return button;
-    }
-}
