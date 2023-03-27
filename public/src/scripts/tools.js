@@ -27,15 +27,24 @@ export const inputSelect = async (entity, selectId, currentStatus) => {
         select.setAttribute('value', data[0].name);
         inputOption.classList.add('input_option');
         inputOption.setAttribute('id', data[i].id);
-        inputOption.innerHTML = data[i].name;
+        let nameData = data[i].name;
+        if (nameData === 'Enabled') {
+            nameData = 'Activo';
+        }
+        else if (nameData === 'Disabled') {
+            nameData = 'Inactivo';
+        }
+        inputOption.innerHTML = nameData;
         optionsContainer.appendChild(inputOption);
     }
     const options = optionsContainer.querySelectorAll('.input_option');
     if (state === "Enabled") {
         select.value = "Activo";
+        select.setAttribute('data-optionid', '60885987-1b61-4247-94c7-dff348347f93');
     }
     else if (state === 'Disabled') {
         select.value = "Inactivo";
+        select.setAttribute('data-optionid', '225b5e5d-9bb1-469a-b2d9-ca85d53db47b');
     }
     else {
         select.value = data[0].name;

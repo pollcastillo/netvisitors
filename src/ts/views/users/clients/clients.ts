@@ -340,7 +340,7 @@ export class Clients {
         })
     }
 
-    private edit(container: InterfaceElement, data: any) {
+    private edit(container: InterfaceElement, data: Data) {
         // Edit entity
         const edit: InterfaceElement = document.querySelectorAll('#edit-entity')
         edit.forEach((edit: InterfaceElement) => {
