@@ -91,10 +91,14 @@
 
     }
 
-    .fa-regular {
+    label {
         position: absolute;
         bottom: 8px;
         color: $slategray;
+
+        i {
+            font-size: 18px;
+        }
     }
 }
 

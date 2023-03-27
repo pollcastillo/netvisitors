@@ -706,10 +706,13 @@ h1, h2, h3, h4, h5, h6 {
   height: 1px;
   width: 100%;
 }
-.input .fa-regular {
+.input label {
   position: absolute;
   bottom: 8px;
   color: #706F8E;
+}
+.input label i {
+  font-size: 18px;
 }
 
 .material_input {

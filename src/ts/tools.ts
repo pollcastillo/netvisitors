@@ -141,11 +141,6 @@ export const fixDate = () => {
         const dateP2 = dateP1[2].split('T')
         const dateP3 = dateP2[1].split(':')
 
-        // TODO: Change months for month names
-        // switch (dateP1[1]) {
-        //   case 01 = console.log('sies')
-        // }
-
         const YearDate = dateP1[0]
         const MonthDate = dateP1[1]
         const DayDate = dateP2[0]
