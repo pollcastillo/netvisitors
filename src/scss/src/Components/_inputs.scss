@@ -227,3 +227,20 @@
 
     i { color: $dark !important; }
 }
+
+.input_textarea {
+    display: block;
+    padding: 16px;
+    border: 1px solid $gray;
+    font-size: 14px;
+    font-family: 'Inter';
+    border-radius: 8px;
+    color: $slategray;
+    margin-bottom: 16px;
+    background-color: $gray;
+
+    &:focus {
+        outline: none;
+        color: $dark;
+    }
+}

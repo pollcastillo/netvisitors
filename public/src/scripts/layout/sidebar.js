@@ -148,7 +148,6 @@ const renders = () => {
         new SuperUsers().render();
     });
 };
-new Clients().render();
+// new Clients().render()
 // new AssistControl()
 //     .render()
-// new Dashboard().render()

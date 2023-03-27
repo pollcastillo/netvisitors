@@ -32,7 +32,7 @@ export class Clients {
         document.getElementById('datatable-container')
 
     public async render(): Promise<void> {
-        let data = await getUsers()
+        let data: any = await getUsers()
         this.datatableContainer.innerHTML = ''
         this.datatableContainer.innerHTML = tableLayout
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
@@ -42,6 +42,7 @@ export class Clients {
 
         this.searchEntity(tableBody, data)
         new filterDataByHeaderType().filter()
+        this.pagination(data, tableRows, currentPage)
     }
 
     private load(table: InterfaceElement, currentPage: number, data: Data) {
@@ -101,8 +102,6 @@ export class Clients {
         this.edit(this.entityDialogContainer, data)
         this.remove()
         this.convertToSuper()
-        this.pagination(data, tableRows, currentPage)
-
     }
 
     public searchEntity = async (tableBody: InterfaceElement, data: any) => {
@@ -123,6 +122,8 @@ export class Clients {
             if (filteredResult >= tableRows) filteredResult = tableRows
 
             this.load(tableBody, currentPage, result)
+
+            this.pagination(result, tableRows, currentPage)
 
         })
 
@@ -585,7 +586,7 @@ export class Clients {
         })
     }
 
-    private pagination(items: [], limitRows: number, currentPage: number, load?: any) {
+    private pagination(items: [], limitRows: number, currentPage: number) {
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
         const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
         paginationWrapper.innerHTML = ''
@@ -613,7 +614,6 @@ export class Clients {
             button.addEventListener('click', (): void => {
                 currentPage = page
                 new Clients().load(tableBody, page, items)
-                buttons[page - 1].classList.add('isActive')
             })
 
             return button

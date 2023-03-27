@@ -35,6 +35,7 @@ export class Clients {
                 if (filteredResult >= tableRows)
                     filteredResult = tableRows;
                 this.load(tableBody, currentPage, result);
+                this.pagination(result, tableRows, currentPage);
             });
         };
         this.generateUserName = async () => {
@@ -76,6 +77,7 @@ export class Clients {
         this.load(tableBody, currentPage, data);
         this.searchEntity(tableBody, data);
         new filterDataByHeaderType().filter();
+        this.pagination(data, tableRows, currentPage);
     }
     load(table, currentPage, data) {
         setUserPassword();
@@ -130,7 +132,6 @@ export class Clients {
         this.edit(this.entityDialogContainer, data);
         this.remove();
         this.convertToSuper();
-        this.pagination(data, tableRows, currentPage);
     }
     register() {
         // register entity
@@ -519,7 +520,7 @@ export class Clients {
             });
         });
     }
-    pagination(items, limitRows, currentPage, load) {
+    pagination(items, limitRows, currentPage) {
         const tableBody = document.getElementById('datatable-body');
         const paginationWrapper = document.getElementById('pagination-container');
         paginationWrapper.innerHTML = '';
@@ -538,7 +539,6 @@ export class Clients {
             button.addEventListener('click', () => {
                 currentPage = page;
                 new Clients().load(tableBody, page, items);
-                buttons[page - 1].classList.add('isActive');
             });
             return button;
         }
