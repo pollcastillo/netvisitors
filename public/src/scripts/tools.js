@@ -1,4 +1,4 @@
-import { getEntitiesData } from "./endpoints.js";
+import { getEntitiesData, getUserInfo } from "./endpoints.js";
 //
 export const inputObserver = () => {
     const inputs = document.querySelectorAll('input');
@@ -195,3 +195,4 @@ export class filterDataByHeaderType {
         };
     }
 }
+export const userInfo = getUserInfo();

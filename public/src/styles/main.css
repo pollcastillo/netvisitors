@@ -1063,6 +1063,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #706F8E;
   margin-bottom: 16px;
   background-color: #E9EAEF;
+  width: 100%;
+  height: 200px;
+  appearance: none;
 }
 .input_textarea:focus {
   outline: none;
