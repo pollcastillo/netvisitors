@@ -609,8 +609,6 @@ export class Clients {
             button.classList.add('pagination_button')
             button.innerText = page
 
-            const buttons: InterfaceElement = document.querySelectorAll('.pagination_button')
-
             button.addEventListener('click', (): void => {
                 currentPage = page
                 new Clients().load(tableBody, page, items)

@@ -54,8 +54,8 @@ export const tableLayout = `
 
       </tbody>
     </table>
-
-    <div class="datatable_footer">
+  </div>
+  <div class="datatable_footer">
       <div class="datatable_pagination" id="pagination-container"></div>
     </div>
-  </div>`;
+  `;

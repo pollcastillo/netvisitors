@@ -82,6 +82,7 @@ export class Employees {
         tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows);
         this.load(tableBody, currentPage, data);
         this.searchEntity(tableBody, data);
+        this.pagination(data, tableRows, currentPage);
     }
     load(table, currentPage, data) {
         setUserPassword();
@@ -569,6 +570,28 @@ export class Employees {
                 };
             });
         });
+    }
+    pagination(items, limitRows, currentPage) {
+        const tableBody = document.getElementById('datatable-body');
+        const paginationWrapper = document.getElementById('pagination-container');
+        paginationWrapper.innerHTML = '';
+        let pageCount;
+        pageCount = Math.ceil(items.length / limitRows);
+        let button;
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(i, items, currentPage, tableBody, limitRows);
+            paginationWrapper.appendChild(button);
+        }
+        function setupButtons(page, items, currentPage, tableBody, limitRows) {
+            const button = document.createElement('button');
+            button.classList.add('pagination_button');
+            button.innerText = page;
+            button.addEventListener('click', () => {
+                currentPage = page;
+                new Employees().load(tableBody, page, items);
+            });
+            return button;
+        }
     }
     close() {
         const closeButton = document.getElementById('close');

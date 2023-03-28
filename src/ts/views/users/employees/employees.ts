@@ -32,7 +32,7 @@ export class Employees implements NUsers.IEmployees {
         document.getElementById('datatable-container')
 
     public async render(): Promise<void> {
-        let data = await getUsers()
+        let data: any = await getUsers()
         this.content.innerHTML = ''
         this.content.innerHTML = tableLayout
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
@@ -41,6 +41,7 @@ export class Employees implements NUsers.IEmployees {
         this.load(tableBody, currentPage, data)
 
         this.searchEntity(tableBody, data)
+        this.pagination(data, tableRows, currentPage)
     }
 
     public load(table: InterfaceElement, currentPage: number, data: any) {
@@ -629,6 +630,38 @@ export class Employees implements NUsers.IEmployees {
             })
         })
 
+    }
+
+    private pagination(items: [], limitRows: number, currentPage: number) {
+        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+        const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+        paginationWrapper.innerHTML = ''
+
+        let pageCount: number
+        pageCount = Math.ceil(items.length / limitRows)
+
+        let button: InterfaceElement
+
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(
+                i, items, currentPage, tableBody, limitRows
+            )
+
+            paginationWrapper.appendChild(button)
+        }
+
+        function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
+            const button: InterfaceElement = document.createElement('button')
+            button.classList.add('pagination_button')
+            button.innerText = page
+
+            button.addEventListener('click', (): void => {
+                currentPage = page
+                new Employees().load(tableBody, page, items)
+            })
+
+            return button
+        }
     }
 
     public close(): void {
