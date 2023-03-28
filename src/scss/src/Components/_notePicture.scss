@@ -10,10 +10,10 @@
     background-color: $grayLightBlue;
     box-shadow: $lightShadow1;
     margin-bottom: 22px;
+    box-shadow: $lightShadow2;
 
     img {
         display: block;
-        // object-position: 50% 50%;
         object-fit: cover;
     }
 }

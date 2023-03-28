@@ -121,7 +121,6 @@ export class Notes {
 
         const previewBox = async (noteId: string): Promise<void> => {
             const note = await getEntityData('Note', noteId)
-            console.log(note)
 
             renderRightSidebar(UIRightSidebar)
             const sidebarContainer: InterfaceElement = document.getElementById('entity-editor-container')
@@ -131,7 +130,7 @@ export class Notes {
             })
             // Note details
             const _details: InterfaceElementCollection = {
-                picture: document.getElementById('note-picture'),
+                picture: document.getElementById('note-picture-placeholder'),
                 title: document.getElementById('note-title'),
                 content: document.getElementById('note-content'),
                 author: document.getElementById('note-author'),
@@ -141,7 +140,6 @@ export class Notes {
             }
 
             const image = await getFile(note.attachment)
-            console.log(image)
 
             const noteCreationDateAndTime = note.creationDate.split('T')
             const noteCreationTime = noteCreationDateAndTime[1]
@@ -153,8 +151,12 @@ export class Notes {
             _details.authorId.value = note.createdBy
             _details.date.value = noteCreationDate
             _details.time.value = noteCreationTime
-            _details.picture.setAttribute('src', image)
 
+            if (note.attachment !== undefined) {
+                _details.picture.innerHTML = `
+                    <img id="note-picture" width="100%" class="note_picture margin_b_8" src="${image}">
+                `
+            }
 
         }
     }

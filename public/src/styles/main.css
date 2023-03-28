@@ -1078,6 +1078,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #F5F6FA;
   box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.08), 0 0.5px 2px 0 rgba(112, 111, 142, 0.16);
   margin-bottom: 22px;
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.04), 0 2px 4px 0 rgba(112, 111, 142, 0.16);
 }
 .note_picture img {
   display: block;

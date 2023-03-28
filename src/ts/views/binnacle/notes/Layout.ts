@@ -56,9 +56,12 @@ export const UIRightSidebar = `
 
     <!-- EDITOR BODY -->
     <div class="entity_editor_body">
-        <img id="note-picture" width="100%" class="note_picture margin_b_8">
-        <h2 id="note-title">Título</h2>
-        <p id="note-content">Lorem ipsum dolor sit amet...</p><br><br>
+        <div id="note-picture-placeholder">
+
+        </div>
+
+        <h2 id="note-title">Cargando</h2>
+        <p id="note-content">Por favor espere...</p><br><br>
 
         <div class="input_detail">
             <label for="note-author"><i class="fa-solid fa-user"></i></label>
