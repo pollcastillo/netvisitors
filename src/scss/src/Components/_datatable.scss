@@ -95,10 +95,6 @@ $TableBorder: 1px solid darken($gray, 10%);
     border-bottom-left-radius: 16px;
     border-collapse: collapse;
 
-    tr td, tr th {
-      width: 100%; // full width table
-    }
-
     thead {
       tr {
         border-bottom: $TableBorder;

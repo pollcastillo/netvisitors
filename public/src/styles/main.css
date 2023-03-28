@@ -531,9 +531,6 @@ table button:hover {
   border-bottom-left-radius: 16px;
   border-collapse: collapse;
 }
-.datatable_content tr td, .datatable_content tr th {
-  width: 100%;
-}
 .datatable_content thead tr {
   border-bottom: 1px solid #cbceda;
   border-top: 1px solid #cbceda;
@@ -1074,7 +1071,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .note_picture {
   display: block;
-  height: 200px;
+  height: auto;
   width: 100%;
   max-width: 100%;
   border-radius: 8px;
