@@ -211,5 +211,12 @@ export const getFile = async (fileUrl: string): Endpoint => {
     };
 
     const file = await fetch(url + fileUrl, requestOptions)
-    return file.text()
+        .then((res) => res.blob())
+        .then(blob => {
+            let file = window.URL.createObjectURL(blob)
+            return file
+        })
+
+    return file
+
 }

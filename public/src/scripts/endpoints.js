@@ -180,6 +180,11 @@ export const getFile = async (fileUrl) => {
         headers: headers,
         redirect: 'follow'
     };
-    const file = await fetch(url + fileUrl, requestOptions);
-    return file.text();
+    const file = await fetch(url + fileUrl, requestOptions)
+        .then((res) => res.blob())
+        .then(blob => {
+        let file = window.URL.createObjectURL(blob);
+        return file;
+    });
+    return file;
 };

@@ -149,5 +149,5 @@ const renders = () => {
     });
 };
 // new Clients().render()
-// new AssistControl()
-//     .render()
+// new AssistControl().render()
+new Notes().render();

@@ -122,15 +122,16 @@ export class Notes {
         const previewBox = async (noteId: string): Promise<void> => {
             const note = await getEntityData('Note', noteId)
             console.log(note)
+
             renderRightSidebar(UIRightSidebar)
             const sidebarContainer: InterfaceElement = document.getElementById('entity-editor-container')
             const closeSidebar: InterfaceElement = document.getElementById('close')
             closeSidebar.addEventListener('click', (): void => {
                 new CloseDialog().x(sidebarContainer)
             })
-
             // Note details
             const _details: InterfaceElementCollection = {
+                picture: document.getElementById('note-picture'),
                 title: document.getElementById('note-title'),
                 content: document.getElementById('note-content'),
                 author: document.getElementById('note-author'),
@@ -138,6 +139,9 @@ export class Notes {
                 date: document.getElementById('creation-date'),
                 time: document.getElementById('creation-time')
             }
+
+            const image = await getFile(note.attachment)
+            console.log(image)
 
             const noteCreationDateAndTime = note.creationDate.split('T')
             const noteCreationTime = noteCreationDateAndTime[1]
@@ -149,7 +153,9 @@ export class Notes {
             _details.authorId.value = note.createdBy
             _details.date.value = noteCreationDate
             _details.time.value = noteCreationTime
-            // _details.date.value =
+            _details.picture.setAttribute('src', image)
+
+
         }
     }
 

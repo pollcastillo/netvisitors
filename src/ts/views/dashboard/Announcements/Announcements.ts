@@ -41,7 +41,6 @@ export class Announcements {
 
         // BUTTONS
         const _controlButtons: InterfaceElement = document.querySelectorAll('.card_dotbutton')
-
         _controlButtons[0].classList.add('card_dotbutton-active')
         _controlButtons.forEach((_controlButton: InterfaceElement) => {
             let index = 0;
