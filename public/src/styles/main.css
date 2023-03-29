@@ -351,6 +351,22 @@ table button:hover {
 .btn_new_announcement:hover, .btn_new_announcement:hover i {
   color: #26233A;
 }
+.btn_remove_announcement {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 100px;
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1px 0 rgba(38, 35, 58, 0.04), 0 2px 4px 0 rgba(112, 111, 142, 0.16);
+  transition: 0.3s all ease-in-out;
+}
+.btn_remove_announcement i {
+  font-size: 16px;
+  color: #FFFFFF;
+}
 
 .btn_transparent {
   background-color: transparent;
@@ -582,6 +598,7 @@ table button:hover {
 .datatable_content tbody tr td {
   padding: 4px 8px;
   border-bottom: 1px solid #E9EAEF;
+  word-break: break-all;
 }
 .datatable_content tbody tr td .fa-solid, .datatable_content tbody tr td .fa-regular {
   font-size: 14px;
@@ -1304,6 +1321,11 @@ i {
   flex-shrink: 0;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+}
+.dashboard_news_and_notes .news .cards .card:hover .btn_remove_announcement {
+  display: flex;
+  opacity: 1;
 }
 .dashboard_news_and_notes .news .cards .card_title {
   margin-bottom: 16px;

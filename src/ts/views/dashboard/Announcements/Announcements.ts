@@ -148,24 +148,3 @@ export class Announcements {
         }, false)
     }
 }
-
-
-//     const buttons: InterfaceElement = document.querySelectorAll('.cards_controls_container button')
-//     buttons[0].classList.add('card_dotbutton-active')
-//     buttons.forEach((button: InterfaceElement) => {
-//         button.addEventListener('click', (e: any): void => {
-//             const parent = button.parentNode
-//             const grantParent = parent.parentNode
-//             const container = grantParent.querySelector('.cards_container')
-
-//             const childrenList = Array.from(parent.children)
-//             const index = childrenList.indexOf(button)
-
-//             container.style.transform = `translatex(-${index * 100}%)`
-
-//             buttons.forEach((button: InterfaceElement) => button.classList.remove('card_dotbutton-active'))
-
-//             button.classList.add('card_dotbutton-active')
-//         })
-//     })
-// }

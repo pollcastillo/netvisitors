@@ -94,6 +94,14 @@
                     flex-shrink: 0;
                     margin: 0 auto;
                     overflow: hidden;
+                    position: relative;
+
+                    &:hover {
+                        .btn_remove_announcement {
+                            display: flex;
+                            opacity: 1;
+                        }
+                    }
 
                     &_title {
                         margin-bottom: 16px;

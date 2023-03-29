@@ -20,7 +20,7 @@ export const UIContentLayout = `
             Título <i class="fa-regular fa-filter"></i>
             </span></th>
 
-            <th width="500px"><span data-type="content">
+            <th><span data-type="content">
             Contenido <i class="fa-regular fa-filter"></i>
             </span></th>
 
@@ -60,7 +60,7 @@ export const UIRightSidebar = `
         </div>
 
         <h2 id="note-title">Cargando</h2>
-        <p id="note-content">Por favor espere...</p><br><br>
+        <p id="note-content" style="word-break: break-all">Por favor espere...</p><br><br>
 
         <div class="input_detail">
             <label for="note-author"><i class="fa-solid fa-user"></i></label>

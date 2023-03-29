@@ -66,7 +66,7 @@ export class Dashboard {
           <!-- RENDER DATATABLE HERE -->
           <div class="dashboard_datatable">
             <h2>Visitas recientes</h2>
-            <table>
+            <table class="datatable_content margin_t_16">
               <thead>
                 <tr>
                   <th>CI</th>
