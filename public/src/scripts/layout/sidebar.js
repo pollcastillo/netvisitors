@@ -72,7 +72,13 @@ export const renderSidebar = () => {
 
                 <div class="sidebar_subitem" id="render-assistControl">
                   <span class="sidebar_subitem_label">
-                    <i class="fa-regular fa-marker"></i> <div class="label">Control de asistencia</div>
+                    <i class="fa-regular fa-marker"></i> <div class="label">Control de<br> asistencia</div>
+                  </span>
+                </div>
+
+                <div class="sidebar_subitem" id="render-events">
+                  <span class="sidebar_subitem_label">
+                    <i class="fa-regular fa-megaphone"></i> <div class="label">Eventos</div>
                   </span>
                 </div>
               </div>
@@ -140,6 +146,10 @@ const renders = () => {
     document.getElementById('render-assistControl')?.addEventListener('click', () => {
         new AssistControl().render();
     });
+    // render AssistControl
+    document.getElementById('render-events')?.addEventListener('click', () => {
+        new Events().render();
+    });
     // render Deparments
     document.getElementById('render-deparments')?.addEventListener('click', () => {
         new Departments().render();
@@ -152,4 +162,3 @@ const renders = () => {
 // new Clients().render()
 // new AssistControl().render()
 // new Notes().render()
-new Events().render();
