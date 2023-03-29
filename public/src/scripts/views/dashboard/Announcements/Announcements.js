@@ -71,9 +71,10 @@ export class Announcements {
             const _hours = _date.getHours();
             const _minutes = _date.getMinutes();
             const _seconds = _date.getSeconds();
+            const _fixedHours = ('0' + _hours).slice(-2);
             const _fixedMinutes = ('0' + _minutes).slice(-2);
             const _fixedSeconds = ('0' + _seconds).slice(-2);
-            const currentTime = `${_hours}:${_fixedMinutes}:${_fixedSeconds}`;
+            const currentTime = `${_fixedHours}:${_fixedMinutes}:${_fixedSeconds}`;
             // DATE
             const _day = _date.getDate();
             const _month = _date.getMonth() + 1;
@@ -96,6 +97,7 @@ export class Announcements {
                 alert('El campo "Contenido" no puede estar vacío');
             }
             else {
+                console.log(announcementRaw);
                 await registerEntity(announcementRaw, 'Announcement')
                     .then(res => {
                     setTimeout(() => {

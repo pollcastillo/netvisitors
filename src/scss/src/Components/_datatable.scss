@@ -160,12 +160,11 @@ $TableBorder: 1px solid darken($gray, 10%);
         td {
           padding: 4px 8px;
           border-bottom: 1px solid $gray;
-          max-width: 72px !important;
-            white-space: nowrap;
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-        //   word-break: break-all;
+          width: fit-content;
+          max-width: 500px !important;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
 
           .fa-solid, .fa-regular {
             font-size: 14px;

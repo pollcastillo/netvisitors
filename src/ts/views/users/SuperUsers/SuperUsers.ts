@@ -16,7 +16,6 @@ const SUser = true
 const getUsers = async (superUser: boolean): Promise<void> => {
     const users: any = await getEntitiesData('User')
     const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
-    console.log(FSuper)
     return FSuper
 }
 
@@ -40,7 +39,6 @@ export class SuperUsers implements NUsers.IContractors {
         this.load(tableBody, currentPage, data)
 
         this.searchEntity(tableBody, data)
-        console.log(data)
     }
 
     public load(table: InterfaceElement, currentPage: number, data: any) {
@@ -68,7 +66,7 @@ export class SuperUsers implements NUsers.IContractors {
           <td>${client.username}</dt>
           <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
-          <td>${client.citadel.description}</dt>
+
           <td class="entity_options">
             <button class="button" id="edit-entity" data-entityId="${client.id}">
               <i class="fa-solid fa-pen"></i>
@@ -76,10 +74,6 @@ export class SuperUsers implements NUsers.IContractors {
 
             <button class="button" id="remove-entity" data-entityId="${client.id}">
               <i class="fa-solid fa-trash"></i>
-            </button>
-
-            <button class="button" id="convert-entity" data-entityId="${client.id}">
-                <i class="fa-solid fa-shield"></i>
             </button>
           </dt>
         `
@@ -273,10 +267,8 @@ export class SuperUsers implements NUsers.IContractors {
         }
 
         const reg = async (raw: any) => {
-            console.log(raw)
             registerEntity(raw, 'User')
                 .then(res => {
-                    console.log('done')
                     this.render()
                     setNewPassword()
                 })
@@ -288,9 +280,6 @@ export class SuperUsers implements NUsers.IContractors {
                 FNewUsers.forEach((newUser: any) => {
 
                 })
-
-                console.log(FNewUsers)
-
             }
         }
     }
@@ -463,7 +452,6 @@ export class SuperUsers implements NUsers.IContractors {
                 document.getElementById('update-changes')
 
             updateButton.addEventListener('click', () => {
-                console.log('updating')
             })
         }
     }
@@ -533,7 +521,6 @@ export class SuperUsers implements NUsers.IContractors {
         const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
         closeButton.addEventListener('click', () => {
-            console.log('close')
             new CloseDialog().x(editor)
         }, false)
     }
@@ -547,7 +534,5 @@ export const setNewPassword: any = async (): Promise<void> => {
     FNewUsers.forEach((newUser: any) => {
 
     })
-    console.group('Nuevos usuarios')
-    console.log(FNewUsers)
 
 }

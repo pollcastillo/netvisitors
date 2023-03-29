@@ -10,7 +10,6 @@ const SUser = true;
 const getUsers = async (superUser) => {
     const users = await getEntitiesData('User');
     const FSuper = users.filter((data) => data.isSuper === superUser);
-    console.log(FSuper);
     return FSuper;
 };
 export class SuperUsers {
@@ -71,7 +70,6 @@ export class SuperUsers {
         tableBody.innerHTML = tableLayoutTemplate.repeat(tableRows);
         this.load(tableBody, currentPage, data);
         this.searchEntity(tableBody, data);
-        console.log(data);
     }
     load(table, currentPage, data) {
         table.innerHTML = '';
@@ -97,7 +95,7 @@ export class SuperUsers {
           <td>${client.username}</dt>
           <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
-          <td>${client.citadel.description}</dt>
+
           <td class="entity_options">
             <button class="button" id="edit-entity" data-entityId="${client.id}">
               <i class="fa-solid fa-pen"></i>
@@ -105,10 +103,6 @@ export class SuperUsers {
 
             <button class="button" id="remove-entity" data-entityId="${client.id}">
               <i class="fa-solid fa-trash"></i>
-            </button>
-
-            <button class="button" id="convert-entity" data-entityId="${client.id}">
-                <i class="fa-solid fa-shield"></i>
             </button>
           </dt>
         `;
@@ -271,10 +265,8 @@ export class SuperUsers {
             });
         };
         const reg = async (raw) => {
-            console.log(raw);
             registerEntity(raw, 'User')
                 .then(res => {
-                console.log('done');
                 this.render();
                 setNewPassword();
             });
@@ -283,7 +275,6 @@ export class SuperUsers {
                 const FNewUsers = users.filter((data) => data.isSuper === true);
                 FNewUsers.forEach((newUser) => {
                 });
-                console.log(FNewUsers);
             };
         };
     }
@@ -409,7 +400,6 @@ export class SuperUsers {
         const UUpdate = async (entityId) => {
             const updateButton = document.getElementById('update-changes');
             updateButton.addEventListener('click', () => {
-                console.log('updating');
             });
         };
     }
@@ -469,7 +459,6 @@ export class SuperUsers {
         const closeButton = document.getElementById('close');
         const editor = document.getElementById('entity-editor-container');
         closeButton.addEventListener('click', () => {
-            console.log('close');
             new CloseDialog().x(editor);
         }, false);
     }
@@ -479,6 +468,4 @@ export const setNewPassword = async () => {
     const FNewUsers = users.filter((data) => data.isSuper === false);
     FNewUsers.forEach((newUser) => {
     });
-    console.group('Nuevos usuarios');
-    console.log(FNewUsers);
 };
