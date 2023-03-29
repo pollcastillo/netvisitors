@@ -98,6 +98,7 @@ export class Clients {
         this.edit(this.entityDialogContainer, data)
         this.remove()
         this.convertToSuper()
+        this.changeUserPassword()
     }
 
     public searchEntity = async (tableBody: InterfaceElement, data: any) => {
@@ -525,34 +526,73 @@ export class Clients {
         }
     }
 
+    private changeUserPassword(): void {
+        const changeUserPasswordKeys: InterfaceElement = document.querySelectorAll('#change-user-password')
+        changeUserPasswordKeys.forEach((buttonKey: InterfaceElement): void => {
+            buttonKey.addEventListener('click', async (): Promise<void> => {
+                let userId: string = buttonKey.dataset.userid
+                this.dialogContainer.style.display = 'block'
+                this.dialogContainer.innerHTML = `
+                    <div class="dialog_content" id="dialog-content">
+                        <div class="dialog">
+                            <div class="dialog_container padding_8">
+                                <div class="dialog_header">
+                                    <h2>Actualizar contraseña</h2>
+                                </div>
+
+                                <div class="dialog_message padding_8">
+                                    <div class="material_input">
+                                        <input type="password" id="password" autocomplete="none">
+                                        <label for="entity-lastname"><i class="fa-solid fa-lock"></i> Nueva contraseña</label>
+                                    </div>
+
+                                    <div class="material_input">
+                                        <input type="password" id="re-password" autocomplete="none">
+                                        <label for="entity-lastname"><i class="fa-solid fa-lock"></i> Repetir contraseña</label>
+                                    </div>
+                                </div>
+
+                                <div class="dialog_footer">
+                                    <button class="btn btn_primary" id="cancel">Cancelar</button>
+                                    <button class="btn btn_danger" id="delete">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+                inputObserver()
+            })
+        })
+
+    }
+
     private remove() {
         const remove: InterfaceElement = document.querySelectorAll('#remove-entity')
         remove.forEach((remove: InterfaceElement) => {
 
             const entityId = remove.dataset.entityid
-
+            // BOOKMARK: MODAL
             remove.addEventListener('click', (): void => {
                 this.dialogContainer.style.display = 'block'
                 this.dialogContainer.innerHTML = `
-          <div class="dialog_content" id="dialog-content">
-            <div class="dialog dialog_danger">
-              <div class="dialog_container">
-                <div class="dialog_header">
-                  <h2>¿Deseas eliminar este cliente?</h2>
-                </div>
+                    <div class="dialog_content" id="dialog-content">
+                        <div class="dialog dialog_danger">
+                        <div class="dialog_container">
+                            <div class="dialog_header">
+                            <h2>¿Deseas eliminar este cliente?</h2>
+                            </div>
 
-                <div class="dialog_message">
-                  <p>Esta acción no se puede revertir</p>
-                </div>
+                            <div class="dialog_message">
+                            <p>Esta acción no se puede revertir</p>
+                            </div>
 
-                <div class="dialog_footer">
-                  <button class="btn btn_primary" id="cancel">Cancelar</button>
-                  <button class="btn btn_danger" id="delete">Eliminar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `
+                            <div class="dialog_footer">
+                            <button class="btn btn_primary" id="cancel">Cancelar</button>
+                            <button class="btn btn_danger" id="delete">Eliminar</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>`
 
                 const deleteButton: InterfaceElement = document.getElementById('delete')
                 const cancelButton: InterfaceElement = document.getElementById('cancel')

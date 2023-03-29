@@ -378,6 +378,34 @@ body, html, .app {
   padding-bottom: 56px !important;
 }
 
+.padding_8 {
+  padding: 8px !important;
+}
+
+.padding_16 {
+  padding: 16px !important;
+}
+
+.padding_24 {
+  padding: 24px !important;
+}
+
+.padding_32 {
+  padding: 32px !important;
+}
+
+.padding_40 {
+  padding: 40px !important;
+}
+
+.padding_48 {
+  padding: 48px !important;
+}
+
+.padding_56 {
+  padding: 56px !important;
+}
+
 .avatar {
   display: flex;
   align-items: center;
