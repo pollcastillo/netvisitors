@@ -11,6 +11,21 @@
     width: 100%;
     margin-bottom: 24px;
 
+    &_clear {
+        border: none;
+        padding: 4px;
+        border: 1px solid $gray;
+        border-radius: 8px;
+    }
+
+    &_centertext {
+        text-align: center;
+    }
+
+    &_widder {
+        width: 100%;
+    }
+
     &_time {
         border: none;
         border-bottom: 1px solid $gray;

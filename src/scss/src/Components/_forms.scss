@@ -6,6 +6,19 @@
         display: grid;
         gap: 16px;
         grid-template-columns: repeat(2, 1fr);
+        position: relative;
+
+        &::after {
+            position: absolute;
+            content: '';
+            display: block;
+            height: 100%;
+            width: 0.5px;
+            background-color: lighten($slategray, 30%);
+            left: 50%;
+            right: 50%;
+            transform: translateX(50%);
+        }
     }
 
     &_label {

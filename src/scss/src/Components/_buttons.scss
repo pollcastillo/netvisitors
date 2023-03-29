@@ -78,6 +78,13 @@ table button {
         }
     }
 
+    &_placeholder_type {
+        background-color: transparent;
+        color: $slategray;
+        border: 1px dashed $slategray;
+        border-radius: 4px;
+    }
+
     &_remove_announcement {
         opacity: 0;
         position: absolute;
@@ -95,6 +102,23 @@ table button {
             font-size: 16px;
             color: $white;
         }
+    }
+}
+
+.btn_image {
+    display: block;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: transparent;
+
+    img {
+        display: block;
+        width: 85px;
+        height: auto;
+    }
+
+    &-active {
+        background-color: $gray;
     }
 }
 

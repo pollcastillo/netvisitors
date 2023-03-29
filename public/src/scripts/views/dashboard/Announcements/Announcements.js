@@ -52,6 +52,7 @@ export class Announcements {
             });
         });
         this.remove();
+        this.publish();
     }
     async publish() {
         const _sidebarRightcontainer = document.getElementById('entity-editor-container');

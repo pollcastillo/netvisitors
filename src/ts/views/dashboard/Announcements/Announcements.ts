@@ -63,6 +63,7 @@ export class Announcements {
         })
 
         this.remove()
+        this.publish()
     }
 
     private async publish(): Promise<void> {
