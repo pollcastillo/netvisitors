@@ -105,6 +105,11 @@
 
                     &_title {
                         margin-bottom: 16px;
+                        word-break: break-all;
+                    }
+
+                    &_content {
+                        word-break: break-all;
                     }
 
                     &_dotbutton {

@@ -39,15 +39,18 @@ export class Announcements {
             this.publish()
         })
 
+        const container: InterfaceElement = document.querySelector('.cards_container')
+        container.style.transform = 'translatex(0%)'
+
         // BUTTONS
         const _controlButtons: InterfaceElement = document.querySelectorAll('.card_dotbutton')
         _controlButtons[0].classList.add('card_dotbutton-active')
         _controlButtons.forEach((_controlButton: InterfaceElement) => {
             let index = 0;
             _controlButton.addEventListener('click', (e: any): void => {
-                const parent = _controlButton.parentNode
-                const grantParent = parent.parentNode
-                const container = grantParent.querySelector('.cards_container')
+                const parent: InterfaceElement = _controlButton.parentNode
+                const grantParent: InterfaceElement = parent.parentNode
+                const container: InterfaceElement = grantParent.querySelector('.cards_container')
 
                 const childrenList = Array.from(parent.children)
                 index = childrenList.indexOf(_controlButton)
@@ -111,14 +114,13 @@ export class Announcements {
             } else if (_announcementContent.value === '') {
                 alert('El campo "Contenido" no puede estar vacío')
             } else {
-                console.log(announcementRaw)
                 await registerEntity(announcementRaw, 'Announcement')
                     .then(res => {
                         setTimeout((): void => {
                             const container = document.getElementById('entity-editor-container')
                             new CloseDialog().x(container)
                             this.render()
-                        }, 100)
+                        }, 1000)
                     })
             }
 

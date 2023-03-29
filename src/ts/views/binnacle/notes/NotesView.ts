@@ -41,6 +41,7 @@ export class Notes {
         // Exec functions
         this.load(tableBody, currentPage, notesArray)
         this.searchNotes(tableBody, notesArray)
+        this.pagination(notesArray, tableRows, currentPage)
 
         // Rendering icons
     }
@@ -105,6 +106,7 @@ export class Notes {
             if (filteredNotes >= Config.tableRows) filteredNotes = Config.tableRows
 
             this.load(tableBody, currentPage, result)
+            this.pagination(result, tableRows, currentPage)
 
             // Rendering icons
         })
@@ -158,6 +160,38 @@ export class Notes {
                 `
             }
 
+        }
+    }
+
+    private pagination(items: [], limitRows: number, currentPage: number) {
+        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+        const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+        paginationWrapper.innerHTML = ''
+
+        let pageCount: number
+        pageCount = Math.ceil(items.length / limitRows)
+
+        let button: InterfaceElement
+
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(
+                i, items, currentPage, tableBody, limitRows
+            )
+
+            paginationWrapper.appendChild(button)
+        }
+
+        function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
+            const button: InterfaceElement = document.createElement('button')
+            button.classList.add('pagination_button')
+            button.innerText = page
+
+            button.addEventListener('click', (): void => {
+                currentPage = page
+                new Notes().load(tableBody, page, items)
+            })
+
+            return button
         }
     }
 

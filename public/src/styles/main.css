@@ -1333,6 +1333,10 @@ i {
 }
 .dashboard_news_and_notes .news .cards .card_title {
   margin-bottom: 16px;
+  word-break: break-all;
+}
+.dashboard_news_and_notes .news .cards .card_content {
+  word-break: break-all;
 }
 .dashboard_news_and_notes .news .cards .card_dotbutton {
   display: inline;

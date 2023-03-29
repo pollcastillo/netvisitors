@@ -87,9 +87,6 @@ export class Clients {
         let start = tableRows * currentPage;
         let end = start + tableRows;
         let paginatedItems = data.slice(start, end);
-        console.log(paginatedItems);
-        console.log(start);
-        console.log(end);
         if (data.length === 0) {
             let row = document.createElement('tr');
             row.innerHTML = `

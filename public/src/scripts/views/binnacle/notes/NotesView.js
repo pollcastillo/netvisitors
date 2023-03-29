@@ -34,6 +34,7 @@ export class Notes {
             // Exec functions
             this.load(tableBody, currentPage, notesArray);
             this.searchNotes(tableBody, notesArray);
+            this.pagination(notesArray, tableRows, currentPage);
             // Rendering icons
         };
         this.load = (tableBody, currentPage, notes) => {
@@ -87,6 +88,7 @@ export class Notes {
                 if (filteredNotes >= Config.tableRows)
                     filteredNotes = Config.tableRows;
                 this.load(tableBody, currentPage, result);
+                this.pagination(result, tableRows, currentPage);
                 // Rendering icons
             });
         };
@@ -140,5 +142,27 @@ export class Notes {
                 new CloseDialog().x(editor);
             });
         };
+    }
+    pagination(items, limitRows, currentPage) {
+        const tableBody = document.getElementById('datatable-body');
+        const paginationWrapper = document.getElementById('pagination-container');
+        paginationWrapper.innerHTML = '';
+        let pageCount;
+        pageCount = Math.ceil(items.length / limitRows);
+        let button;
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(i, items, currentPage, tableBody, limitRows);
+            paginationWrapper.appendChild(button);
+        }
+        function setupButtons(page, items, currentPage, tableBody, limitRows) {
+            const button = document.createElement('button');
+            button.classList.add('pagination_button');
+            button.innerText = page;
+            button.addEventListener('click', () => {
+                currentPage = page;
+                new Notes().load(tableBody, page, items);
+            });
+            return button;
+        }
     }
 }

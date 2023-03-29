@@ -54,10 +54,6 @@ export class Clients {
         let end: number = start + tableRows
         let paginatedItems: any = data.slice(start, end)
 
-        console.log(paginatedItems)
-        console.log(start)
-        console.log(end)
-
         if (data.length === 0) {
             let row: InterfaceElement = document.createElement('tr')
             row.innerHTML = `

@@ -31,6 +31,8 @@ export class Announcements {
         this._newAnnouncementButton.addEventListener('click', () => {
             this.publish();
         });
+        const container = document.querySelector('.cards_container');
+        container.style.transform = 'translatex(0%)';
         // BUTTONS
         const _controlButtons = document.querySelectorAll('.card_dotbutton');
         _controlButtons[0].classList.add('card_dotbutton-active');
@@ -97,14 +99,13 @@ export class Announcements {
                 alert('El campo "Contenido" no puede estar vacío');
             }
             else {
-                console.log(announcementRaw);
                 await registerEntity(announcementRaw, 'Announcement')
                     .then(res => {
                     setTimeout(() => {
                         const container = document.getElementById('entity-editor-container');
                         new CloseDialog().x(container);
                         this.render();
-                    }, 100);
+                    }, 1000);
                 });
             }
         });
