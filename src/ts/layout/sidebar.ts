@@ -15,6 +15,7 @@ import { Contractors } from "../views/users/contractors/Contractors.js"
 import { AssistControl } from "../views/binnacle/assistcontrol/AssistControl.js"
 import { Departments } from "../views/departments/Departments.js"
 import { SuperUsers } from "../views/users/SuperUsers/SuperUsers.js"
+import { Events } from "../views/binnacle/Events/EventsView.js"
 
 export const renderSidebar = (): void => {
     const sidebar: InterfaceElement = document.getElementById('app-sidebar')
@@ -170,3 +171,4 @@ const renders = () => {
 // new AssistControl().render()
 
 // new Notes().render()
+new Events().render()
