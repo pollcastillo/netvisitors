@@ -37,11 +37,11 @@ export const UIContentLayout = `
 
         </tbody>
         </table>
-
-        <div class="datatable_footer">
+    </div>
+    <div class="datatable_footer">
         <div class="datatable_pagination" id="pagination-container"></div>
-        </div>
-    </div>`;
+    </div>
+    `;
 export const UIRightSidebar = `
     <div class="entity_editor" id="entity-editor">
     <div class="entity_editor_header">

@@ -598,7 +598,10 @@ table button:hover {
 .datatable_content tbody tr td {
   padding: 4px 8px;
   border-bottom: 1px solid #E9EAEF;
-  word-break: break-all;
+  max-width: 72px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .datatable_content tbody tr td .fa-solid, .datatable_content tbody tr td .fa-regular {
   font-size: 14px;
