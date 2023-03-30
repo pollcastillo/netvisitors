@@ -497,13 +497,45 @@ export class Clients {
 
                                 <div class="dialog_footer">
                                     <button class="btn btn_primary" id="cancel">Cancelar</button>
-                                    <button class="btn btn_danger" id="delete">Actualizar</button>
+                                    <button class="btn btn_danger" id="update-password">Actualizar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 `;
                 inputObserver();
+                const _password = document.getElementById('password');
+                const _repassword = document.getElementById('re-password');
+                const _updatePasswordButton = document.getElementById('update-password');
+                const _closeButton = document.getElementById('cancel');
+                const _dialog = document.getElementById('dialog-content');
+                _updatePasswordButton.addEventListener('click', () => {
+                    if (_password.value === '') {
+                        alert('El campo "Contraseña" no puede estar vacío.');
+                    }
+                    else if (_repassword.value === ' ') {
+                        alert('Debe repetir la contraseña para continuar');
+                    }
+                    else if (_password.value === _repassword.value) {
+                        let raw = JSON.stringify({
+                            "id": `${userId}`,
+                            "newPassword": `${_password.value}`
+                        });
+                        setPassword(raw)
+                            .then(() => {
+                            setTimeout(() => {
+                                alert('Se ha cambiado la contraseña');
+                                new CloseDialog().x(_dialog);
+                            }, 1000);
+                        });
+                    }
+                    else {
+                        console.log('Las contraseñas no coinciden');
+                    }
+                });
+                _closeButton.onclick = () => {
+                    new CloseDialog().x(_dialog);
+                };
             });
         });
     }
@@ -620,15 +652,5 @@ export async function setRole() {
                 updateEntity('User', newUser.id, updateNewUser);
             }, 1000);
         }
-    });
-}
-export async function changeUserPassword() {
-    const triggers = document.querySelectorAll('#change-user-password');
-    triggers.forEach((button) => {
-        const userId = button.dataset.userid;
-        button.addEventListener('click', () => {
-            console.log(userId);
-            alert('Aún estamos trabajando en esta función');
-        });
     });
 }

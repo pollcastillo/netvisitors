@@ -554,13 +554,48 @@ export class Clients {
 
                                 <div class="dialog_footer">
                                     <button class="btn btn_primary" id="cancel">Cancelar</button>
-                                    <button class="btn btn_danger" id="delete">Actualizar</button>
+                                    <button class="btn btn_danger" id="update-password">Actualizar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 `
                 inputObserver()
+                const _password: InterfaceElement = document.getElementById('password')
+                const _repassword: InterfaceElement = document.getElementById('re-password')
+                const _updatePasswordButton: InterfaceElement = document.getElementById('update-password')
+                const _closeButton: InterfaceElement = document.getElementById('cancel')
+                const _dialog: InterfaceElement = document.getElementById('dialog-content')
+
+                _updatePasswordButton.addEventListener('click', () => {
+                    if (_password.value === '') {
+                        alert('El campo "Contraseña" no puede estar vacío.')
+                    }
+                    else if (_repassword.value === ' ') {
+                        alert('Debe repetir la contraseña para continuar')
+                    }
+                    else if (_password.value === _repassword.value) {
+                        let raw: string = JSON.stringify({
+                            "id": `${userId}`,
+                            "newPassword": `${_password.value}`
+                        })
+
+                        setPassword(raw)
+                            .then((): void => {
+                                setTimeout((): void => {
+                                    alert('Se ha cambiado la contraseña')
+                                    new CloseDialog().x(_dialog)
+                                }, 1000)
+                            })
+                    }
+                    else {
+                        console.log('Las contraseñas no coinciden')
+                    }
+                })
+
+                _closeButton.onclick = () => {
+                    new CloseDialog().x(_dialog)
+                }
             })
         })
 
@@ -704,17 +739,5 @@ export async function setRole(): Promise<void> {
                 updateEntity('User', newUser.id, updateNewUser)
             }, 1000)
         }
-    })
-}
-
-export async function changeUserPassword(): Promise<void> {
-    const triggers: InterfaceElement = document.querySelectorAll('#change-user-password')
-
-    triggers.forEach((button: InterfaceElement) => {
-        const userId = button.dataset.userid
-        button.addEventListener('click', (): void => {
-            console.log(userId)
-            alert('Aún estamos trabajando en esta función')
-        })
     })
 }
