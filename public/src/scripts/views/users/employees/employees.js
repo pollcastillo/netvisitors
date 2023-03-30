@@ -109,7 +109,7 @@ export class Employees {
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.dni}</dt>
           <td>${client.username}</dt>
-          <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
+          <td class="key"><button class="button" id="change-user-password" data-userid="${client.id}"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
           <td class="entity_options">
             <button class="button" id="edit-entity" data-entityId="${client.id}">
@@ -129,6 +129,77 @@ export class Employees {
         this.import();
         this.edit(this.entityDialogContainer, data);
         this.remove();
+        this.changeUserPassword();
+    }
+    changeUserPassword() {
+        const changeUserPasswordKeys = document.querySelectorAll('#change-user-password');
+        changeUserPasswordKeys.forEach((buttonKey) => {
+            buttonKey.addEventListener('click', async () => {
+                let userId = buttonKey.dataset.userid;
+                this.dialogContainer.style.display = 'block';
+                this.dialogContainer.innerHTML = `
+                    <div class="dialog_content" id="dialog-content">
+                        <div class="dialog">
+                            <div class="dialog_container padding_8">
+                                <div class="dialog_header">
+                                    <h2>Actualizar contraseña</h2>
+                                </div>
+
+                                <div class="dialog_message padding_8">
+                                    <div class="material_input">
+                                        <input type="password" id="password" autocomplete="none">
+                                        <label for="entity-lastname"><i class="fa-solid fa-lock"></i> Nueva contraseña</label>
+                                    </div>
+
+                                    <div class="material_input">
+                                        <input type="password" id="re-password" autocomplete="none">
+                                        <label for="entity-lastname"><i class="fa-solid fa-lock"></i> Repetir contraseña</label>
+                                    </div>
+                                </div>
+
+                                <div class="dialog_footer">
+                                    <button class="btn btn_primary" id="cancel">Cancelar</button>
+                                    <button class="btn btn_danger" id="update-password">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                inputObserver();
+                const _password = document.getElementById('password');
+                const _repassword = document.getElementById('re-password');
+                const _updatePasswordButton = document.getElementById('update-password');
+                const _closeButton = document.getElementById('cancel');
+                const _dialog = document.getElementById('dialog-content');
+                _updatePasswordButton.addEventListener('click', () => {
+                    if (_password.value === '') {
+                        alert('El campo "Contraseña" no puede estar vacío.');
+                    }
+                    else if (_repassword.value === ' ') {
+                        alert('Debe repetir la contraseña para continuar');
+                    }
+                    else if (_password.value === _repassword.value) {
+                        let raw = JSON.stringify({
+                            "id": `${userId}`,
+                            "newPassword": `${_password.value}`
+                        });
+                        setPassword(raw)
+                            .then(() => {
+                            setTimeout(() => {
+                                alert('Se ha cambiado la contraseña');
+                                new CloseDialog().x(_dialog);
+                            }, 1000);
+                        });
+                    }
+                    else {
+                        console.log('Las contraseñas no coinciden');
+                    }
+                });
+                _closeButton.onclick = () => {
+                    new CloseDialog().x(_dialog);
+                };
+            });
+        });
     }
     register() {
         // register entity
@@ -328,8 +399,33 @@ export class Employees {
         };
     }
     import() {
-        const importButton = document.getElementById('import-entities');
-        importButton.addEventListener('click', () => {
+        const importEmployees = document.getElementById('import-entities');
+        importEmployees.addEventListener('click', () => {
+            this.entityDialogContainer.innerHTML = '';
+            this.entityDialogContainer.style.display = 'flex';
+            this.entityDialogContainer.innerHTML = `
+            <div class="entity_editor" id="entity-editor">
+              <div class="entity_editor_header">
+                <div class="user_info">
+                  <div class="avatar"><i class="fa-regular fa-up-from-line"></i></div>
+                  <h1 class="entity_editor_title">Importar <br><small>Empleados</small></h1>
+                </div>
+
+                <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
+              </div>
+
+              <!-- EDITOR BODY -->
+              <div class="entity_editor_body">
+
+              </div>
+              <!-- END EDITOR BODY -->
+
+              <div class="entity_editor_footer">
+                <button class="btn btn_primary btn_widder" id="button-import">Importar</button>
+              </div>
+            </div>
+          `;
+            this.close();
         });
     }
     edit(container, data) {

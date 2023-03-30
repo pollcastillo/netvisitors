@@ -1,5 +1,5 @@
 // @filename: SuperUsers.ts
-import { deleteEntity, getEntitiesData, getEntityData, registerEntity } from "../../../endpoints.js";
+import { deleteEntity, getEntitiesData, getEntityData, registerEntity, setPassword } from "../../../endpoints.js";
 import { drawTagsIntoTables, inputObserver, inputSelect, CloseDialog } from "../../../tools.js";
 import { Config } from "../../../Configs.js";
 import { tableLayout } from "./Layout.js";
@@ -93,7 +93,7 @@ export class SuperUsers {
                 row.innerHTML += `
           <td>${client.firstName} ${client.lastName}</dt>
           <td>${client.username}</dt>
-          <td class="key"><button class="button"><i class="fa-regular fa-key"></i></button></td>
+          <td class="key"><button class="button" id="change-user-password"><i class="fa-regular fa-key"></i></button></td>
           <td class="tag"><span>${client.state.name}</span></td>
 
           <td class="entity_options">
@@ -115,6 +115,77 @@ export class SuperUsers {
         this.edit(this.entityDialogContainer, data);
         this.remove();
         this.convertToSuper();
+        this.changeUserPassword();
+    }
+    changeUserPassword() {
+        const changeUserPasswordKeys = document.querySelectorAll('#change-user-password');
+        changeUserPasswordKeys.forEach((buttonKey) => {
+            buttonKey.addEventListener('click', async () => {
+                let userId = buttonKey.dataset.userid;
+                this.dialogContainer.style.display = 'block';
+                this.dialogContainer.innerHTML = `
+                    <div class="dialog_content" id="dialog-content">
+                        <div class="dialog">
+                            <div class="dialog_container padding_8">
+                                <div class="dialog_header">
+                                    <h2>Actualizar contraseña</h2>
+                                </div>
+
+                                <div class="dialog_message padding_8">
+                                    <div class="material_input">
+                                        <input type="password" id="password" autocomplete="none">
+                                        <label for="entity-lastname"><i class="fa-solid fa-lock"></i> Nueva contraseña</label>
+                                    </div>
+
+                                    <div class="material_input">
+                                        <input type="password" id="re-password" autocomplete="none">
+                                        <label for="entity-lastname"><i class="fa-solid fa-lock"></i> Repetir contraseña</label>
+                                    </div>
+                                </div>
+
+                                <div class="dialog_footer">
+                                    <button class="btn btn_primary" id="cancel">Cancelar</button>
+                                    <button class="btn btn_danger" id="update-password">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                inputObserver();
+                const _password = document.getElementById('password');
+                const _repassword = document.getElementById('re-password');
+                const _updatePasswordButton = document.getElementById('update-password');
+                const _closeButton = document.getElementById('cancel');
+                const _dialog = document.getElementById('dialog-content');
+                _updatePasswordButton.addEventListener('click', () => {
+                    if (_password.value === '') {
+                        alert('El campo "Contraseña" no puede estar vacío.');
+                    }
+                    else if (_repassword.value === ' ') {
+                        alert('Debe repetir la contraseña para continuar');
+                    }
+                    else if (_password.value === _repassword.value) {
+                        let raw = JSON.stringify({
+                            "id": `${userId}`,
+                            "newPassword": `${_password.value}`
+                        });
+                        setPassword(raw)
+                            .then(() => {
+                            setTimeout(() => {
+                                alert('Se ha cambiado la contraseña');
+                                new CloseDialog().x(_dialog);
+                            }, 1000);
+                        });
+                    }
+                    else {
+                        console.log('Las contraseñas no coinciden');
+                    }
+                });
+                _closeButton.onclick = () => {
+                    new CloseDialog().x(_dialog);
+                };
+            });
+        });
     }
     register() {
         // register entity
