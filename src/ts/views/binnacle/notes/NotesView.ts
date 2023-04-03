@@ -70,10 +70,12 @@ export class Notes {
             for (let i = 0; i < paginatedItems.length; i++) {
                 let note = paginatedItems[i] // getting note items
                 let row: InterfaceElement = document.createElement('TR')
+                const noteCreationDateAndTime = note.creationDate.split('T')
+                const noteCreationDate = noteCreationDateAndTime[0]
                 row.innerHTML += `
                     <td>${note.title}</td>
                     <td>${note.content}</td>
-                    <td id="table-date">${note.creationDate}</td>
+                    <td id="table-date">${noteCreationDate}</td>
                     <td>
                         <button class="button" id="entity-details" data-entityId="${note.id}">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -90,7 +92,6 @@ export class Notes {
 
     private searchNotes = async (tableBody: InterfaceElement, notes: any) => {
         const search: InterfaceElement = document.getElementById('search')
-
         await search.addEventListener('keyup', () => {
             const arrayNotes: any = notes.filter((note: any) =>
                 `${note.title}
