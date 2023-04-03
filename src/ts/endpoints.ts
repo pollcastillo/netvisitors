@@ -218,5 +218,4 @@ export const getFile = async (fileUrl: string): Endpoint => {
         })
 
     return file
-
 }
