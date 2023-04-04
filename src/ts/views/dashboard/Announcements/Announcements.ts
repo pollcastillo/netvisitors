@@ -22,16 +22,9 @@ export class Announcements {
         announcementsList.forEach(async (announcement: any): Promise<void> => {
             const _card = document.createElement('DIV')
 
-            let file
-            if (announcement.attachment) {
-                file = await getFile(announcement.attachment)
-            }
-
             _card.classList.add('card')
             _card.innerHTML = `
                 <button class="btn btn_remove_announcement" data-announcementid="${announcement.id}" id="remove-announcement"><i class="fa-solid fa-trash"></i></button>
-                <img src="${file}">
-                <img src="${announcement.attachment ? await getFile(announcement.attachment) : null}">
                 <h3 class="card_title">${announcement.title}</h3>
                 <p class="card_content">${announcement.content}</p>
             `
