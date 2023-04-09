@@ -10,9 +10,28 @@ import { AssistControl } from "../views/binnacle/assistcontrol/AssistControl.js"
 import { Departments } from "../views/departments/Departments.js";
 import { SuperUsers } from "../views/users/SuperUsers/SuperUsers.js";
 import { Events } from "../views/binnacle/Events/EventsView.js";
-export const renderSidebar = () => {
-    const sidebar = document.getElementById('app-sidebar');
-    sidebar.innerHTML = `
+export class Sidebar {
+    constructor() {
+        this.sidebarContainer = document.getElementById('app-sidebar');
+        this.getSidebarItems = () => {
+            const sidebarItems = document.querySelectorAll('.sidebar_item');
+            const sidebarSubitems = document.querySelectorAll('.sidebar_subitem');
+            sidebarItems.forEach((sidebarItem) => {
+                sidebarItem.addEventListener('click', () => {
+                    sidebarItems.forEach((sidebarItem) => sidebarItem.classList.remove('isActive'));
+                    sidebarItem.classList.add('isActive');
+                });
+            });
+            sidebarSubitems.forEach((sidebarSubitem) => {
+                sidebarSubitem.addEventListener('click', () => {
+                    sidebarSubitems.forEach((sidebarSubitem) => sidebarSubitem.classList.remove('isActive'));
+                    sidebarSubitem.classList.add('isActive');
+                });
+            });
+        };
+    }
+    render() {
+        this.sidebarContainer.innerHTML = `
     <div class="app_sidebar_container">
       <div class="app_sidebar_container_menu">
         <div class="sidebar_top">
@@ -100,67 +119,52 @@ export const renderSidebar = () => {
       </div>
     </div>
   `;
-    //  @ts-ignore
-    feather.replace();
-    getSidebarItems();
-    renders();
-};
-const getSidebarItems = () => {
-    const sidebarItems = document.querySelectorAll('.sidebar_item');
-    const sidebarSubitems = document.querySelectorAll('.sidebar_subitem');
-    sidebarItems.forEach((sidebarItem) => {
-        sidebarItem.addEventListener('click', () => {
-            sidebarItems.forEach((sidebarItem) => sidebarItem.classList.remove('isActive'));
-            sidebarItem.classList.add('isActive');
+        this.getSidebarItems();
+        this.renders();
+    }
+    renders() {
+        document.getElementById('render-dashboard')?.addEventListener('click', () => {
+            new Dashboard().render();
         });
-    });
-    sidebarSubitems.forEach((sidebarSubitem) => {
-        sidebarSubitem.addEventListener('click', () => {
-            sidebarSubitems.forEach((sidebarSubitem) => sidebarSubitem.classList.remove('isActive'));
-            sidebarSubitem.classList.add('isActive');
+        document.getElementById('render-clients')?.addEventListener('click', () => {
+            new Clients().render();
         });
-    });
-};
-const renders = () => {
-    document.getElementById('render-dashboard')?.addEventListener('click', () => {
-        new Dashboard().render();
-    });
-    document.getElementById('render-clients')?.addEventListener('click', () => {
-        new Clients().render();
-    });
-    document.getElementById('render-employees')?.addEventListener('click', () => {
-        new Employees().render();
-    });
-    document.getElementById('render-contractors')?.addEventListener('click', () => {
-        new Contractors().render();
-    });
-    // render notes
-    document.getElementById('render-notes')?.addEventListener('click', () => {
-        new Notes().render();
-    });
-    // render visits
-    document.getElementById('render-visits')?.addEventListener('click', () => {
-        new Visits().render();
-    });
-    // render AssistControl
-    document.getElementById('render-assistControl')?.addEventListener('click', () => {
-        new AssistControl().render();
-    });
-    // render AssistControl
-    document.getElementById('render-events')?.addEventListener('click', () => {
-        new Events().render();
-    });
-    // render Deparments
-    document.getElementById('render-deparments')?.addEventListener('click', () => {
-        new Departments().render();
-    });
-    // render Superusers
-    document.getElementById('render-superusers')?.addEventListener('click', () => {
-        new SuperUsers().render();
-    });
-};
-// new Clients().render()
+        document.getElementById('render-employees')?.addEventListener('click', () => {
+            new Employees().render();
+        });
+        document.getElementById('render-contractors')?.addEventListener('click', () => {
+            new Contractors().render();
+        });
+        // render notes
+        document.getElementById('render-notes')?.addEventListener('click', () => {
+            new Notes().render();
+        });
+        // render visits
+        document.getElementById('render-visits')?.addEventListener('click', () => {
+            new Visits().render();
+        });
+        // render AssistControl
+        document.getElementById('render-assistControl')?.addEventListener('click', () => {
+            new AssistControl().render();
+        });
+        // render AssistControl
+        document.getElementById('render-events')?.addEventListener('click', () => {
+            new Events().render();
+        });
+        // render Deparments
+        document.getElementById('render-deparments')?.addEventListener('click', () => {
+            new Departments().render();
+        });
+        // render Superusers
+        document.getElementById('render-superusers')?.addEventListener('click', () => {
+            new SuperUsers().render();
+        });
+    }
+}
+new Clients().render();
 // new AssistControl().render()
 // new Notes().render()
+// new SuperUsers().render()
 // new Employees().render()
 // new Contractors().render()
+// new Dashboard().render()

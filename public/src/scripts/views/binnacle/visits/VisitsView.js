@@ -34,6 +34,7 @@ export class Visits {
             // Exec functions
             this.load(tableBody, currentPage, visitsArray);
             this.searchVisit(tableBody, visitsArray);
+            this.pagination(visitsArray, tableRows, currentPage);
             // Rendering icons
         };
         this.load = (tableBody, currentPage, visits) => {
@@ -137,5 +138,27 @@ export class Visits {
                 date.innerText = separateDateAndTime[0];
             });
         };
+    }
+    pagination(items, limitRows, currentPage) {
+        const tableBody = document.getElementById('datatable-body');
+        const paginationWrapper = document.getElementById('pagination-container');
+        paginationWrapper.innerHTML = '';
+        let pageCount;
+        pageCount = Math.ceil(items.length / limitRows);
+        let button;
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(i, items, currentPage, tableBody, limitRows);
+            paginationWrapper.appendChild(button);
+        }
+        function setupButtons(page, items, currentPage, tableBody, limitRows) {
+            const button = document.createElement('button');
+            button.classList.add('pagination_button');
+            button.innerText = page;
+            button.addEventListener('click', () => {
+                currentPage = page;
+                new Visits().load(tableBody, page, items);
+            });
+            return button;
+        }
     }
 }

@@ -16,10 +16,11 @@ const SUser = true
 const getUsers = async (superUser: boolean): Promise<void> => {
     const users: any = await getEntitiesData('User')
     const FSuper: any = users.filter((data: any) => data.isSuper === superUser)
+    // const SuperUsers: any = FSuper.filter((data: any) => `${data.userType}`.includes('CUSTOMER'))
     return FSuper
 }
 
-export class SuperUsers implements NUsers.IContractors {
+export class SuperUsers {
     private dialogContainer: InterfaceElement =
         document.getElementById('app-dialogs')
 
@@ -30,7 +31,7 @@ export class SuperUsers implements NUsers.IContractors {
         document.getElementById('datatable-container')
 
     public async render(): Promise<void> {
-        let data = await getUsers(SUser)
+        let data: any = await getUsers(SUser)
         this.content.innerHTML = ''
         this.content.innerHTML = tableLayout
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
@@ -39,6 +40,7 @@ export class SuperUsers implements NUsers.IContractors {
         this.load(tableBody, currentPage, data)
 
         this.searchEntity(tableBody, data)
+        this.pagination(data, tableRows, currentPage)
     }
 
     public load(table: InterfaceElement, currentPage: number, data: any) {
@@ -187,7 +189,7 @@ export class SuperUsers implements NUsers.IContractors {
 
     }
 
-    public register() {
+    private register() {
         // register entity
         const openEditor: InterfaceElement = document.getElementById('new-entity')
         openEditor.addEventListener('click', (): void => {
@@ -198,96 +200,102 @@ export class SuperUsers implements NUsers.IContractors {
             this.entityDialogContainer.innerHTML = ''
             this.entityDialogContainer.style.display = 'flex'
             this.entityDialogContainer.innerHTML = `
-        <div class="entity_editor" id="entity-editor">
-          <div class="entity_editor_header">
-            <div class="user_info">
-              <div class="avatar"><i class="fa-regular fa-user"></i></div>
-              <h1 class="entity_editor_title">Registrar <br><small>Contratista</small></h1>
-            </div>
+                <div class="entity_editor" id="entity-editor">
+                <div class="entity_editor_header">
+                    <div class="user_info">
+                    <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                    <h1 class="entity_editor_title">Registrar <br><small>Superusuario</small></h1>
+                    </div>
 
-            <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
-          </div>
+                    <button class="btn btn_close_editor" id="close"><i class="fa-regular fa-x"></i></button>
+                </div>
 
-          <!-- EDITOR BODY -->
-          <div class="entity_editor_body">
-            <div class="material_input">
-              <input type="text" id="entity-firstname" autocomplete="none">
-              <label for="entity-firstname">Nombre</label>
-            </div>
+                <!-- EDITOR BODY -->
+                <div class="entity_editor_body">
+                    <div class="material_input">
+                    <input type="text" id="entity-firstname" autocomplete="none">
+                    <label for="entity-firstname"><i class="fa-solid fa-user"></i> Nombre</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-lastname" autocomplete="none">
-              <label for="entity-lastname">Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-lastname" autocomplete="none">
+                    <label for="entity-lastname"><i class="fa-solid fa-user"></i> Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-secondlastname" autocomplete="none">
-              <label for="entity-secondlastname">2do Apellido</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-secondlastname" autocomplete="none">
+                    <label for="entity-secondlastname"><i class="fa-solid fa-user"></i> 2do Apellido</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text"
-                id="entity-phone"
-                maxlength="10" autocomplete="none">
-              <label for="entity-phone">Teléfono</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text"
+                        id="entity-dni"
+                        maxlength="12" autocomplete="none">
+                    <label for="entity-dni"><i class="fa-solid fa-id-card"></i> DNI</label>
+                    </div>
 
-            <div class="material_input">
-              <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
-              <label for="entity-username"><i class="input_locked fa-solid fa-lock"></i> Nombre de usuario</label>
-            </div>
+                    <div class="material_input">
+                    <input type="text"
+                        id="entity-phone"
+                        maxlength="10" autocomplete="none">
+                    <label for="entity-phone"><i class="fa-solid fa-phone"></i> Teléfono</label>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-state">Estado</label>
-              <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input">
+                    <input type="text" id="entity-username" class="input_filled" placeholder="john.doe@ejemplo.com" readonly>
+                    <label for="entity-username"><i class="input_locked fa-solid fa-lock"></i> Nombre de usuario</label>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-business">Empresa</label>
-              <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-state">Estado</label>
+                    <input type="text" id="entity-state" class="input_select" readonly placeholder="cargando..." autocomplete="none">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-citadel">Ciudadela</label>
-              <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select" style="display: none">
+                        <label for="entity-business"><i class="fa-solid fa-building"></i> Empresa</label>
+                        <input type="text" id="entity-business" class="input_select" readonly placeholder="cargando..." autocomplete="none">
+                        <div id="input-options" class="input_options">
+                        </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-customer">Cliente</label>
-              <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select">
+                    <label for="entity-citadel"><i class="fa-solid fa-buildings"></i> Ciudadela</label>
+                    <input type="text" id="entity-citadel" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <div class="material_input_select">
-              <label for="entity-department">Departamento</label>
-              <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
-              <div id="input-options" class="input_options">
-              </div>
-            </div>
+                    <div class="material_input_select" style="display: none">
+                    <label for="entity-customer">Cliente</label>
+                    <input type="text" id="entity-customer" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-            <br><br>
-            <div class="material_input">
-              <input type="password" id="tempPass" autocomplete="false">
-              <label for="tempPass">Contraseña temporal</label>
-            </div>
+                    <div class="material_input_select" style="display: none">
+                    <label for="entity-department">Departamento</label>
+                    <input type="text" id="entity-department" class="input_select" readonly placeholder="cargando...">
+                    <div id="input-options" class="input_options">
+                    </div>
+                    </div>
 
-          </div>
-          <!-- END EDITOR BODY -->
+                    <br>
+                    <div class="material_input">
+                    <input type="password" id="tempPass" autocomplete="false">
+                    <label for="tempPass">Contraseña</label>
+                    </div>
 
-          <div class="entity_editor_footer">
-            <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
-          </div>
-        </div>
-      `
+                </div>
+                <!-- END EDITOR BODY -->
 
-            // @ts-ignore
+                <div class="entity_editor_footer">
+                    <button class="btn btn_primary btn_widder" id="register-entity">Guardar</button>
+                </div>
+                </div>
+            `
+
             inputObserver()
             inputSelect('Citadel', 'entity-citadel')
             inputSelect('Customer', 'entity-customer')
@@ -296,7 +304,6 @@ export class SuperUsers implements NUsers.IContractors {
             inputSelect('Business', 'entity-business')
             this.close()
             this.generateUserName()
-
 
             const registerButton: InterfaceElement = document.getElementById('register-entity')
             registerButton.addEventListener('click', (): void => {
@@ -322,7 +329,7 @@ export class SuperUsers implements NUsers.IContractors {
                     "active": true,
                     "firstName": `${inputsCollection.firstName.value}`,
                     "state": {
-                        "id": `${inputsCollection.state.dataset.entityid}`
+                        "id": `${inputsCollection.state.dataset.optionid}`
                     },
                     "contractor": {
                         "id": "06b476c4-d151-d7dc-cf0e-2a1e19295a00",
@@ -331,11 +338,11 @@ export class SuperUsers implements NUsers.IContractors {
                         "id": `${inputsCollection.customer.dataset.optionid}`
                     },
                     "citadel": {
-                        "id": `${inputsCollection.citadel.dataset.entityid}`
+                        "id": `${inputsCollection.citadel.dataset.optionid}`
                     },
                     "phone": `${inputsCollection.phoneNumer.value}`,
-                    "userType": "CONTRACTOR",
-                    "username": `${inputsCollection.username.value}@${inputsCollection.customer.value}.com`
+                    "userType": "CUSTOMER",
+                    "username": `${inputsCollection.username.value}@${inputsCollection.customer.value.toLowerCase()}.com`
                 })
                 reg(raw)
             })
@@ -344,19 +351,16 @@ export class SuperUsers implements NUsers.IContractors {
 
         const reg = async (raw: any) => {
             registerEntity(raw, 'User')
-                .then(res => {
-                    this.render()
-                    setNewPassword()
+                .then((res) => {
+                    setTimeout(async () => {
+                        let data = await getUsers(true)
+                        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+                        const container: InterfaceElement = document.getElementById('entity-editor-container')
+
+                        new CloseDialog().x(container)
+                        this.load(tableBody, currentPage, data)
+                    }, 1000)
                 })
-
-            const setNewPassword: any = async (): Promise<void> => {
-                const users: any = await getEntitiesData('User')
-                const FNewUsers: any = users.filter((data: any) => data.isSuper === true)
-
-                FNewUsers.forEach((newUser: any) => {
-
-                })
-            }
         }
     }
 
@@ -580,6 +584,38 @@ export class SuperUsers implements NUsers.IContractors {
             })
         })
 
+    }
+
+    private pagination(items: [], limitRows: number, currentPage: number) {
+        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+        const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+        paginationWrapper.innerHTML = ''
+
+        let pageCount: number
+        pageCount = Math.ceil(items.length / limitRows)
+
+        let button: InterfaceElement
+
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(
+                i, items, currentPage, tableBody, limitRows
+            )
+
+            paginationWrapper.appendChild(button)
+        }
+
+        function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
+            const button: InterfaceElement = document.createElement('button')
+            button.classList.add('pagination_button')
+            button.innerText = page
+
+            button.addEventListener('click', (): void => {
+                currentPage = page
+                new SuperUsers().load(tableBody, page, items)
+            })
+
+            return button
+        }
     }
 
     public convertToSuper() {

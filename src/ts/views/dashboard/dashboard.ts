@@ -14,31 +14,31 @@ import { renderWeeklyChart } from "./DashboardWeeklySection.js"
 import { renderYearlyChart } from "./DashboardYearlySection.js"
 
 namespace NDashbd {
-    export interface IRender {
-        render(): void
-        interface(container: InterfaceElement): void
-    }
+  export interface IRender {
+    render(): void
+    interface(container: InterfaceElement): void
+  }
 }
 
 export class Dashboard implements NDashbd.IRender {
-    private interfaceContainer: InterfaceElement =
-        document.getElementById('datatable-container')
+  private interfaceContainer: InterfaceElement =
+    document.getElementById('datatable-container')
 
-    private dashboardContainer: InterfaceElement =
-        document.createElement('div')
+  private dashboardContainer: InterfaceElement =
+    document.createElement('div')
 
-    public render() {
-        this.dashboardContainer.classList.add('dashboard_container')
-        this.dashboardContainer.setAttribute('id', 'dashboard-container')
-        this.interfaceContainer.innerHTML = ""
-        this.interfaceContainer.appendChild(this.dashboardContainer)
-        this.interface(this.dashboardContainer)
-        // @ts-ignore
-        feather.replace()
-    }
+  public render() {
+    this.dashboardContainer.classList.add('dashboard_container')
+    this.dashboardContainer.setAttribute('id', 'dashboard-container')
+    this.interfaceContainer.innerHTML = ""
+    this.interfaceContainer.appendChild(this.dashboardContainer)
+    this.interface(this.dashboardContainer)
+    // @ts-ignore
+    feather.replace()
+  }
 
-    public interface(container: InterfaceElement) {
-        container.innerHTML = `
+  public interface(container: InterfaceElement) {
+    container.innerHTML = `
       <h1>Dashboard</h1>
       <div class="dashboard_content">
 
@@ -129,78 +129,78 @@ export class Dashboard implements NDashbd.IRender {
       </div>
     `
 
-        renderDailyChart()
-        new Announcements().render()
+    renderDailyChart()
+    new Announcements().render()
 
-        const buttonCluster: InterfaceElement = document.querySelectorAll('.dashboard_buttonCluster-button')
+    const buttonCluster: InterfaceElement = document.querySelectorAll('.dashboard_buttonCluster-button')
+    buttonCluster.forEach((button: InterfaceElement) => {
+      button.addEventListener('click', (): void => {
         buttonCluster.forEach((button: InterfaceElement) => {
-            button.addEventListener('click', (): void => {
-                buttonCluster.forEach((button: InterfaceElement) => {
-                    button.classList.remove('dashboard_buttonCluster_buttonActive')
-                })
-
-                button.classList.add('dashboard_buttonCluster_buttonActive')
-            })
+          button.classList.remove('dashboard_buttonCluster_buttonActive')
         })
 
-        const dailyChart: InterfaceElement =
-            document.getElementById('daily-chart-button')
-        dailyChart.addEventListener('click', (): void => {
-            renderDailyChart()
-        })
+        button.classList.add('dashboard_buttonCluster_buttonActive')
+      })
+    })
 
-        const weeklyChart: InterfaceElement =
-            document.getElementById('weekly-chart-button')
-        weeklyChart.addEventListener('click', (): void => {
-            renderWeeklyChart()
-        })
+    const dailyChart: InterfaceElement =
+      document.getElementById('daily-chart-button')
+    dailyChart.addEventListener('click', (): void => {
+      renderDailyChart()
+    })
 
-        const monthlyChart: InterfaceElement =
-            document.getElementById('monthly-chart-button')
-        monthlyChart.addEventListener('click', (): void => {
-            renderMonthlyChart()
-        })
+    const weeklyChart: InterfaceElement =
+      document.getElementById('weekly-chart-button')
+    weeklyChart.addEventListener('click', (): void => {
+      renderWeeklyChart()
+    })
 
-        const yearlyChart: InterfaceElement =
-            document.getElementById('yearly-chart-button')
-        yearlyChart.addEventListener('click', (): void => {
-            renderYearlyChart()
-        })
+    const monthlyChart: InterfaceElement =
+      document.getElementById('monthly-chart-button')
+    monthlyChart.addEventListener('click', (): void => {
+      renderMonthlyChart()
+    })
 
-        this.renderlastNotes()
+    const yearlyChart: InterfaceElement =
+      document.getElementById('yearly-chart-button')
+    yearlyChart.addEventListener('click', (): void => {
+      renderYearlyChart()
+    })
+
+    this.renderlastNotes()
+  }
+
+  private async renderlastNotes(): Promise<void> {
+    async function getNotes() {
+      let url: string = 'https://backend.netliinks.com:443/rest/entities/Note?fetchPlan=full&&limit=5&&offset=0'
+      return await getData(url)
     }
 
-    private async renderlastNotes(): Promise<void> {
-        async function getNotes() {
-            let url: string = 'https://backend.netliinks.com:443/rest/entities/Note?fetchPlan=full&&limit=5&&offset=0'
-            return await getData(url)
-        }
+    const tableBody: InterfaceElement = document.getElementById('table-body-notes')
+    let _notes = await getNotes()
 
-        const tableBody: InterfaceElement = document.getElementById('table-body-notes')
-        let _notes = await getNotes()
+    for (let i = 0; i < _notes.length; i++) {
+      let note = _notes[i]
+      let row: InterfaceElement = document.createElement('TR')
+      let noteCreationDate = note.creationDate.split('T')
+      let creationDate = noteCreationDate[0]
 
-        for (let i = 0; i < _notes.length; i++) {
-            let note = _notes[i]
-            let row: InterfaceElement = document.createElement('TR')
-            let noteCreationDate = note.creationDate.split('T')
-            let creationDate = noteCreationDate[0]
-
-            row.innerHTML += `
+      row.innerHTML += `
                 <td>${note.content}</td>
                 <td>${creationDate}</td>
             `
 
-            tableBody.appendChild(row)
-        }
+      tableBody.appendChild(row)
     }
+  }
 
-    private close(): void {
-        const closeButton: InterfaceElement = document.getElementById('close')
-        const editor: InterfaceElement = document.getElementById('entity-editor-container')
+  private close(): void {
+    const closeButton: InterfaceElement = document.getElementById('close')
+    const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
-        closeButton.addEventListener('click', () => {
-            console.log('close')
-            new CloseDialog().x(editor)
-        }, false)
-    }
+    closeButton.addEventListener('click', () => {
+      console.log('close')
+      new CloseDialog().x(editor)
+    }, false)
+  }
 }

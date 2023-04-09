@@ -5,7 +5,7 @@
 //
 
 import { getUserInfo, _userAgent } from "./endpoints.js"
-import { renderLayout } from "./layout/interface.js"
+import { RenderApplicationUI } from "./layout/interface.js"
 import { InterfaceElement, Request } from "./types.js"
 
 const loginContainer: InterfaceElement = document.getElementById('login-container')
@@ -26,57 +26,37 @@ const reqOP: Request = {
     method: 'POST'
 }
 
-class CheckUser {
-    public checkType(userType: string, isNew: boolean, isSuper: boolean): void {
-        if (userType === 'GUARD') {
-            console.log('mensaje...')
-        }
-        else {
-            this.checkIfNew(isNew)
-            this.checkIfIsSuper(isSuper)
-        }
-    }
-
-    private checkIfIsSuper(isSuper: boolean): void {
-        if (isSuper === false) {
-            console.log('Ocultando controles...')
-        }
-    }
-
-    private checkIfNew(isNew: boolean): void {
-        if (isNew === true) {
-            app.style.display = 'block'
-            loginContainer.style.display = 'none'
-            renderLayout()
-            console.log('es nuevo usuario')
-        }
-        else {
-            app.style.display = 'block'
-            loginContainer.style.display = 'none'
-            renderLayout()
-        }
-    }
-}
-
-export class SignIn extends CheckUser {
+export class SignIn {
     public async checkSignIn(): Promise<void> {
-        const currentUser = await getUserInfo()
-        console.log(currentUser)
+        const accessToken = localStorage.getItem('access_token')
 
-        // validate token
-        if (currentUser.error == "invalid_token") {
+        const checkUser = async (): Promise<void> => {
+            let currentUser = await getUserInfo()
+
+            if (currentUser.error === 'invalid_token') {
+                this.signOut()
+            }
+
+            console.log(currentUser)
+            if (currentUser.attributes.isSuper === true) {
+                new RenderApplicationUI().render()
+            } else {
+                this.signOut()
+            }
+
+        }
+
+        if (accessToken) {
+            checkUser()
+        } else {
             this.showLogin()
+            console.info('You need login')
         }
-        else {
-            let userType = currentUser.attributes.userType
-            let isNew = currentUser.attributes.newUser
-            let isSuper = currentUser.attributes.isSuper
-            this.checkType(userType, isNew, isSuper)
-        }
+
     }
 
-    private showLogin(): void {
-        loginContainer.style.display = 'flex'
+    public showLogin(): void {
+        loginContainer.style.display = 'flex !important'
         loginContainer.innerHTML = `
         <div class="login_window">
         <div class="login_header">
@@ -123,8 +103,6 @@ export class SignIn extends CheckUser {
         </div>
       </div>
         `
-        // @ts-ignore
-        feather.replace()
         this.signIn()
     }
 

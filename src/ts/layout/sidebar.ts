@@ -17,9 +17,10 @@ import { Departments } from "../views/departments/Departments.js"
 import { SuperUsers } from "../views/users/SuperUsers/SuperUsers.js"
 import { Events } from "../views/binnacle/Events/EventsView.js"
 
-export const renderSidebar = (): void => {
-    const sidebar: InterfaceElement = document.getElementById('app-sidebar')
-    sidebar.innerHTML = `
+export class Sidebar {
+    private sidebarContainer: InterfaceElement = document.getElementById('app-sidebar')
+    public render(): void {
+        this.sidebarContainer.innerHTML = `
     <div class="app_sidebar_container">
       <div class="app_sidebar_container_menu">
         <div class="sidebar_top">
@@ -107,79 +108,83 @@ export const renderSidebar = (): void => {
       </div>
     </div>
   `
-    //  @ts-ignore
-    feather.replace()
-    getSidebarItems()
-    renders()
-}
+        this.getSidebarItems()
+        this.renders()
+    }
 
-const getSidebarItems = (): void => {
-    const sidebarItems: InterfaceElement =
-        document.querySelectorAll('.sidebar_item')
-    const sidebarSubitems: InterfaceElement =
-        document.querySelectorAll('.sidebar_subitem')
+    public getSidebarItems = (): void => {
+        const sidebarItems: InterfaceElement =
+            document.querySelectorAll('.sidebar_item')
+        const sidebarSubitems: InterfaceElement =
+            document.querySelectorAll('.sidebar_subitem')
 
-    sidebarItems.forEach((sidebarItem: InterfaceElement) => {
-        sidebarItem.addEventListener('click', () => {
-            sidebarItems.forEach((sidebarItem: InterfaceElement) => sidebarItem.classList.remove('isActive'))
-            sidebarItem.classList.add('isActive')
+        sidebarItems.forEach((sidebarItem: InterfaceElement) => {
+            sidebarItem.addEventListener('click', () => {
+                sidebarItems.forEach((sidebarItem: InterfaceElement) => sidebarItem.classList.remove('isActive'))
+                sidebarItem.classList.add('isActive')
+            })
         })
-    })
 
-    sidebarSubitems.forEach((sidebarSubitem: InterfaceElement) => {
-        sidebarSubitem.addEventListener('click', () => {
-            sidebarSubitems.forEach((sidebarSubitem: InterfaceElement) => sidebarSubitem.classList.remove('isActive'))
-            sidebarSubitem.classList.add('isActive')
+        sidebarSubitems.forEach((sidebarSubitem: InterfaceElement) => {
+            sidebarSubitem.addEventListener('click', () => {
+                sidebarSubitems.forEach((sidebarSubitem: InterfaceElement) => sidebarSubitem.classList.remove('isActive'))
+                sidebarSubitem.classList.add('isActive')
+            })
         })
-    })
+
+
+    }
+
+    public renders(): void {
+        document.getElementById('render-dashboard')?.addEventListener('click', () => {
+            new Dashboard().render()
+        })
+
+        document.getElementById('render-clients')?.addEventListener('click', (): void => {
+            new Clients().render()
+        })
+
+        document.getElementById('render-employees')?.addEventListener('click', (): void => {
+            new Employees().render()
+        })
+
+        document.getElementById('render-contractors')?.addEventListener('click', (): void => {
+            new Contractors().render()
+        })
+
+        // render notes
+        document.getElementById('render-notes')?.addEventListener('click', (): void => {
+            new Notes().render()
+        })
+        // render visits
+        document.getElementById('render-visits')?.addEventListener('click', (): void => {
+            new Visits().render()
+        })
+        // render AssistControl
+        document.getElementById('render-assistControl')?.addEventListener('click', (): void => {
+            new AssistControl().render()
+        })
+
+        // render AssistControl
+        document.getElementById('render-events')?.addEventListener('click', (): void => {
+            new Events().render()
+        })
+        // render Deparments
+        document.getElementById('render-deparments')?.addEventListener('click', (): void => {
+            new Departments().render()
+        })
+        // render Superusers
+        document.getElementById('render-superusers')?.addEventListener('click', (): void => {
+            new SuperUsers().render()
+        })
+    }
 }
 
-const renders = () => {
-    document.getElementById('render-dashboard')?.addEventListener('click', () => {
-        new Dashboard().render()
-    })
 
-    document.getElementById('render-clients')?.addEventListener('click', (): void => {
-        new Clients().render()
-    })
-
-    document.getElementById('render-employees')?.addEventListener('click', (): void => {
-        new Employees().render()
-    })
-
-    document.getElementById('render-contractors')?.addEventListener('click', (): void => {
-        new Contractors().render()
-    })
-
-    // render notes
-    document.getElementById('render-notes')?.addEventListener('click', (): void => {
-        new Notes().render()
-    })
-    // render visits
-    document.getElementById('render-visits')?.addEventListener('click', (): void => {
-        new Visits().render()
-    })
-    // render AssistControl
-    document.getElementById('render-assistControl')?.addEventListener('click', (): void => {
-        new AssistControl().render()
-    })
-
-    // render AssistControl
-    document.getElementById('render-events')?.addEventListener('click', (): void => {
-        new Events().render()
-    })
-    // render Deparments
-    document.getElementById('render-deparments')?.addEventListener('click', (): void => {
-        new Departments().render()
-    })
-    // render Superusers
-    document.getElementById('render-superusers')?.addEventListener('click', (): void => {
-        new SuperUsers().render()
-    })
-}
-
-// new Clients().render()
+new Clients().render()
 // new AssistControl().render()
 // new Notes().render()
+// new SuperUsers().render()
 // new Employees().render()
 // new Contractors().render()
+// new Dashboard().render()

@@ -27,7 +27,7 @@ export class Departments {
         document.getElementById('datatable-container')
 
     public async render(): Promise<void> {
-        let data = await getDepartments()
+        let data: any = await getDepartments()
         this.content.innerHTML = ''
         this.content.innerHTML = tableLayout
         const tableBody: InterfaceElement = document.getElementById('datatable-body')
@@ -36,6 +36,7 @@ export class Departments {
         this.load(tableBody, currentPage, data)
 
         this.searchEntity(tableBody, data)
+        this.pagination(data, tableRows, currentPage)
     }
 
     public load(table: InterfaceElement, currentPage: number, data?: any) {
@@ -233,6 +234,38 @@ export class Departments {
             console.log('close')
             new CloseDialog().x(editor)
         })
+    }
+
+    private pagination(items: [], limitRows: number, currentPage: number) {
+        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+        const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+        paginationWrapper.innerHTML = ''
+
+        let pageCount: number
+        pageCount = Math.ceil(items.length / limitRows)
+
+        let button: InterfaceElement
+
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(
+                i, items, currentPage, tableBody, limitRows
+            )
+
+            paginationWrapper.appendChild(button)
+        }
+
+        function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
+            const button: InterfaceElement = document.createElement('button')
+            button.classList.add('pagination_button')
+            button.innerText = page
+
+            button.addEventListener('click', (): void => {
+                currentPage = page
+                new Departments().load(tableBody, page, items)
+            })
+
+            return button
+        }
     }
 }
 

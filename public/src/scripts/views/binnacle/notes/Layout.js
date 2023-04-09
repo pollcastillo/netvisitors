@@ -10,7 +10,7 @@ export const UIContentLayout = `
             <div class="datatable_tools" id="datatable-tools">
                 <input type="search" class="search_input" placeholder="Buscar" id="search">
 
-                <button class="datatable_button import_user" id="import-entities">Exportar</button>
+                <button class="datatable_button" id="export-button">Exportar</button>
             </div>
         </div>
 
@@ -86,3 +86,29 @@ export const UIRightSidebar = `
     <!-- END EDITOR BODY -->
     </div>
     `;
+export const UIExportSidebar = `
+<div class="entity_editor" id="entity-editor">
+<div class="entity_editor_header">
+  <div class="user_info">
+    <div class="avatar"><i class="fa-regular fa-magnifying-glass"></i></div>
+    <h1 class="entity_editor_title">Exportar <br><small> notas</small></h1>
+  </div>
+
+  <button class="btn btn_close_editor" id="close"><i class="fa-solid fa-x"></i></button>
+</div>
+
+<!-- EDITOR BODY -->
+<div class="entity_editor_body">
+    <label class="label" for="timestamp-from">Desde</label>
+    <input type="date" id="timestamp-from">
+    <br>
+    <label class="label" for="timestamp-to">Hasta</label>
+    <input type="date" id="timestamp-to">
+</div>
+<!-- END EDITOR BODY -->
+<div class="entity_editor_footer">
+    <button class="btn btn_primary btn_widder" id="export-data">Exportar</button>
+    </div>
+
+</div>
+`;

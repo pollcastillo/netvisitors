@@ -7,7 +7,7 @@ import { Config } from "../../../Configs.js"
 import { getEntityData, getEntitiesData, getFile } from "../../../endpoints.js"
 import { CloseDialog, fixDate, renderRightSidebar } from "../../../tools.js"
 import { InterfaceElement, InterfaceElementCollection } from "../../../types.js"
-import { UIContentLayout, UIRightSidebar } from "./Layout.js"
+import { UIContentLayout, UIExportSidebar, UIRightSidebar } from "./Layout.js"
 import { UITableSkeletonTemplate } from "./Template.js"
 
 // Local configs
@@ -42,8 +42,6 @@ export class Notes {
         this.load(tableBody, currentPage, notesArray)
         this.searchNotes(tableBody, notesArray)
         this.pagination(notesArray, tableRows, currentPage)
-
-        // Rendering icons
     }
 
     public load = (tableBody: InterfaceElement, currentPage: number, notes: any): void => {
@@ -88,6 +86,8 @@ export class Notes {
                 // fixDate()
             }
         }
+
+        renderTimeStamp()
     }
 
     private searchNotes = async (tableBody: InterfaceElement, notes: any) => {
@@ -205,4 +205,61 @@ export class Notes {
             new CloseDialog().x(editor)
         })
     }
+}
+
+
+async function renderTimeStamp() {
+    const exportButton: InterfaceElement = document.getElementById('export-button')
+
+    exportButton.addEventListener('click', (): void => {
+        exportData()
+    })
+
+}
+
+
+async function exportData() {
+    console.log('%cTIMESTAMP 🕒', 'color: white;font-weight: bolder; font-size: 18px; background-color: slateblue; padding: 3px 5px')
+    console.log('%cℹ️ Importante: se necesita cambiar el string de la fecha para filtrar los elementos', 'color: slateblue;font-weight: bolder; font-size: 10px;')
+    renderRightSidebar(UIExportSidebar)
+
+
+    const _export: InterfaceElement = document.getElementById('export-data')
+
+    const pickedTime: any = {
+        from: document.getElementById('timestamp-from'),
+        to: document.getElementById('timestamp-to'),
+    }
+
+    const notes: any = await GetNotes()
+
+    // 2023-03-21T16:28:47
+
+    _export.addEventListener('click', (): void => {
+        if (pickedTime.from.value === '') {
+            alert('Debe seleccionar una fecha de inicio')
+        } else {
+
+            const preDate = pickedTime.from.value
+            const postDate = pickedTime.to.value
+            const fnotes: any = notes.filter((note: any) =>
+                toMs(note.creationDate) > preDate && toMs(note.creationDate) < postDate
+            )
+
+            console.log(fnotes)
+            console.log('Time from: ' + pickedTime.from.value)
+            console.log('Time to: ' + pickedTime.to.value)
+        }
+    })
+
+    console.log(_export)
+}
+
+
+function toMs(dateStr: any) {
+    let separateDate: any = dateStr.split('T')
+    const [year, month, day] = separateDate[0].split('-')
+    let date = new Date(year, month - 1, day).getTime()
+    console.log(date)
+    return date
 }

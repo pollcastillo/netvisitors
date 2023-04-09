@@ -41,6 +41,7 @@ export class AssistControl {
         // Exec functions
         this.load(tableBody, currentPage, assistControlArray)
         this.searchVisit(tableBody, assistControlArray)
+        this.pagination(assistControlArray, tableRows, currentPage)
 
         // Rendering icons
     }
@@ -187,4 +188,37 @@ export class AssistControl {
             date.innerText = separateDateAndTime[0]
         })
     }
+
+    private pagination(items: [], limitRows: number, currentPage: number) {
+        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+        const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+        paginationWrapper.innerHTML = ''
+
+        let pageCount: number
+        pageCount = Math.ceil(items.length / limitRows)
+
+        let button: InterfaceElement
+
+        for (let i = 1; i < pageCount + 1; i++) {
+            button = setupButtons(
+                i, items, currentPage, tableBody, limitRows
+            )
+
+            paginationWrapper.appendChild(button)
+        }
+
+        function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
+            const button: InterfaceElement = document.createElement('button')
+            button.classList.add('pagination_button')
+            button.innerText = page
+
+            button.addEventListener('click', (): void => {
+                currentPage = page
+                new AssistControl().load(tableBody, page, items)
+            })
+
+            return button
+        }
+    }
+
 }

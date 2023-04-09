@@ -13,8 +13,8 @@ export class Announcements {
         this._announcementCardControlsContainers.innerHTML = '';
         const announcementsList = await getEntitiesData('Announcement');
         let _userinfo = await getUserInfo();
+        console.log(_userinfo);
         let prop;
-        console.log(announcementsList);
         announcementsList.forEach(async (announcement) => {
             const _card = document.createElement('DIV');
             _card.classList.add('card');

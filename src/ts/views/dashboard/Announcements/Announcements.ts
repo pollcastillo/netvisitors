@@ -1,6 +1,6 @@
 // @filename: announcements
 
-import { deleteEntity, getEntitiesData, getFile, getUserInfo, registerEntity } from "../../../endpoints.js";
+import { deleteEntity, getEntitiesData, getUserInfo, registerEntity } from "../../../endpoints.js";
 import { CloseDialog, inputObserver, userInfo } from "../../../tools.js";
 import { InterfaceElement } from "../../../types.js";
 import { announcementCreatorController } from "./AnnouncementsCreatorControllers.js";
@@ -15,9 +15,8 @@ export class Announcements {
         this._announcementCardControlsContainers.innerHTML = ''
         const announcementsList: any = await getEntitiesData('Announcement')
         let _userinfo: any = await getUserInfo()
+        console.log(_userinfo)
         let prop: any
-
-        console.log(announcementsList)
 
         announcementsList.forEach(async (announcement: any): Promise<void> => {
             const _card = document.createElement('DIV')

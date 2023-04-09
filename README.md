@@ -55,6 +55,7 @@ MULTI_STATUS
 code: 207
 phrase: "Multi-Status"
 
+## 300
 MULTIPLE_CHOICES
 code: 300
 phrase: "Multiple Choices"
@@ -84,6 +85,8 @@ code: 307
 phrase: "Temporary Redirect"
 
 PERMANENT_REDIRECT code: 308, phrase: "Permanent Redirect"
+
+## 400
 
 BAD_REQUEST code: 400, phrase: "Bad Request"
 
@@ -142,6 +145,8 @@ TOO_MANY_REQUESTS code: 429, phrase: "Too Many Requests"
 REQUEST_HEADER_FIELDS_TOO_LARGE code: 431, phrase: "Request Header Fields Too Large"
 
 UNAVAILABLE_FOR_LEGAL_REASONS code: 451, phrase: "Unavailable For Legal Reasons"
+
+## 500
 
 INTERNAL_SERVER_ERROR code: 500, phrase: "Internal Server Error"
 
