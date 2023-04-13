@@ -5,7 +5,7 @@
 //
 import { Config } from "../../../Configs.js"
 import { getEntityData, getEntitiesData, getFile } from "../../../endpoints.js"
-import { CloseDialog, fixDate, renderRightSidebar } from "../../../tools.js"
+import { CloseDialog, fixDate, generateCsv, renderRightSidebar } from "../../../tools.js"
 import { InterfaceElement, InterfaceElementCollection } from "../../../types.js"
 import { UIContentLayout, UIExportSidebar, UIRightSidebar } from "./Layout.js"
 import { UITableSkeletonTemplate } from "./Template.js"
@@ -42,6 +42,7 @@ export class Notes {
         this.load(tableBody, currentPage, notesArray)
         this.searchNotes(tableBody, notesArray)
         this.pagination(notesArray, tableRows, currentPage)
+        this.export()
     }
 
     public load = (tableBody: InterfaceElement, currentPage: number, notes: any): void => {
@@ -86,8 +87,6 @@ export class Notes {
                 // fixDate()
             }
         }
-
-        renderTimeStamp()
     }
 
     private searchNotes = async (tableBody: InterfaceElement, notes: any) => {
@@ -205,61 +204,97 @@ export class Notes {
             new CloseDialog().x(editor)
         })
     }
-}
 
+    private export = async (): Promise<void> => {
+      const buttonExport: InterfaceElement = document.getElementById('export-button')
+      buttonExport.addEventListener('click', async (): Promise<void> => {
+        this.dialogContainer.style.display = 'block'
+        this.dialogContainer.innerHTML = `
+          <div class="dialog_content" id="dialog-content">
+            <div class="dialog">
+              <div class="dialog_container padding_8">
+                <div class="dialog_header">
+                  <h2>Selecciona la fecha</h2>
+                </div>
 
-async function renderTimeStamp() {
-    const exportButton: InterfaceElement = document.getElementById('export-button')
+                <div class="dialog_message padding_8">
+                  <div class="form_group">
+                    <div class="form_input">
+                      <label class="form_label" for="start-date">Desde:</label>
+                      <input type="date" class="input_date input_date-end" id="start-date" name="end-date">
+                    </div>
 
-    exportButton.addEventListener('click', (): void => {
-        exportData()
-    })
+                    <div class="form_input">
+                      <label class="form_label" for="end-date">Hasta:</label>
+                      <input type="date" class="input_date input_date-end" id="end-date" name="end-date">
+                    </div>
+                  </div>
+                </div>
 
-}
+                <div class="dialog_footer">
+                  <button class="btn btn_primary" id="cancel">Cancelar</button>
+                  <button class="btn btn_danger" id="export-data">Exportar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+        const _date: Date = new Date()
+        let month: any = _date.getMonth()
+        let day: any = _date.getDate()
+        let year: any = _date.getFullYear()
 
+        if (day < 10) day = '0' + day
+        if (month < 10) month = '0' + day
 
-async function exportData() {
-    console.log('%cTIMESTAMP 🕒', 'color: white;font-weight: bolder; font-size: 18px; background-color: slateblue; padding: 3px 5px')
-    console.log('%cℹ️ Importante: se necesita cambiar el string de la fecha para filtrar los elementos', 'color: slateblue;font-weight: bolder; font-size: 10px;')
-    renderRightSidebar(UIExportSidebar)
+        const _inputStartDate: InterfaceElement = document.getElementById('start-date')
+        const _inputEndDate: InterfaceElement = document.getElementById('end-date')
 
+        _inputStartDate.value = year + '-' + month + '-' + day
+        _inputEndDate.value = year + '-' + month + '-' + day
 
-    const _export: InterfaceElement = document.getElementById('export-data')
+        const _closeButton: InterfaceElement = document.getElementById('cancel')
+        const _exportButton: InterfaceElement = document.getElementById('export-data')
+        const _dialog: InterfaceElement = document.getElementById('dialog-content')
 
-    const pickedTime: any = {
-        from: document.getElementById('timestamp-from'),
-        to: document.getElementById('timestamp-to'),
-    }
+        _exportButton.addEventListener('click', async (): Promise<void> => {
+          let $rows = []
+          const _values = {
+            start: document.getElementById('start-date'),
+            end: document.getElementById('end-date')
+          }
 
-    const notes: any = await GetNotes()
+          alert('Exportando')
 
-    // 2023-03-21T16:28:47
+          const notes: any = await GetNotes()
 
-    _export.addEventListener('click', (): void => {
-        if (pickedTime.from.value === '') {
-            alert('Debe seleccionar una fecha de inicio')
-        } else {
+          for(let i = 0; i < notes.length; i++) {
+            let note = notes[i]
+            let noteCreationDateAndTime: any = note.creationDate.split('T')
+            let noteCreationDate: any = noteCreationDateAndTime[0]
+            let noteCreationTime: any = noteCreationDateAndTime[1]
+            // @ts-ignore
+            if (noteCreationDate >= _values.start?.value && noteCreationDate <= _values.end?.value) {
+              let obj: any = {
+                "Título": `${note.title.split("\n").join("(salto)")}`,
+                "Fecha": `${noteCreationDate}`,
+                "Hora": `${noteCreationTime}`,
+                "Usuario": `${note.user.firstName} ${note.user.lastName}`,
+                "Contenido": `${note.content.split("\n").join("(salto)")}`
+              }
 
-            const preDate = pickedTime.from.value
-            const postDate = pickedTime.to.value
-            const fnotes: any = notes.filter((note: any) =>
-                toMs(note.creationDate) > preDate && toMs(note.creationDate) < postDate
-            )
+              $rows.push(obj)
+            }
+          }
 
-            console.log(fnotes)
-            console.log('Time from: ' + pickedTime.from.value)
-            console.log('Time to: ' + pickedTime.to.value)
+          generateCsv($rows, 'Notas')
+        })
+
+        _closeButton.onclick = () => {
+            new CloseDialog().x(_dialog);
         }
-    })
-
-    console.log(_export)
+      })
+    }
 }
 
 
-function toMs(dateStr: any) {
-    let separateDate: any = dateStr.split('T')
-    const [year, month, day] = separateDate[0].split('-')
-    let date = new Date(year, month - 1, day).getTime()
-    console.log(date)
-    return date
-}

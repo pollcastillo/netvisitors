@@ -195,73 +195,61 @@ export class filterDataByHeaderType {
         };
     }
 }
-export const userInfo = getUserInfo();
-
-export const verifyUserType = (userType) =>{
-    if(userType == 'CUSTOMER'){
-      return 'Cliente'
-    }else if(userType == 'GUARD'){
-      return 'Guardia'
-    }else if(userType == 'EMPLOYEE'){
-      return 'Empleado'
-    }else if(userType == 'CONTRACTOR'){
-      return 'Contratista'
-    }else{
-      return userType
-    }
-  }
-
-export function generateCsv(ar, title){
+export const generateCsv = async (ar, title) => {
+    console.log('...');
     //comprobamos compatibilidad
-    if(window.Blob && (window.URL || window.webkitURL)){
-      var contenido = "",
-        d = new Date(),
-        blob,
-        reader,
-        save,
-        clicEvent;
-      //creamos contenido del archivo
-      for (var i = 0; i < ar.length; i++) {
-        //construimos cabecera del csv
-        if (i == 0)
-          contenido += Object.keys(ar[i]).join(";") + "\n";
-        //resto del contenido
-        contenido += Object.keys(ar[i]).map(function(key){
+    if (window.Blob && (window.URL || window.webkitURL)) {
+        let contenido = "";
+        let d = new Date();
+        let blob;
+        let reader;
+        let save;
+        let clicEvent;
+        //creamos contenido del archivo
+        for (let i = 0; i < ar.length; i++) {
+            //construimos cabecera del csv
+            if (i == 0)
+                contenido += Object.keys(ar[i]).join(";") + "\n";
+            //resto del contenido
+            contenido += Object.keys(ar[i]).map(function (key) {
                 return ar[i][key];
-              }).join(";") + "\n";
-      }
-      //creamos el blob
-      blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
-      //creamos el reader
-      var reader = new FileReader();
-      reader.onload = function (event) {
-        //escuchamos su evento load y creamos un enlace en dom
-        save = document.createElement('a');
-        save.href = event.target.result;
-        save.target = '_blank';
-        //aquí le damos nombre al archivo
-        save.download = "log_"+title+"_"+ d.getDate() + "_" + (d.getMonth()+1) + "_" + d.getFullYear() +".csv";
-        try {
-          //creamos un evento click
-          clicEvent = new MouseEvent('click', {
-            'view': window,
-            'bubbles': true,
-            'cancelable': true
-          });
-        } catch (e) {
-          //si llega aquí es que probablemente implemente la forma antigua de crear un enlace
-          clicEvent = document.createEvent("MouseEvent");
-          clicEvent.click();
+            }).join(";") + "\n";
         }
-        //disparamos el evento
-        save.dispatchEvent(clicEvent);
-        //liberamos el objeto window.URL
-        (window.URL || window.webkitURL).revokeObjectURL(save.href);
-      }
-      //leemos como url
-      reader.readAsDataURL(blob);
-    }else {
-      //el navegador no admite esta opción
-      alert("Su navegador no permite esta acción");
+        //creamos el blob
+        blob = new Blob(["\ufeff", contenido], { type: 'text/csv' });
+        //creamos el reader
+        reader = new FileReader();
+        reader.onload = (e) => {
+            //escuchamos su evento load y creamos un enlace en dom
+            save = document.createElement('a');
+            save.href = e.target.result;
+            save.target = '_blank';
+            //aquí le damos nombre al archivo
+            save.download = "netliinks_" + title + "_" + d.getDate() + "_" + (d.getMonth() + 1) + "_" + d.getFullYear() + ".csv";
+            try {
+                //creamos un evento click
+                clicEvent = new MouseEvent('click', {
+                    'view': window,
+                    'bubbles': true,
+                    'cancelable': true
+                });
+            }
+            catch (e) {
+                //si llega aquí es que probablemente implemente la forma antigua de crear un enlace
+                clicEvent = document.createEvent("MouseEvent");
+                clicEvent.click();
+            }
+            //disparamos el evento
+            save.dispatchEvent(clicEvent);
+            //liberamos el objeto window.URL
+            (window.URL || window.webkitURL).revokeObjectURL(save.href);
+        };
+        //leemos como url
+        reader.readAsDataURL(blob);
     }
-  }
+    else {
+        //el navegador no admite esta opción
+        alert("Su navegador no permite esta acción");
+    }
+};
+export const userInfo = getUserInfo();
