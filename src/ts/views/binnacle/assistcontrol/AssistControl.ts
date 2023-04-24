@@ -5,7 +5,7 @@
 //
 import { Config } from "../../../Configs.js"
 import { getEntityData, getEntitiesData } from "../../../endpoints.js"
-import { CloseDialog, FixStatusElement, drawTagsIntoTables, fixDate, renderRightSidebar } from "../../../tools.js"
+import { CloseDialog, FixStatusElement, drawTagsIntoTables, fixDate, generateCsv, renderRightSidebar } from "../../../tools.js"
 import { InterfaceElement, InterfaceElementCollection } from "../../../types.js"
 import { UIContentLayout, UIRightSidebar } from "./Layout.js"
 import { UITableSkeletonTemplate } from "./Template.js"
@@ -42,7 +42,7 @@ export class AssistControl {
         this.load(tableBody, currentPage, assistControlArray)
         this.searchVisit(tableBody, assistControlArray)
         this.pagination(assistControlArray, tableRows, currentPage)
-
+        this.export()
         // Rendering icons
     }
 
@@ -169,6 +169,94 @@ export class AssistControl {
         }
 
     }
+
+    public export = () => {
+        const exportAssisControl: InterfaceElement = document.getElementById('export-entities');
+        exportAssisControl.addEventListener('click', async () => {
+            this.dialogContainer.style.display = 'block';
+            this.dialogContainer.innerHTML = `
+                <div class="dialog_content" id="dialog-content">
+                    <div class="dialog">
+                        <div class="dialog_container padding_8">
+                            <div class="dialog_header">
+                                <h2>Seleccionar la fecha</h2>
+                            </div>
+
+                            <div class="dialog_message padding_8">
+                                <div class="form_group">
+                                    <div class="form_input">
+                                        <label class="form_label" for="start-date">Desde:</label>
+                                        <input type="date" class="input_date input_date-start" id="start-date" name="start-date">
+                                    </div>
+
+                                    <div class="form_input">
+                                        <label class="form_label" for="end-date">Hasta:</label>
+                                        <input type="date" class="input_date input_date-end" id="end-date" name="end-date">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dialog_footer">
+                                <button class="btn btn_primary" id="cancel">Cancelar</button>
+                                <button class="btn btn_danger" id="export-data">Exportar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            let date = new Date(); //Fecha actual
+            let month: any = date.getMonth() + 1; //obteniendo mes
+            let day: any = date.getDate(); //obteniendo dia
+            let year: any = date.getFullYear(); //obteniendo año
+            if (day < 10)
+                day = '0' + day; //agrega cero si el menor de 10
+            if (month < 10)
+                month = '0' + month //agrega cero si el menor de 10
+
+            const startDate: InterfaceElement = document.getElementById("start-date")
+
+            const endDate: InterfaceElement = document.getElementById("end-date")
+
+            startDate.value = year + "-" + month + "-" + day;
+            endDate.value = year + "-" + month + "-" + day;
+
+            const _closeButton: InterfaceElement = document.getElementById('cancel');
+            const _exportButton: InterfaceElement = document.getElementById('export-data');
+            const _dialog: InterfaceElement = document.getElementById('dialog-content');
+            _exportButton.addEventListener('click', async () => {
+                let rows = [];
+                const _values = {
+                    start: document.getElementById('start-date'),
+                    end: document.getElementById('end-date'),
+                }
+                const marcations: any = await GetAssistControl();
+                for (let i = 0; i < marcations.length; i++) {
+                    let marcation = marcations[i]
+                    // @ts-ignore
+                    if (marcation.ingressDate >= _values.start.value && marcation.ingressDate <= _values.end.value) {
+                        let obj = {
+                            "DNI": `${marcation.user.dni}`,
+                            "Usuario": `${marcation.user.firstName} ${marcation.user.lastName}`,
+                            "Fecha Ingreso": `${marcation.ingressDate}`,
+                            "Hora Ingreso": `${marcation.ingressTime}`,
+                            "Emitido Ingreso": `${marcation.ingressIssued.firstName} ${marcation.ingressIssued.lastName}`,
+                            "Fecha Salida": `${marcation.egressDate}`,
+                            "Hora Salida": `${marcation.egressTime}`,
+                            "Emitido Salida": `${marcation.egressIssued?.firstName} ${marcation.egressIssued?.lastName}`,
+                        }
+                        rows.push(obj);
+                    }
+
+                }
+                generateCsv(rows, "Marcaciones");
+
+
+            });
+            _closeButton.onclick = () => {
+                new CloseDialog().x(_dialog);
+            };
+        });
+    };
 
     private closeRightSidebar = (): void => {
         const closeButton: InterfaceElement = document.getElementById('close')

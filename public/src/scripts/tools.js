@@ -196,7 +196,6 @@ export class filterDataByHeaderType {
     }
 }
 export const generateCsv = async (ar, title) => {
-    console.log('...');
     //comprobamos compatibilidad
     if (window.Blob && (window.URL || window.webkitURL)) {
         let contenido = "";
@@ -253,3 +252,17 @@ export const generateCsv = async (ar, title) => {
     }
 };
 export const userInfo = getUserInfo();
+
+export const verifyUserType = (userType) =>{
+    if(userType == 'CUSTOMER'){
+        return 'Cliente'
+      }else if(userType == 'GUARD'){
+        return 'Guardia'
+      }else if(userType == 'EMPLOYEE'){
+        return 'Empleado'
+      }else if(userType == 'CONTRACTOR'){
+        return 'Contratista'
+      }else{
+        return userType
+      }
+}

@@ -16,62 +16,61 @@ let currentPage = Config.currentPage
 const pageName = 'Notas'
 
 const GetNotes = async (): Promise<void> => {
-    const notes = await getEntitiesData('Note')
-    return notes
+  const notes = await getEntitiesData('Note')
+  return notes
 }
 
 export class Notes {
-    private dialogContainer: InterfaceElement = document.getElementById('app-dialogs')
-    private siebarDialogContainer: InterfaceElement = document.getElementById('entity-editor-container')
-    private appContainer: InterfaceElement = document.getElementById('datatable-container')
+  private dialogContainer: InterfaceElement = document.getElementById('app-dialogs')
+  private siebarDialogContainer: InterfaceElement = document.getElementById('entity-editor-container')
+  private appContainer: InterfaceElement = document.getElementById('datatable-container')
 
-    public render = async (): Promise<void> => {
-        let notesArray: any = await GetNotes()
-        this.appContainer.innerHTML = ''
-        this.appContainer.innerHTML = UIContentLayout
+  public render = async (): Promise<void> => {
+    let notesArray: any = await GetNotes()
+    this.appContainer.innerHTML = ''
+    this.appContainer.innerHTML = UIContentLayout
 
-        // Getting interface elements
-        const viewTitle: InterfaceElement = document.getElementById('view-title')
-        const tableBody: InterfaceElement = document.getElementById('datatable-body')
+    // Getting interface elements
+    const viewTitle: InterfaceElement = document.getElementById('view-title')
+    const tableBody: InterfaceElement = document.getElementById('datatable-body')
 
-        // Changing interface element content
-        viewTitle.innerText = pageName
-        tableBody.innerHTML = UITableSkeletonTemplate.repeat(tableRows)
+    // Changing interface element content
+    viewTitle.innerText = pageName
+    tableBody.innerHTML = UITableSkeletonTemplate.repeat(tableRows)
 
-        // Exec functions
-        this.load(tableBody, currentPage, notesArray)
-        this.searchNotes(tableBody, notesArray)
-        this.pagination(notesArray, tableRows, currentPage)
-        this.export()
-    }
+    // Exec functions
+    this.load(tableBody, currentPage, notesArray)
+    this.searchNotes(tableBody, notesArray)
+    this.pagination(notesArray, tableRows, currentPage)
+    this.export()
+  }
 
-    public load = (tableBody: InterfaceElement, currentPage: number, notes: any): void => {
-        tableBody.innerHTML = '' // clean table
+  public load = (tableBody: InterfaceElement, currentPage: number, notes: any): void => {
+    tableBody.innerHTML = '' // clean table
 
-        // configuring max table row size
-        currentPage--
-        let start: number = tableRows * currentPage
-        let end: number = start + tableRows
-        let paginatedItems: any = notes.slice(start, end)
+    // configuring max table row size
+    currentPage--
+    let start: number = tableRows * currentPage
+    let end: number = start + tableRows
+    let paginatedItems: any = notes.slice(start, end)
 
-        // Show message if page is empty
-        if (notes.length === 0) {
-            let row: InterfaceElement = document.createElement('TR')
-            row.innerHTML = `
+    // Show message if page is empty
+    if (notes.length === 0) {
+      let row: InterfaceElement = document.createElement('TR')
+      row.innerHTML = `
             <td>No existen datos<td>
             <td></td>
             <td></td>
             `
 
-            tableBody.appendChild(row)
-        }
-        else {
-            for (let i = 0; i < paginatedItems.length; i++) {
-                let note = paginatedItems[i] // getting note items
-                let row: InterfaceElement = document.createElement('TR')
-                const noteCreationDateAndTime = note.creationDate.split('T')
-                const noteCreationDate = noteCreationDateAndTime[0]
-                row.innerHTML += `
+      tableBody.appendChild(row)
+    } else {
+      for (let i = 0; i < paginatedItems.length; i++) {
+        let note = paginatedItems[i] // getting note items
+        let row: InterfaceElement = document.createElement('TR')
+        const noteCreationDateAndTime = note.creationDate.split('T')
+        const noteCreationDate = noteCreationDateAndTime[0]
+        row.innerHTML += `
                     <td>${note.title}</td>
                     <td>${note.content}</td>
                     <td id="table-date">${noteCreationDate}</td>
@@ -81,135 +80,134 @@ export class Notes {
                         </button>
                     </td>
                 `
-                tableBody.appendChild(row)
-                this.previewNote(note.id)
-                // TODO: Corret this fixer
-                // fixDate()
-            }
-        }
+        tableBody.appendChild(row)
+        this.previewNote(note.id)
+        // TODO: Corret this fixer
+        // fixDate()
+      }
     }
+  }
 
-    private searchNotes = async (tableBody: InterfaceElement, notes: any) => {
-        const search: InterfaceElement = document.getElementById('search')
-        await search.addEventListener('keyup', () => {
-            const arrayNotes: any = notes.filter((note: any) =>
-                `${note.title}
+  private searchNotes = async (tableBody: InterfaceElement, notes: any) => {
+    const search: InterfaceElement = document.getElementById('search')
+    await search.addEventListener('keyup', () => {
+      const arrayNotes: any = notes.filter((note: any) =>
+        `${note.title}
                 ${note.content}
                 ${note.creationDate}`
-                    .toLowerCase()
-                    .includes(search.value.toLowerCase())
-            )
+          .toLowerCase()
+          .includes(search.value.toLowerCase())
+      )
 
-            let filteredNotes = arrayNotes.length
-            let result = arrayNotes
+      let filteredNotes = arrayNotes.length
+      let result = arrayNotes
 
-            if (filteredNotes >= Config.tableRows) filteredNotes = Config.tableRows
+      if (filteredNotes >= Config.tableRows) filteredNotes = Config.tableRows
 
-            this.load(tableBody, currentPage, result)
-            this.pagination(result, tableRows, currentPage)
+      this.load(tableBody, currentPage, result)
+      this.pagination(result, tableRows, currentPage)
 
-            // Rendering icons
-        })
-    }
+      // Rendering icons
+    })
+  }
 
-    private previewNote = async (noteID: string): Promise<void> => {
-        const openPreview: InterfaceElement = document.querySelectorAll('#entity-details')
-        openPreview.forEach((preview: InterfaceElement) => {
-            let currentNoteId = preview.dataset.entityid
-            preview.addEventListener('click', (): void => {
-                previewBox(currentNoteId)
-            })
-        })
+  private previewNote = async (noteID: string): Promise<void> => {
+    const openPreview: InterfaceElement = document.querySelectorAll('#entity-details')
+    openPreview.forEach((preview: InterfaceElement) => {
+      let currentNoteId = preview.dataset.entityid
+      preview.addEventListener('click', (): void => {
+        previewBox(currentNoteId)
+      })
+    })
 
-        const previewBox = async (noteId: string): Promise<void> => {
-            const note = await getEntityData('Note', noteId)
+    const previewBox = async (noteId: string): Promise<void> => {
+      const note = await getEntityData('Note', noteId)
 
-            renderRightSidebar(UIRightSidebar)
-            const sidebarContainer: InterfaceElement = document.getElementById('entity-editor-container')
-            const closeSidebar: InterfaceElement = document.getElementById('close')
-            closeSidebar.addEventListener('click', (): void => {
-                new CloseDialog().x(sidebarContainer)
-            })
-            // Note details
-            const _details: InterfaceElementCollection = {
-                picture: document.getElementById('note-picture-placeholder'),
-                title: document.getElementById('note-title'),
-                content: document.getElementById('note-content'),
-                author: document.getElementById('note-author'),
-                authorId: document.getElementById('note-author-id'),
-                date: document.getElementById('creation-date'),
-                time: document.getElementById('creation-time')
-            }
+      renderRightSidebar(UIRightSidebar)
+      const sidebarContainer: InterfaceElement = document.getElementById('entity-editor-container')
+      const closeSidebar: InterfaceElement = document.getElementById('close')
+      closeSidebar.addEventListener('click', (): void => {
+        new CloseDialog().x(sidebarContainer)
+      })
+      // Note details
+      const _details: InterfaceElementCollection = {
+        picture: document.getElementById('note-picture-placeholder'),
+        title: document.getElementById('note-title'),
+        content: document.getElementById('note-content'),
+        author: document.getElementById('note-author'),
+        authorId: document.getElementById('note-author-id'),
+        date: document.getElementById('creation-date'),
+        time: document.getElementById('creation-time')
+      }
 
-            const image = await getFile(note.attachment)
+      const image = await getFile(note.attachment)
 
-            const noteCreationDateAndTime = note.creationDate.split('T')
-            const noteCreationTime = noteCreationDateAndTime[1]
-            const noteCreationDate = noteCreationDateAndTime[0]
+      const noteCreationDateAndTime = note.creationDate.split('T')
+      const noteCreationTime = noteCreationDateAndTime[1]
+      const noteCreationDate = noteCreationDateAndTime[0]
 
-            _details.title.innerText = note.title
-            _details.content.innerText = note.content
-            _details.author.value = `${note.user.firstName} ${note.user.lastName}`
-            _details.authorId.value = note.createdBy
-            _details.date.value = noteCreationDate
-            _details.time.value = noteCreationTime
+      _details.title.innerText = note.title
+      _details.content.innerText = note.content
+      _details.author.value = `${note.user.firstName} ${note.user.lastName}`
+      _details.authorId.value = note.createdBy
+      _details.date.value = noteCreationDate
+      _details.time.value = noteCreationTime
 
-            if (note.attachment !== undefined) {
-                _details.picture.innerHTML = `
+      if (note.attachment !== undefined) {
+        _details.picture.innerHTML = `
                     <img id="note-picture" width="100%" class="note_picture margin_b_8" src="${image}">
                 `
-            }
+      }
+    }
+  }
 
-        }
+  private pagination(items: [], limitRows: number, currentPage: number) {
+    const tableBody: InterfaceElement = document.getElementById('datatable-body')
+    const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
+    paginationWrapper.innerHTML = ''
+
+    let pageCount: number
+    pageCount = Math.ceil(items.length / limitRows)
+
+    let button: InterfaceElement
+
+    for (let i = 1; i < pageCount + 1; i++) {
+      button = setupButtons(
+        i, items, currentPage, tableBody, limitRows
+      )
+
+      paginationWrapper.appendChild(button)
     }
 
-    private pagination(items: [], limitRows: number, currentPage: number) {
-        const tableBody: InterfaceElement = document.getElementById('datatable-body')
-        const paginationWrapper: InterfaceElement = document.getElementById('pagination-container')
-        paginationWrapper.innerHTML = ''
+    function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
+      const button: InterfaceElement = document.createElement('button')
+      button.classList.add('pagination_button')
+      button.innerText = page
 
-        let pageCount: number
-        pageCount = Math.ceil(items.length / limitRows)
+      button.addEventListener('click', (): void => {
+        currentPage = page
+        new Notes().load(tableBody, page, items)
+      })
 
-        let button: InterfaceElement
-
-        for (let i = 1; i < pageCount + 1; i++) {
-            button = setupButtons(
-                i, items, currentPage, tableBody, limitRows
-            )
-
-            paginationWrapper.appendChild(button)
-        }
-
-        function setupButtons(page: any, items: any, currentPage: number, tableBody: InterfaceElement, limitRows: number) {
-            const button: InterfaceElement = document.createElement('button')
-            button.classList.add('pagination_button')
-            button.innerText = page
-
-            button.addEventListener('click', (): void => {
-                currentPage = page
-                new Notes().load(tableBody, page, items)
-            })
-
-            return button
-        }
+      return button
     }
+  }
 
-    private closeRightSidebar = (): void => {
-        const closeButton: InterfaceElement = document.getElementById('close')
+  private closeRightSidebar = (): void => {
+    const closeButton: InterfaceElement = document.getElementById('close')
 
-        const editor: InterfaceElement = document.getElementById('entity-editor-container')
+    const editor: InterfaceElement = document.getElementById('entity-editor-container')
 
-        closeButton.addEventListener('click', (): void => {
-            new CloseDialog().x(editor)
-        })
-    }
+    closeButton.addEventListener('click', (): void => {
+      new CloseDialog().x(editor)
+    })
+  }
 
-    private export = async (): Promise<void> => {
-      const buttonExport: InterfaceElement = document.getElementById('export-button')
-      buttonExport.addEventListener('click', async (): Promise<void> => {
-        this.dialogContainer.style.display = 'block'
-        this.dialogContainer.innerHTML = `
+  private export = async (): Promise<void> => {
+    const buttonExport: InterfaceElement = document.getElementById('export-button')
+    buttonExport.addEventListener('click', async (): Promise<void> => {
+      this.dialogContainer.style.display = 'block'
+      this.dialogContainer.innerHTML = `
           <div class="dialog_content" id="dialog-content">
             <div class="dialog">
               <div class="dialog_container padding_8">
@@ -239,62 +237,60 @@ export class Notes {
             </div>
           </div>
         `
-        const _date: Date = new Date()
-        let month: any = _date.getMonth()
-        let day: any = _date.getDate()
-        let year: any = _date.getFullYear()
+      const _date: Date = new Date()
+      let month: any = _date.getMonth()
+      let day: any = _date.getDate()
+      let year: any = _date.getFullYear()
 
-        if (day < 10) day = '0' + day
-        if (month < 10) month = '0' + day
+      if (day < 10) day = '0' + day
+      if (month < 10) month = '0' + day
 
-        const _inputStartDate: InterfaceElement = document.getElementById('start-date')
-        const _inputEndDate: InterfaceElement = document.getElementById('end-date')
+      const _inputStartDate: InterfaceElement = document.getElementById('start-date')
+      const _inputEndDate: InterfaceElement = document.getElementById('end-date')
 
-        _inputStartDate.value = year + '-' + month + '-' + day
-        _inputEndDate.value = year + '-' + month + '-' + day
+      _inputStartDate.value = year + '-' + month + '-' + day
+      _inputEndDate.value = year + '-' + month + '-' + day
 
-        const _closeButton: InterfaceElement = document.getElementById('cancel')
-        const _exportButton: InterfaceElement = document.getElementById('export-data')
-        const _dialog: InterfaceElement = document.getElementById('dialog-content')
+      const _closeButton: InterfaceElement = document.getElementById('cancel')
+      const _exportButton: InterfaceElement = document.getElementById('export-data')
+      const _dialog: InterfaceElement = document.getElementById('dialog-content')
 
-        _exportButton.addEventListener('click', async (): Promise<void> => {
-          let $rows = []
-          const _values = {
-            start: document.getElementById('start-date'),
-            end: document.getElementById('end-date')
-          }
-
-          alert('Exportando')
-
-          const notes: any = await GetNotes()
-
-          for(let i = 0; i < notes.length; i++) {
-            let note = notes[i]
-            let noteCreationDateAndTime: any = note.creationDate.split('T')
-            let noteCreationDate: any = noteCreationDateAndTime[0]
-            let noteCreationTime: any = noteCreationDateAndTime[1]
-            // @ts-ignore
-            if (noteCreationDate >= _values.start?.value && noteCreationDate <= _values.end?.value) {
-              let obj: any = {
-                "Título": `${note.title.split("\n").join("(salto)")}`,
-                "Fecha": `${noteCreationDate}`,
-                "Hora": `${noteCreationTime}`,
-                "Usuario": `${note.user.firstName} ${note.user.lastName}`,
-                "Contenido": `${note.content.split("\n").join("(salto)")}`
-              }
-
-              $rows.push(obj)
-            }
-          }
-
-          generateCsv($rows, 'Notas')
-        })
-
-        _closeButton.onclick = () => {
-            new CloseDialog().x(_dialog);
+      _exportButton.addEventListener('click', async (): Promise<void> => {
+        let $rows = []
+        const _values = {
+          start: document.getElementById('start-date'),
+          end: document.getElementById('end-date')
         }
+
+        alert('Exportando')
+
+        const notes: any = await GetNotes()
+
+        for (let i = 0; i < notes.length; i++) {
+          let note = notes[i]
+          let noteCreationDateAndTime: any = note.creationDate.split('T')
+          let noteCreationDate: any = noteCreationDateAndTime[0]
+          let noteCreationTime: any = noteCreationDateAndTime[1]
+          // @ts-ignore
+          if (noteCreationDate >= _values.start?.value && noteCreationDate <= _values.end?.value) {
+            let obj: any = {
+              "Título": `${note.title.split("\n").join("(salto)")}`,
+              "Fecha": `${noteCreationDate}`,
+              "Hora": `${noteCreationTime}`,
+              "Usuario": `${note.user.firstName} ${note.user.lastName}`,
+              "Contenido": `${note.content.split("\n").join("(salto)")}`
+            }
+
+            $rows.push(obj)
+          }
+        }
+
+        generateCsv($rows, 'Notas')
       })
-    }
+
+      _closeButton.onclick = () => {
+        new CloseDialog().x(_dialog);
+      }
+    })
+  }
 }
-
-

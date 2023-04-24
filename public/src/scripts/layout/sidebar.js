@@ -161,8 +161,9 @@ export class Sidebar {
         });
     }
 }
-new Clients().render();
+// new Clients().render()
 // new AssistControl().render()
+new Visits().render();
 // new Notes().render()
 // new SuperUsers().render()
 // new Employees().render()
